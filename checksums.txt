@@ -1,3 +1,4 @@
+705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da *./.gitattributes
 3220f45c5b5af880df18158576a0a818f0b362feda0d61a32ef1d32a790cd4af *./LICENSE
 3925db9154b65f8dce0f7192e71bf2b1af1a25b3fea585eba73f253304e3439e *./README.md
 8fbcac72a1279766034a207fd0e949c732cc0d668d54f8c3ca8763700db95304 *./contract/EXPERIMENT_CONTRACT.md
@@ -21,7 +22,7 @@ c321ea8d1a781bf488c947c33cc67fef456be6f89620062ca10478ba9b4198c6 *./harness/make
 4a0594fda2f1265b1d65fda66c889bd79d64939d80a4c3bbc6701290c83d52f6 *./harness/rdma_runtime/rdma_container_preflight.py
 f7a463cbe28329a1e07261868a2362be4d8db488ec59e3f468e99d3ff5093421 *./harness/rdma_runtime/tacc_rdma_bridge.py
 6ace5e8574a736a38bc6925131a8e9b16d5cd2eac7b66f8c00a21417bb9f1907 *./processed/additive_overhead_decomposition_long.csv
-e8db8561a398cdb64a36ef521a63d3b3c09ecaae6ba693b284597b9ebd4f6ded *./processed/control_campaign_summary.txt
+afaa5290167a0ffd147f0e802994f9e196c45a4e149405f1517e312d7d947ed0 *./processed/control_campaign_summary.txt
 ad6a4d40be64921e80e8487042f8916e076156df3e1683741e3c3921bb1fb2be *./processed/h100_fabric_collectives.csv
 f169d13d2e5b71b2f6b761fe1b48f4b6505063e98da04ebd972fbc374d0c5772 *./processed/h100_overlap_control.csv
 8e415d33e1ea05b538d5308ca933097ae1eb83c0d5df95eed19c448a37fd6602 *./processed/h100_topology_resnet50_mean_sample_sd.csv
@@ -41,6 +42,7 @@ acebb6499656d29dfff14b523655b60d12e1c15f9e653bfcc78a2f9186f7fae9 *./processed/re
 05e03a8740a7d6d9ba19f20abe2be35974145641f1599fb5e1a082340789dbf4 *./processed/relative_method_overhead_ws8.csv
 94db494991d5c2cdc6fc1dc172362c40f58fcd7d316cdc4a4a6a41a0b496969d *./raw/control/redctl-A-1n-3514993.tgz
 354fe4e0ccebb929b77100d18ea2f0c2c81d7a38250f4d47967e9436ec5bf339 *./raw/control/redctl-A-2n4n-3514994-3514995.tgz
+94c9be6a0885b1c0ed3c0efa380871d457377c3bf031d1a91e66e420d03ed135 *./raw/control/redctl-B-4n-3515314.tgz
 92e880626fec71b04edd993ffbeab805e8a8704fc34a8c2bc0b4bc677519c09b *./raw/control/redctl-C-B1-3515263-3515264.tgz
 542c924a791bbce4d7ed3330cd0e6b4888d56c69ee8ebf74509f07b0591ee6d7 *./raw/july/h100-3328657.tar.gz
 b126a5c8841c5066370a14963245b8cd2a6f216480bae27b904666b5c03360d1 *./raw/july/h100-3328657.tar.gz.sha256

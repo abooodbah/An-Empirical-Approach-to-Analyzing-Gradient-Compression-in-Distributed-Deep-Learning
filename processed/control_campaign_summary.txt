@@ -38,17 +38,29 @@ A transformer native               32 phase     77.69    63.10 p50=    77.46  32
 A transformer powersgd              8 phase     31.14    23.03 p50=    14.96   8 PASS
 A transformer powersgd              8 wall      29.12      nan p50=    13.57   8 PASS
 B resnet50    ddp-overlap           8 phase    910.71      nan p50=   910.75   8 PASS
+B resnet50    ddp-overlap          32 phase    987.85      nan p50=   986.70  32 PASS
 B resnet50    gpu-quant             8 phase    931.15    93.51 p50=   917.28   8 PASS
+B resnet50    gpu-quant            32 phase   2028.78  1051.60 p50=  1998.79  32 PASS
 B resnet50    gpu-quant-reducible   8 phase    860.96    37.69 p50=   855.04   8 PASS
+B resnet50    gpu-quant-reducible  32 phase    886.95    68.90 p50=   879.73  32 PASS
 B resnet50    gpu-topk              8 phase   1191.93    35.40 p50=  1184.62   8 PASS
+B resnet50    gpu-topk             32 phase   1334.70   175.51 p50=  1305.57  32 PASS
 B resnet50    native                8 phase    911.46    91.27 p50=   908.41   8 PASS
+B resnet50    native               32 phase   1001.14   183.34 p50=   998.02  32 PASS
 B resnet50    powersgd              8 phase    913.66    96.45 p50=   863.41   8 PASS
+B resnet50    powersgd             32 phase    938.17   122.50 p50=   882.74  32 PASS
 B transformer ddp-overlap           8 phase     44.93      nan p50=    44.49   8 PASS
+B transformer ddp-overlap          32 phase     92.80      nan p50=    91.76  32 PASS
 B transformer gpu-quant             8 phase     54.49    34.53 p50=    48.58   8 PASS
+B transformer gpu-quant            32 phase    514.30   427.50 p50=   503.71  32 PASS
 B transformer gpu-quant-reducible   8 phase     25.75    11.28 p50=    19.97   8 PASS
+B transformer gpu-quant-reducible  32 phase     38.32    22.28 p50=    32.45  32 PASS
 B transformer gpu-topk              8 phase    227.87    18.83 p50=   226.44   8 PASS
+B transformer gpu-topk             32 phase    292.21    77.64 p50=   290.47  32 PASS
 B transformer native                8 phase     46.05    35.69 p50=    44.77   8 PASS
+B transformer native               32 phase     75.77    61.52 p50=    75.44  32 PASS
 B transformer powersgd              8 phase     32.83    22.10 p50=    18.76   8 PASS
+B transformer powersgd             32 phase     39.37    30.36 p50=    20.51  32 PASS
 C resnet50    native               32 phase    972.35   151.09 p50=   971.19  32 PASS
 C transformer ddp-overlap          32 phase     97.35      nan p50=    96.10  32 PASS
 C transformer gpu-quant            32 wall     510.25      nan p50=   494.98  32 PASS
@@ -66,7 +78,9 @@ A transformer ws 8: native=35.17  gpu-quant=34.07  gpu-quant-reducible=10.31
 A transformer ws16: native=58.32  gpu-quant=152.01  gpu-quant-reducible=17.20
 A transformer ws32: native=63.10  gpu-quant=528.95  gpu-quant-reducible=22.27
 B resnet50    ws 8: native=91.27  gpu-quant=93.51  gpu-quant-reducible=37.69
+B resnet50    ws32: native=183.34  gpu-quant=1051.60  gpu-quant-reducible=68.90
 B transformer ws 8: native=35.69  gpu-quant=34.53  gpu-quant-reducible=11.28
+B transformer ws32: native=61.52  gpu-quant=427.50  gpu-quant-reducible=22.28
 
 == instrumentation overhead: phase step vs wall step (ms, ratio) ==
 A resnet50    ws 8 native    phase=   911.85 wall=   899.45 ratio= 1.01
@@ -104,15 +118,25 @@ A transformer ws 8 native       july=    45.80 A=    44.21 delta=  -3.5%
 A transformer ws32 native       july=   107.40 A=    77.46 delta= -27.9%
 A transformer ws 8 powersgd     july=    15.80 A=    14.96 delta=  -5.3%
 B resnet50    ws 8 ddp-overlap  july=   905.00 B=   910.75 delta=  +0.6%
+B resnet50    ws32 ddp-overlap  july=   986.30 B=   986.70 delta=  +0.0%
 B resnet50    ws 8 gpu-quant    july=   910.50 B=   917.28 delta=  +0.7%
+B resnet50    ws32 gpu-quant    july=  2041.90 B=  1998.79 delta=  -2.1%
 B resnet50    ws 8 gpu-topk     july=  1177.60 B=  1184.62 delta=  +0.6%
+B resnet50    ws32 gpu-topk     july=  1321.40 B=  1305.57 delta=  -1.2%
 B resnet50    ws 8 native       july=   902.50 B=   908.41 delta=  +0.7%
+B resnet50    ws32 native       july=  1026.30 B=   998.02 delta=  -2.8%
 B resnet50    ws 8 powersgd     july=   857.00 B=   863.41 delta=  +0.7%
+B resnet50    ws32 powersgd     july=   884.80 B=   882.74 delta=  -0.2%
 B transformer ws 8 ddp-overlap  july=    45.70 B=    44.49 delta=  -2.6%
+B transformer ws32 ddp-overlap  july=    80.20 B=    91.76 delta= +14.4%
 B transformer ws 8 gpu-quant    july=    48.30 B=    48.58 delta=  +0.6%
+B transformer ws32 gpu-quant    july=   536.00 B=   503.71 delta=  -6.0%
 B transformer ws 8 gpu-topk     july=   226.60 B=   226.44 delta=  -0.1%
+B transformer ws32 gpu-topk     july=   291.50 B=   290.47 delta=  -0.4%
 B transformer ws 8 native       july=    45.80 B=    44.77 delta=  -2.3%
+B transformer ws32 native       july=   107.40 B=    75.44 delta= -29.8%
 B transformer ws 8 powersgd     july=    15.80 B=    18.76 delta= +18.8%
+B transformer ws32 powersgd     july=    21.60 B=    20.51 delta=  -5.0%
 C resnet50    ws32 native       july=  1026.30 C=   971.19 delta=  -5.4%
 C transformer ws32 ddp-overlap  july=    80.20 C=    96.10 delta= +19.8%
 C transformer ws32 gpu-topk     july=   291.50 C=   288.65 delta=  -1.0%
@@ -126,9 +150,18 @@ resnet50    ws 8 gpu-topk             A=  1190.05 B=  1191.93 delta=  +0.2%
 resnet50    ws 8 powersgd             A=   909.23 B=   913.66 delta=  +0.5%
 resnet50    ws 8 ddp-overlap          A=   905.38 B=   910.71 delta=  +0.6%
 resnet50    ws 8 gpu-quant-reducible  A=   865.07 B=   860.96 delta=  -0.5%
+resnet50    ws32 native               A=  1001.38 B=  1001.14 delta=  -0.0%
+resnet50    ws32 gpu-quant            A=  2267.24 B=  2028.78 delta= -10.5%
+resnet50    ws32 gpu-topk             A=  1355.47 B=  1334.70 delta=  -1.5%
+resnet50    ws32 powersgd             A=   936.83 B=   938.17 delta=  +0.1%
+resnet50    ws32 ddp-overlap          A=   988.75 B=   987.85 delta=  -0.1%
+resnet50    ws32 gpu-quant-reducible  A=   883.92 B=   886.95 delta=  +0.3%
 transformer ws 8 native               A=    45.14 B=    46.05 delta=  +2.0%
 transformer ws 8 gpu-quant            A=    54.03 B=    54.49 delta=  +0.8%
 transformer ws 8 gpu-topk             A=   227.95 B=   227.87 delta=  -0.0%
 transformer ws 8 powersgd             A=    31.14 B=    32.83 delta=  +5.4%
 transformer ws 8 ddp-overlap          A=    44.96 B=    44.93 delta=  -0.1%
 transformer ws 8 gpu-quant-reducible  A=    24.34 B=    25.75 delta=  +5.8%
+transformer ws32 native               A=    77.69 B=    75.77 delta=  -2.5%
+transformer ws32 gpu-quant            A=   605.97 B=   514.30 delta= -15.1%
+transformer ws32 gpu-quant-reducible  A=    38.25 B=    38.32 delta=  +0.2%
