@@ -1,0 +1,3 @@
+model_index,model,model_label,independent_job_count,native_no_overlap_step_ms_mean,native_no_overlap_step_ms_sample_sd,ddp_overlap_step_ms_mean,ddp_overlap_step_ms_sample_sd,ddp_vs_native_percent
+1,resnet50,ResNet-50,3,33.117556944489479,0.1931571638790652,33.807416000248246,0.18960821139917722,2.0830614314790274
+2,transformer,Transformer,3,9.0187104069627821,0.028171373590106925,7.8589508096532281,0.17277218836357575,-12.859483728562527

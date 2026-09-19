@@ -1,0 +1,321 @@
+{
+  "schema_version": "2.0.0",
+  "contract_version": "2.0.0",
+  "amendment_id": "2026-07-17-a",
+  "campaign_id": "tpds-legacy-continuity-tacc-2026-07",
+  "frozen_at": "2026-07-17T00:00:00-05:00",
+  "amended_at": "2026-07-17T00:00:00-05:00",
+  "causal_fabric_contrast": false,
+  "authorized_benchmarks": {
+    "pvc_v2": {
+      "implementation": "experiments/tacc_paper_workloads/paper_workload_benchmark.py",
+      "schema": "tacc-paper-workloads/v2",
+      "sha256": "26f884cc32d366441b248386d5afaf873adf9c289ff0c1f1091689514df1be29",
+      "calibration_policy": "one_direct_source_per_world_size_with_hash_bound_references"
+    },
+    "h100_v1": {
+      "implementation": "frozen_queued_h100_release/paper_workload_benchmark.py",
+      "schema": "tacc-paper-workloads/v1",
+      "sha256": "27a81ace30e103da19d905a684a30744ccc9ad1df9497e5f0ba021f68a1674ee",
+      "allowed_platform": "cuda_nccl_h100_only",
+      "calibration_policy": "finite_direct_allreduce_and_allgather_alpha_beta_in_every_condition"
+    }
+  },
+  "tracks": {
+    "legacy_continuity": {
+      "models": [
+        "resnet50",
+        "transformer"
+      ],
+      "local_batch_size": 32,
+      "precision": "fp32",
+      "optimizer": {
+        "name": "sgd",
+        "learning_rate": 0.01
+      },
+      "warmup_iterations": 10,
+      "measured_iterations": 40,
+      "timing_semantics": "legacy_isolated_corrected_sync_v2",
+      "modes": {
+        "native": {
+          "sync_every": [
+            1,
+            2,
+            4
+          ]
+        },
+        "gpu_topk": {
+          "sync_every": [
+            1,
+            2,
+            4
+          ],
+          "fraction": 0.01,
+          "residual_semantics": "legacy_global_reconstruction_residual"
+        },
+        "gpu_quant": {
+          "sync_every": [
+            1
+          ],
+          "bits": 8
+        },
+        "cpu_quant": {
+          "sync_every": [
+            1
+          ],
+          "bits": 8
+        },
+        "powersgd": {
+          "sync_every": [
+            1
+          ],
+          "rank": 1
+        }
+      },
+      "separate_baselines": [
+        "ddp_overlap"
+      ]
+    },
+    "future_real_workload_validation": {
+      "authorized_in_this_amendment": false,
+      "candidate_models": [
+        "food101_resnet50",
+        "wikitext103_gpt2_medium"
+      ],
+      "timing_semantics": "production_overlapped_ddp",
+      "pool_with_legacy": false
+    }
+  },
+  "platforms": {
+    "h100_archived_1x8": {
+      "nodes": 1,
+      "ranks_per_node": 8,
+      "world_size": 8,
+      "local_batch_size": 32,
+      "role": "descriptive_only_noncausal_reference",
+      "rank_coverage": "rank0_only",
+      "complete_provenance": false,
+      "independent_of_new_tacc_jobs": false,
+      "pool_with_new_tacc_jobs": false,
+      "causal_fabric_contrast": false
+    },
+    "h100_tacc_2x4": {
+      "partition": "h100",
+      "qos": "qh100",
+      "nodes": 2,
+      "gpus_per_node": 4,
+      "ranks_per_node": 4,
+      "world_size": 8,
+      "local_batch_size": 32,
+      "backend": "nccl",
+      "benchmark_schema": "tacc-paper-workloads/v1",
+      "benchmark_sha256": "27a81ace30e103da19d905a684a30744ccc9ad1df9497e5f0ba021f68a1674ee",
+      "comparison_label": "world_size_matched_cross_system_topology_contrast",
+      "causal_fabric_contrast": false,
+      "seeds": [
+        2026010043,
+        2026011043,
+        2026012043
+      ],
+      "full_jobs": 3,
+      "qualification": {
+        "max_wall_minutes": 15,
+        "max_su": 2.0
+      },
+      "full_job": {
+        "max_wall_minutes": 15,
+        "max_su_each": 2.0,
+        "max_su_total": 6.0
+      }
+    },
+    "pvc_tacc_weak_scale": {
+      "partition": "pvc",
+      "qos": "qpvc",
+      "allocation_shape": "single_four_node_allocation_with_nested_steps",
+      "nodes_in_order": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "ranks_per_node": 8,
+      "world_sizes": [
+        8,
+        16,
+        24,
+        32
+      ],
+      "local_batch_size": 32,
+      "global_batch_sizes": [
+        256,
+        512,
+        768,
+        1024
+      ],
+      "backend": "ccl",
+      "benchmark_schema": "tacc-paper-workloads/v2",
+      "benchmark_sha256": "26f884cc32d366441b248386d5afaf873adf9c289ff0c1f1091689514df1be29",
+      "seed": 2026010043,
+      "replication": "single_allocation_descriptive",
+      "inferential_statistics_allowed": false,
+      "required_oneccl_version": "1.13.100+gpu",
+      "required_oneccl_version_substring": "+gpu",
+      "forbidden_oneccl_version_substring": "+cpu",
+      "module": "intel/23.1",
+      "stack_root": "/scratch/projects/compilers/intel23.1/intelpython/python3.9/envs/pytorch-gpu",
+      "scaling_regime": "weak",
+      "transport": {
+        "path_label": "oneccl_host_staged_ofi_tcp",
+        "fi_provider": "tcp",
+        "fi_tcp_iface": "ibp56s0",
+        "device_direct": false,
+        "rdma": false,
+        "native_gpu_fabric": false,
+        "causal_fabric_contrast": false,
+        "prohibited_claims": [
+          "pvc_device_direct_collectives",
+          "pvc_rdma_data_path",
+          "pvc_native_gpu_fabric",
+          "fabric_only_effect"
+        ]
+      },
+      "qualification": {
+        "nodes": 1,
+        "max_wall_minutes": 15,
+        "max_su": 0.75
+      },
+      "four_node_smoke": {
+        "nodes": 4,
+        "max_wall_minutes": 15,
+        "max_su": 3.0
+      },
+      "full_allocation": {
+        "nodes": 4,
+        "max_wall_minutes": 120,
+        "max_su": 24.0
+      }
+    }
+  },
+  "calibration_reference_contract": {
+    "enabled": true,
+    "scope": "pvc_tacc_weak_scale",
+    "sources_per_world_size": 1,
+    "world_sizes": [
+      8,
+      16,
+      24,
+      32
+    ],
+    "source_cell": {
+      "model": "resnet50",
+      "mode": "native",
+      "sync_every": 1,
+      "seed": 2026010043
+    },
+    "consumer_behavior": "skip_calibration_with_nonempty_calibration_reference",
+    "reference_must_match": [
+      "campaign_id",
+      "platform",
+      "backend",
+      "transport_path_label",
+      "fi_provider",
+      "fi_tcp_iface",
+      "seed",
+      "world_size",
+      "nodes",
+      "ranks_per_node",
+      "benchmark_sha256",
+      "software_stack"
+    ],
+    "cross_world_size_reference_allowed": false,
+    "cross_platform_reference_allowed": false,
+    "paper_profile_skip_without_reference_allowed": false,
+    "qualification_profile_skip_without_reference_allowed": true
+  },
+  "replication_and_claims": {
+    "h100_new_job_seeds": 3,
+    "pvc_allocations": 1,
+    "within_allocation_iterations_are_independent_samples": false,
+    "archived_h100_is_independent_replication": false,
+    "pool_archived_h100_with_new_h100": false,
+    "pool_h100_with_pvc": false,
+    "pvc_descriptive_only": true,
+    "causal_fabric_contrast": false
+  },
+  "budget": {
+    "initial_allocation_su": 854.0,
+    "overall_fraction_reference": 0.15,
+    "overall_fraction_reference_su": 128.1,
+    "cumulative_extension_su_cap": 100.0,
+    "active_cap_is_lower_than_fraction_reference": true,
+    "charged_failures_cancellations_and_retries_count": true,
+    "qualification_before_full_run": true,
+    "phase_caps_su": {
+      "h100_qualification": 2.0,
+      "h100_full_three_jobs": 6.0,
+      "pvc_qualification": 0.75,
+      "pvc_four_node_smoke": 3.0,
+      "pvc_full_single_allocation": 24.0
+    },
+    "current_planned_phase_max_su": 35.75,
+    "unused_headroom_authorizes_additional_jobs": false
+  },
+  "required_provenance": [
+    "campaign_id",
+    "contract_version",
+    "amendment_id",
+    "track",
+    "run_id",
+    "source_sha256",
+    "launcher_sha256",
+    "slurm_job_id",
+    "timestamp_utc",
+    "hostname",
+    "rank",
+    "local_rank",
+    "device_name",
+    "rank_device_map",
+    "model",
+    "mode",
+    "sync_every",
+    "seed",
+    "backend",
+    "transport_evidence",
+    "world_size",
+    "nodes",
+    "ranks_per_node",
+    "local_batch_size",
+    "global_batch_size",
+    "precision",
+    "timing_semantics",
+    "warmup_iterations",
+    "measured_iterations",
+    "software_versions",
+    "calibration_reference",
+    "status"
+  ],
+  "final_hash_policy": {
+    "initial_full_state_equal_required": true,
+    "measured_start_full_state_equal_required": true,
+    "final_full_state_equal_universal_gate": false,
+    "disclose_final_inequality": true,
+    "mode_specific_reasons": [
+      "resnet50_state_dict_includes_rank_local_batchnorm_running_buffers",
+      "sync_every_2_or_4_permits_local_parameter_updates_between_collectives"
+    ]
+  },
+  "invalidation_rules": [
+    "missing_expected_rank",
+    "missing_or_extra_measured_sample",
+    "nonfinite_metric",
+    "rank_metadata_disagreement",
+    "model_device_or_backend_fallback",
+    "missing_or_mislabeled_transport_evidence",
+    "initial_or_measured_start_full_state_hash_mismatch",
+    "matrix_contract_mismatch",
+    "source_manifest_mismatch",
+    "track_authorized_schema_or_hash_mismatch",
+    "calibration_reference_mismatch",
+    "incomplete_finalization"
+  ]
+}

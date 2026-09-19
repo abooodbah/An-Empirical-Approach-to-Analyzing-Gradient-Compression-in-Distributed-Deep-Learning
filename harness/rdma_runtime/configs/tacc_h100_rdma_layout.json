@@ -1,0 +1,71 @@
+{
+  "claim_boundary": "This frozen layout authorizes only host library/config identities and runtime bind targets. P2 must still prove container device-open, NCCL NET/IB, GDRDMA, exact collectives, and two-host synchronization.",
+  "diagnostic": {
+    "hostname": "c562-005",
+    "job_id": "3314112",
+    "raw_recorded_path": "/scratch/08447/abd2000/acm_pivot_v9/real_workloads/provider_layout_diagnostic/3314112/provider-layout-raw.json",
+    "raw_sha256": "9ccc07a906df46bc5fbbe5b98da1872d514da795a7efa49bc58ad68665e01e52",
+    "receipt_sha256": "41f1daf57132e47369d65ccd0bfb21412fb6f7d473df080cd42ca0799c3c403d"
+  },
+  "frozen_utc": "2026-07-15T23:19:58.643363+00:00",
+  "hardware": {
+    "gpu_count": 4,
+    "gpu_model": "NVIDIA H100",
+    "hca": "mlx5_0",
+    "link_layer": "InfiniBand",
+    "minimum_rate_gbps": 400,
+    "observed_rate_gbps": 400.0,
+    "partition": "h100",
+    "physical_state": "5: LinkUp",
+    "port": "1",
+    "rate": "400 Gb/sec (4X NDR)",
+    "state": "4: ACTIVE"
+  },
+  "layout_digest_sha256": "8e15b75a379512d500a8d0dfa81d00bb40b00f28184af53b573c1603a8a6f978",
+  "libibverbs": {
+    "bundle_name": "libibverbs.so.1",
+    "source": {
+      "bytes": 142000,
+      "gid": 0,
+      "mode": "0o755",
+      "real_path": "/usr/lib64/libibverbs.so.1.15.60.0",
+      "requested_path": "/lib64/libibverbs.so",
+      "sha256": "1edf101ea49c5138e0cb8c7f4ace8839e348c16654d2a532ea6481e91b797817",
+      "uid": 0
+    }
+  },
+  "provider": {
+    "ibv_drivers": "mlx5",
+    "loader_filename": "libmlx5-rdmav59.so",
+    "loader_target_path": "/usr/lib64/libibverbs/libmlx5-rdmav59.so",
+    "name": "mlx5",
+    "source": {
+      "bytes": 477440,
+      "gid": 0,
+      "mode": "0o755",
+      "real_path": "/usr/lib64/libmlx5.so.1.25.60.0",
+      "requested_path": "/usr/lib64/libmlx5.so.1.25.60.0",
+      "sha256": "ed713a50181cee6cfeb8fc9af3db15cc9df1d05e7513ee87320b13c1cde07946",
+      "uid": 0
+    }
+  },
+  "provider_config": {
+    "active_lines": [
+      "driver mlx5"
+    ],
+    "container_target_path": "/etc/libibverbs.d/mlx5.driver",
+    "driver": "mlx5",
+    "source": {
+      "bytes": 12,
+      "gid": 0,
+      "mode": "0o644",
+      "real_path": "/etc/libibverbs.d/mlx5.driver",
+      "requested_path": "/etc/libibverbs.d/mlx5.driver",
+      "sha256": "1432d9d75eef15e990ba9bfe03ff607925a664289707971c03881c6ec9b475dc",
+      "uid": 0
+    }
+  },
+  "purpose": "tacc_h100_mlx5_frozen_runtime_layout",
+  "schema_version": "1.0.0",
+  "status": "FROZEN"
+}
