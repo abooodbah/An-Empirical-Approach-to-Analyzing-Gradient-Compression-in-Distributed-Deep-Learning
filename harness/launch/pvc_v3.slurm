@@ -33,7 +33,7 @@ PVC_PYTHON="$PVC_VENV/bin/python"
 CAMPAIGN_ID="${CAMPAIGN_ID:-redctl-v3-2026-09-19}"
 PAPER_SEED="${PAPER_SEED:-2026010043}"
 
-case "$RED_SET" in v3smoke|v3n1|v3n2|v3n4) ;; *) launch_die "RED_SET must be v3smoke, v3n1, v3n2, or v3n4" ;; esac
+case "$RED_SET" in v3smoke|v3n1|v3n2|v3n4|r8|r16|r16b|r32) ;; *) launch_die "RED_SET must be v3smoke, v3n1, v3n2, v3n4, r8, r16, r16b, or r32" ;; esac
 [[ -f "$BENCHMARK" ]] || launch_die "missing benchmark: $BENCHMARK"
 [[ -f "$PROBE" ]] || launch_die "missing probe: $PROBE"
 [[ -x "$PVC_PYTHON" ]] || launch_die "PVC python is not executable: $PVC_PYTHON"
@@ -216,6 +216,32 @@ case "$RED_SET" in
     for mode in native gpu-quant-reducible ddp-int8-hook ddp-fp16-hook; do llama "$mode"; done
     for mode in ddp-int8-hook ddp-fp16-hook; do llama "$mode" wall; done
     llama_optional gpu-quant
+    ;;
+  # Reruns after the first chain: the 1B PowerSGD condition aborts in oneCCL
+  # (zero-length all-reduce), the 1B whole-gradient gather exhausts device
+  # memory at 16 ranks and above, and the 1B int8 hook page-faults at 32
+  # ranks; those three are excluded here and reported as such.
+  r8)
+    for mode in native ddp-int8-hook ddp-fp16-hook; do llama "$mode" wall; done
+    for model in transformer resnet50; do
+      for mode in ddp-int8-hook ddp-fp16-hook; do small "$model" "$mode"; small "$model" "$mode" wall; done
+    done
+    ;;
+  r16)
+    for mode in gpu-quant-reducible ddp-int8-hook ddp-fp16-hook; do llama "$mode"; done
+    for mode in ddp-int8-hook ddp-fp16-hook; do llama "$mode" wall; done
+    ;;
+  r16b)
+    llama ddp-fp16-hook
+    llama ddp-fp16-hook wall
+    ;;
+  r32)
+    llama ddp-fp16-hook
+    llama ddp-fp16-hook wall
+    llama native wall
+    for model in transformer resnet50; do
+      for mode in ddp-int8-hook ddp-fp16-hook; do small "$model" "$mode"; done
+    done
     ;;
 esac
 

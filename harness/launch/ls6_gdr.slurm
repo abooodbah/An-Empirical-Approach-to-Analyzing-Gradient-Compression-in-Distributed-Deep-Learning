@@ -21,13 +21,26 @@ VENV="${RED_LS6_VENV:-/scratch/08447/abd2000/redctl-ls6/venv}"
 SEED="${PAPER_SEED:-2026010043}"
 CAMPAIGN_ID="${CAMPAIGN_ID:-redctl-ls6-2026-09-19}"
 NODES="${SLURM_JOB_NUM_NODES:?}"
-RPN=3
+# GPUs per node differ between LS6 partitions (3 on gpu-a100, 2 on the dev
+# nodes); detect on the batch host, which is an allocated GPU node.
+RPN="${RED_RPN:-$(nvidia-smi -L 2>/dev/null | wc -l)}"
+[[ "$RPN" =~ ^[1-9]$ ]] || { echo "FATAL: could not detect GPUs per node (got '$RPN')" >&2; exit 1; }
 WORLD=$((NODES * RPN))
+export RPN
 
-module load cuda/12.8
-module load python3/3.9.7
-source "$VENV/bin/activate"
+# Select a CUDA-capable environment on this node image: the cu121 wheel with
+# and without the cuda module, then the MOSAIC venv. The choice is recorded.
 export PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1
+cuda_ok() { "$1" -c 'import torch,sys; sys.exit(0 if torch.cuda.is_available() and torch.cuda.device_count()>0 else 1)' >/dev/null 2>&1; }
+ENV_CHOICE=""
+module load cuda/12.8 2>/dev/null; module load python3/3.9.7 2>/dev/null
+if cuda_ok "$VENV/bin/python"; then ENV_CHOICE="redctl-venv+cuda12.8-module"; fi
+if [[ -z "$ENV_CHOICE" ]]; then module unload cuda/12.8 2>/dev/null; if cuda_ok "$VENV/bin/python"; then ENV_CHOICE="redctl-venv-no-cuda-module"; fi; fi
+if [[ -z "$ENV_CHOICE" ]]; then module purge 2>/dev/null; unset LD_LIBRARY_PATH; if cuda_ok "$VENV/bin/python"; then ENV_CHOICE="redctl-venv-purged"; fi; fi
+if [[ -z "$ENV_CHOICE" ]]; then module load cuda/12.8 2>/dev/null; VENV=/scratch/08447/abd2000/mosaic-scale/venv; if cuda_ok "$VENV/bin/python"; then ENV_CHOICE="mosaic-venv+cuda12.8-module"; fi; fi
+[[ -n "$ENV_CHOICE" ]] || { echo "FATAL: no environment exposes CUDA on $(hostname)" >&2; exit 1; }
+source "$VENV/bin/activate"
+echo "env_choice=$ENV_CHOICE venv=$VENV"
 
 RUN_DIR="$RED_ROOT/runs/ls6-${RED_SET}-${NODES}n-${SLURM_JOB_ID}"
 mkdir -p "$RUN_DIR/results" "$RUN_DIR/logs" "$RUN_DIR/provenance"
@@ -58,7 +71,7 @@ run_condition() {
     --kill-on-bad-exit=1 --wait=0 \
     --output="$RUN_DIR/logs/${condition}.node%t.out" --error="$RUN_DIR/logs/${condition}.node%t.err" \
     bash -c 'exec env NCCL_DEBUG_FILE="$RUN_DIR/logs/nccl.${CONDITION_ID}.%h.%p.log" \
-      torchrun --nnodes="$SLURM_JOB_NUM_NODES" --nproc_per_node=3 --node_rank="$SLURM_PROCID" \
+      torchrun --nnodes="$SLURM_JOB_NUM_NODES" --nproc_per_node="$RPN" --node_rank="$SLURM_PROCID" \
       --rdzv_backend=c10d --rdzv_endpoint="${HEAD_NODE}:${MASTER_PORT}" --rdzv_id="${SLURM_JOB_ID}-${CONDITION_ID}" \
       --max_restarts=0 "$BENCHMARK" "$@"' _ "$@"
 }
