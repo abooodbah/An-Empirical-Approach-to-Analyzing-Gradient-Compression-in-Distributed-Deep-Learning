@@ -23,6 +23,14 @@ allocations.
   exchanged by all-reduce, a Top-k mode with standard local error
   feedback, and an uninstrumented wall-clock timing mode. The frozen
   file is unchanged; the generator asserts every edit.
+  `control_workload_benchmark_v3.py`, generated in turn from the
+  September control file by `make_control_harness_v3.py`, adds a
+  LLaMA-style decoder workload of about 1.05e9 parameters (18 layers,
+  d 2048, 16 heads, SwiGLU 5504, vocabulary 32000, sequence 2048) and two
+  production overlap modes: PyTorch's fp16 compression hook and its
+  per-tensor int8 hook, the latter ported with device-agnostic tensor
+  placement so the same algorithm runs on the XPU track. Each generator
+  leaves its source unchanged and asserts every edit.
 - `contract/` — the experiment contract and campaign protocol the July
   runs were validated against.
 - `raw/july/` — the July campaign archives: three independent H100 2x4
