@@ -60,6 +60,11 @@ export NCCL_DEBUG=INFO
 export NCCL_DEBUG_SUBSYS=INIT,NET,ENV
 export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
 export OMP_NUM_THREADS=8
+# On these A100-PCIe nodes the HCA sits across the CPU root complex from the
+# GPUs, and NCCL's default distance rule disables GPUDirect ("distance 6 > 4").
+# SYS permits GDR across the system; the level used is recorded.
+export NCCL_NET_GDR_LEVEL="${RED_GDR_LEVEL:-SYS}"
+echo "nccl_net_gdr_level=$NCCL_NET_GDR_LEVEL" >>"$RUN_DIR/provenance/settings.txt"
 
 step=0
 run_condition() {
@@ -123,11 +128,14 @@ case "$RED_SET" in
 esac
 
 # Transport verdict from the NCCL logs: GDRDMA on the NET/IB path or not.
+set +e
 {
+  echo "nccl_net_gdr_level=$NCCL_NET_GDR_LEVEL"
   echo "gdr_lines=$(grep -h 'GDRDMA' "$RUN_DIR"/logs/nccl.*.log 2>/dev/null | wc -l)"
   echo "netib_lines=$(grep -h 'via NET/IB' "$RUN_DIR"/logs/nccl.*.log 2>/dev/null | wc -l)"
-  grep -h 'via NET/IB' "$RUN_DIR"/logs/nccl.*.log 2>/dev/null | sort | uniq -c | sort -rn | head -5
-  grep -hE 'NET/IB : Using|GDR|GPU Direct RDMA' "$RUN_DIR"/logs/nccl.*.log 2>/dev/null | sort -u | head -8
+  grep -h 'via NET/IB' "$RUN_DIR"/logs/nccl.*.log 2>/dev/null | sed 's/^[^ ]* //' | sort | uniq -c | sort -rn | head -5
+  grep -hE 'NET/IB : Using|GDR|GPU Direct RDMA' "$RUN_DIR"/logs/nccl.*.log 2>/dev/null | sed 's/^[^ ]* //' | sort -u | head -8
+  echo "completed_conditions=$step"
 } >"$RUN_DIR/provenance/transport_verdict.txt"
 cat "$RUN_DIR/provenance/transport_verdict.txt"
-echo "completed_conditions=$step" >>"$RUN_DIR/provenance/transport_verdict.txt"
+exit 0
