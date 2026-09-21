@@ -1,0 +1,112 @@
+# -*- coding: utf-8 -*-
+"""E6 scorer. Applies the FROZEN rules (rules.py v1) to the held-out feature
+table and scores each manifest case against its paired uninstrumented
+measurements, exactly as E6_PROTOCOL.md specifies. Prints the per-case
+table first; counts second. Also scores the three ablations identically.
+
+Usage: python score_e6.py features_r4.json
+
+The manifest below binds each case to (original condition, intervention
+condition). Both must exist in wall mode in the same run directory family
+(same job) for the case to be scored; otherwise it is reported unscored.
+Nothing in this file adjusts a threshold.
+"""
+import io
+import json
+import sys
+
+from rules import (RULES_VERSION, diagnose, ablation_payload_only,
+                   ablation_calibration_only, ablation_timeline_only)
+
+# (case, model, p, original mode, intervention mode, tau_orig, barrier_orig, tau_int, barrier_int, family)
+MANIFEST = [
+    (1, "transformer", 24, "gpu-quant", "gpu-quant-reducible", 1, "every_iteration", 1, "every_iteration", "isolated shape"),
+    (2, "resnet50", 24, "gpu-quant", "gpu-quant-reducible", 1, "every_iteration", 1, "every_iteration", "isolated shape"),
+    (3, "transformer", 12, "gpu-quant-gathersum", "gpu-quant-reducible", 1, "every_iteration", 1, "every_iteration", "isolated shape"),
+    (4, "resnet50", 24, "gpu-quant-gathersum", "gpu-quant-reducible", 1, "every_iteration", 1, "every_iteration", "isolated shape"),
+    (5, "transformer", 12, "gpu-topk", "gpu-quant-reducible", 1, "every_iteration", 1, "every_iteration", "bundled placement"),
+    (6, "resnet50", 24, "gpu-topk", "gpu-quant-reducible", 1, "every_iteration", 1, "every_iteration", "bundled placement"),
+    (7, "transformer", 24, "ddp-int8-hook", "ddp-fp16-hook", 1, "every_iteration", 1, "every_iteration", "shape under overlap"),
+    (8, "resnet50", 12, "ddp-int8-hook", "ddp-fp16-hook", 1, "every_iteration", 1, "every_iteration", "shape under overlap"),
+    (9, "transformer", 12, "native", "native", 4, "every_iteration", 4, "none_on_local_iterations", "coordination"),
+    (10, "resnet50", 12, "native", "native", 4, "every_iteration", 4, "none_on_local_iterations", "coordination"),
+    (11, "transformer", 24, "fp16-native", None, 1, "every_iteration", None, None, "abstention expected"),
+    (12, "resnet50", 12, "cpu-quant", "gpu-quant-reducible", 1, "every_iteration", 1, "every_iteration", "bundled placement"),
+]
+# Note on cases 5, 6, 12: the manifest in E6_PROTOCOL.md names a TopKC-style
+# port as the intervention for Top-k; that port is not implemented in v4, so
+# the intervention actually applied is the reduce-shaped GPU int8 exchange
+# (a cheaper encoder AND a reduce-shaped collective: bundled, labeled so).
+
+
+def find(rows, model, p, mode, timing, tau, barrier):
+    for r in rows:
+        if (r["model"], r["p"], r["mode"], r["timing"], r["tau"], r["barrier"]) == (model, p, mode, timing, tau, barrier):
+            return r
+    return None
+
+
+def trend_for(rows, r):
+    """exchange-share growth from the smallest p measured for this mode/model (phase mode)."""
+    cands = [x for x in rows if x["model"] == r["model"] and x["mode"] == r["mode"] and x["timing"] == "phase"
+             and x["tau"] == r["tau"] and x["barrier"] == r["barrier"] and x["exchange_share"] is not None]
+    if not cands:
+        return None
+    base = min(cands, key=lambda x: x["p"])
+    if base["p"] == r["p"] or r["exchange_share"] is None:
+        return None
+    return r["exchange_share"] - base["exchange_share"]
+
+
+def outcome(verdict, expected, delta, intervention_named):
+    if verdict in ("none", "mixed", "insufficient"):
+        # abstention: correct if no tried intervention paid
+        if delta is None:
+            return "abstain (no intervention run)"
+        return "abstain-correct" if delta < 0.05 else "abstain-miss"
+    if delta is None:
+        return "unscored (no paired wall run)"
+    if delta <= -0.05:
+        return "harmful"
+    if delta >= max(0.05, 0.5 * expected):
+        return "correct"
+    return "null"
+
+
+def score(rows, method_name, method):
+    print(f"\n=== {method_name} ===")
+    print("case model       p  original             -> intervention        verdict       exp    T_orig^U  T_int^U   delta   outcome")
+    counts = {}
+    for (c, model, p, orig, intv, tau_o, bar_o, tau_i, bar_i, fam) in MANIFEST:
+        m1 = find(rows, model, p, orig, "phase", tau_o, bar_o)
+        m2 = find(rows, model, p, orig, "wall", tau_o, bar_o)
+        m3 = find(rows, model, p, intv, "wall", tau_i, bar_i) if intv else None
+        if m1 is None:
+            print(f"{c:4d} {model:11s} {p:2d} {orig:20s} -> {str(intv):20s} (M1 missing)")
+            counts["unscored"] = counts.get("unscored", 0) + 1
+            continue
+        if method is diagnose:
+            v, named, e = method(m1, trend_for(rows, m1))
+        else:
+            v, named, e = method(m1)
+        delta = None
+        if m2 is not None and m3 is not None and m2["step_ms"] > 0:
+            delta = (m2["step_ms"] - m3["step_ms"]) / m2["step_ms"]
+        oc = outcome(v, e, delta, named)
+        counts[oc] = counts.get(oc, 0) + 1
+        t2 = f"{m2['step_ms']:8.1f}" if m2 else "    -   "
+        t3 = f"{m3['step_ms']:8.1f}" if m3 else "    -   "
+        dl = f"{delta:+6.2f}" if delta is not None else "   -  "
+        print(f"{c:4d} {model:11s} {p:2d} {orig:20s} -> {str(intv):20s} {v:13s} {e:5.2f} {t2} {t3} {dl}   {oc}  [{fam}]")
+    print("counts:", json.dumps(counts))
+    return counts
+
+
+if __name__ == "__main__":
+    rows = json.load(io.open(sys.argv[1], encoding="utf-8"))
+    rows = [r for r in rows if r["tag"] == "R"]
+    print(f"rules {RULES_VERSION}; held-out rows: {len(rows)}")
+    score(rows, "full procedure (rules.py)", diagnose)
+    score(rows, "ablation A1 payload-only", ablation_payload_only)
+    score(rows, "ablation A2 calibration-only", ablation_calibration_only)
+    score(rows, "ablation A3 timeline-only", ablation_timeline_only)
