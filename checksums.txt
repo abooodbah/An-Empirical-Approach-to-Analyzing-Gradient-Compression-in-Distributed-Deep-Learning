@@ -3,11 +3,12 @@
 d5d3a705f3c12563b2e3d88be601b504ad270c32ca7f4a5483906fa40249e72e *./README.md
 8fbcac72a1279766034a207fd0e949c732cc0d668d54f8c3ca8763700db95304 *./contract/EXPERIMENT_CONTRACT.md
 a132c19ec0ed0597820fdc7e0bf54f0b94479e865400fa89d16b6843cecf061d *./contract/campaign_protocol.json
-f39c170c20341f820fddaa40ddbfabf368ce236874cf66aa64fde933638b8f1f *./diagnostic/E6_PROTOCOL.md
+dbd100385ad86f1bd31ec16923a043854c0f82b231003f626c927eab4b3cc7c5 *./diagnostic/E6_INTERIM_after_J3.txt
+e255aba8f64ed76996f868f35cdc2827f65212d6f64659416e2f8a75fa8ddcba *./diagnostic/E6_PROTOCOL.md
 e9d4de5f7c1ed107a7bccd66043f2a7f7973c1c1c0253a7e0cc11f4981441bfb *./diagnostic/RULES_FROZEN.sha256
 1f706f85bbb917402c36b6061dda543fcc87b8c73c2c4e685a6d9d48386bb914 *./diagnostic/features.py
 6b4a9471d8258c6b0e1ab195a7a06ae57e244aa52d9e728cbee4f204f5685853 *./diagnostic/features_dev.json
-baaf0f5fe8687e7e553db55c5dd56728b74dcd41562672d68bbc0ec71b39d233 *./diagnostic/features_r4.json
+1488722d5e412f83708f174a2a8dbc3dd015632de5f78c5fbea17516cfb9b9a6 *./diagnostic/features_r4.json
 71329c336cc3e9646dbb6e6dd4ce20e12305d666c663f2a3e4b35195b535a822 *./diagnostic/rules.py
 f3deeb76f641c5f17c7119dd8a7a388ec371bf51098f68a1b551a1c73269b2a3 *./diagnostic/score_e6.py
 3e8d3a3e2a4ebc3addee642222da4b345c7dcc6393911214cd0a6740b22e0be7 *./environment/versions.md
@@ -77,3 +78,4 @@ c2fc4dfb21a47232548e979beef9483354bd06e40613378fea18a4bbbb7fcc7e *./raw/july/h10
 a0279d3939729ee280d5ab863fa2b7bce937a6dbd7ed59f467171f97309c0d2d *./raw/july/h100-3328660.tar.gz.sha256
 de762c48c1743a201fbdcb0316d62f834ffc9d364fa7b084da35e9053452192e *./raw/july/pvc-3323561-evidence.tar.gz
 f5c4745e78b8c7c5d66e24f9585e393a507f39a56507ad63ed03a82698b42f50 *./raw/round4/ls6-j1-pilot-3459209-and-j2-3459786.tgz
+2be01d6bc30ac9a23886b99b670a1f7f0701963328718779c629c200becf734c *./raw/round4/ls6-j3-3459984.tgz

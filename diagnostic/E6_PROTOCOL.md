@@ -89,3 +89,36 @@ int16 native arm (NCCL has no int16 reduction): dropped. E2b THC
 saturating ring (non-associative, order-dependent): deferred; cited,
 not implemented. 1B workload on LS6 (40 GB A100s): not attempted; its
 Intel results stay labeled instrumented-only.
+
+## Interim record after J2 and J3 (2026-09-21, written before J4/J5 ran)
+
+Eight of twelve cases scorable. Frozen rules v1: 4 correct, 1 null, 4
+abstain-miss. Ablations on the same cases: payload-only 5 correct, 4
+abstain-miss; calibration-only 7 correct, 2 abstain-miss; timeline-only
+identical to the full procedure. Per-case table in
+E6_INTERIM_after_J3.txt.
+
+Reading, recorded now so it cannot be rewritten after J4/J5:
+
+1. Calibration-only (shape_ratio > 2 means "change the collective") is
+   the strongest predictor on these cases. Its two misses are the
+   overlapped hooks, whose exchange is not separable, so it abstains
+   there, same as the others.
+2. The full procedure's extra misses are its own T_TREND gate and its
+   mixed rule: case 1 (Transformer gather at 24 ranks) has exchange
+   share 0.87 AND codec share above threshold, and the 2:1 dominance
+   test returned mixed; case 6 (ResNet-50 Top-k at 24) has exchange
+   share below T_EXCH so the shape rule never fires although the
+   reduce-shaped intervention paid 16 percent.
+3. Every method abstains on the overlapped hooks (cases 7, 8), where the
+   intervention paid 39 to 65 percent. Phase attribution cannot see
+   inside an overlapped hook; this is a failure boundary of attribution
+   as such, not of one rule set.
+4. The reviewer's first-row scenario ("correct controls and useful
+   diagnostic evidence, but limited validation") is where this lands
+   unless J4/J5 change the count. The paper reports this as measured.
+   The rules are NOT revised; a v2 could be proposed for future work
+   with the calibration ratio promoted, but it would need a fresh
+   held-out set, which the budget does not contain.
+
+The rules file hash is unchanged: 71329c336cc3e964.

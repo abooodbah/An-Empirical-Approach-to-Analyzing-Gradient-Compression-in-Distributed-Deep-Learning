@@ -1,0 +1,65 @@
+rules v1-2026-09-21; held-out rows: 66
+
+=== full procedure (rules.py) ===
+case model       p  original             -> intervention        verdict       exp    T_orig^U  T_int^U   delta   outcome
+   1 transformer 24 gpu-quant            -> gpu-quant-reducible  mixed          0.00     50.0     14.6  +0.71   abstain-miss  [isolated shape]
+   2 resnet50    24 gpu-quant            -> gpu-quant-reducible  shape          0.34    121.1     49.3  +0.59   correct  [isolated shape]
+   3 transformer 12 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.20     27.5     13.5  +0.51   correct  [isolated shape]
+   4 resnet50    24 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.36    112.8     49.3  +0.56   correct  [isolated shape]
+   5 transformer 12 gpu-topk             -> gpu-quant-reducible  placement      0.52     15.2     13.5  +0.11   null  [bundled placement]
+   6 resnet50    24 gpu-topk             -> gpu-quant-reducible  none           0.00     58.7     49.3  +0.16   abstain-miss  [bundled placement]
+   7 transformer 24 ddp-int8-hook        -> ddp-fp16-hook        none           0.00     44.2     15.3  +0.65   abstain-miss  [shape under overlap]
+   8 resnet50    12 ddp-int8-hook        -> ddp-fp16-hook        none           0.00     89.4     54.3  +0.39   abstain-miss  [shape under overlap]
+   9 transformer 12 native               -> native               (M1 missing)
+  10 resnet50    12 native               -> native               (M1 missing)
+  11 transformer 24 fp16-native          -> None                 none           0.00     14.7     -       -     abstain (no intervention run)  [abstention expected]
+  12 resnet50    12 cpu-quant            -> gpu-quant-reducible  placement      0.69    708.0     48.5  +0.93   correct  [bundled placement]
+counts: {"abstain-miss": 4, "correct": 4, "null": 1, "unscored": 2, "abstain (no intervention run)": 1}
+
+=== ablation A1 payload-only ===
+case model       p  original             -> intervention        verdict       exp    T_orig^U  T_int^U   delta   outcome
+   1 transformer 24 gpu-quant            -> gpu-quant-reducible  shape          0.00     50.0     14.6  +0.71   correct  [isolated shape]
+   2 resnet50    24 gpu-quant            -> gpu-quant-reducible  shape          0.00    121.1     49.3  +0.59   correct  [isolated shape]
+   3 transformer 12 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.00     27.5     13.5  +0.51   correct  [isolated shape]
+   4 resnet50    24 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.00    112.8     49.3  +0.56   correct  [isolated shape]
+   5 transformer 12 gpu-topk             -> gpu-quant-reducible  none           0.00     15.2     13.5  +0.11   abstain-miss  [bundled placement]
+   6 resnet50    24 gpu-topk             -> gpu-quant-reducible  none           0.00     58.7     49.3  +0.16   abstain-miss  [bundled placement]
+   7 transformer 24 ddp-int8-hook        -> ddp-fp16-hook        none           0.00     44.2     15.3  +0.65   abstain-miss  [shape under overlap]
+   8 resnet50    12 ddp-int8-hook        -> ddp-fp16-hook        none           0.00     89.4     54.3  +0.39   abstain-miss  [shape under overlap]
+   9 transformer 12 native               -> native               (M1 missing)
+  10 resnet50    12 native               -> native               (M1 missing)
+  11 transformer 24 fp16-native          -> None                 none           0.00     14.7     -       -     abstain (no intervention run)  [abstention expected]
+  12 resnet50    12 cpu-quant            -> gpu-quant-reducible  shape          0.00    708.0     48.5  +0.93   correct  [bundled placement]
+counts: {"correct": 5, "abstain-miss": 4, "unscored": 2, "abstain (no intervention run)": 1}
+
+=== ablation A2 calibration-only ===
+case model       p  original             -> intervention        verdict       exp    T_orig^U  T_int^U   delta   outcome
+   1 transformer 24 gpu-quant            -> gpu-quant-reducible  shape          0.00     50.0     14.6  +0.71   correct  [isolated shape]
+   2 resnet50    24 gpu-quant            -> gpu-quant-reducible  shape          0.00    121.1     49.3  +0.59   correct  [isolated shape]
+   3 transformer 12 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.00     27.5     13.5  +0.51   correct  [isolated shape]
+   4 resnet50    24 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.00    112.8     49.3  +0.56   correct  [isolated shape]
+   5 transformer 12 gpu-topk             -> gpu-quant-reducible  shape          0.00     15.2     13.5  +0.11   correct  [bundled placement]
+   6 resnet50    24 gpu-topk             -> gpu-quant-reducible  shape          0.00     58.7     49.3  +0.16   correct  [bundled placement]
+   7 transformer 24 ddp-int8-hook        -> ddp-fp16-hook        insufficient   0.00     44.2     15.3  +0.65   abstain-miss  [shape under overlap]
+   8 resnet50    12 ddp-int8-hook        -> ddp-fp16-hook        insufficient   0.00     89.4     54.3  +0.39   abstain-miss  [shape under overlap]
+   9 transformer 12 native               -> native               (M1 missing)
+  10 resnet50    12 native               -> native               (M1 missing)
+  11 transformer 24 fp16-native          -> None                 shape          0.00     14.7     -       -     unscored (no paired wall run)  [abstention expected]
+  12 resnet50    12 cpu-quant            -> gpu-quant-reducible  shape          0.00    708.0     48.5  +0.93   correct  [bundled placement]
+counts: {"correct": 7, "abstain-miss": 2, "unscored": 2, "unscored (no paired wall run)": 1}
+
+=== ablation A3 timeline-only ===
+case model       p  original             -> intervention        verdict       exp    T_orig^U  T_int^U   delta   outcome
+   1 transformer 24 gpu-quant            -> gpu-quant-reducible  mixed          0.00     50.0     14.6  +0.71   abstain-miss  [isolated shape]
+   2 resnet50    24 gpu-quant            -> gpu-quant-reducible  shape          0.51    121.1     49.3  +0.59   correct  [isolated shape]
+   3 transformer 12 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.59     27.5     13.5  +0.51   correct  [isolated shape]
+   4 resnet50    24 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.55    112.8     49.3  +0.56   correct  [isolated shape]
+   5 transformer 12 gpu-topk             -> gpu-quant-reducible  placement      0.52     15.2     13.5  +0.11   null  [bundled placement]
+   6 resnet50    24 gpu-topk             -> gpu-quant-reducible  none           0.00     58.7     49.3  +0.16   abstain-miss  [bundled placement]
+   7 transformer 24 ddp-int8-hook        -> ddp-fp16-hook        none           0.00     44.2     15.3  +0.65   abstain-miss  [shape under overlap]
+   8 resnet50    12 ddp-int8-hook        -> ddp-fp16-hook        none           0.00     89.4     54.3  +0.39   abstain-miss  [shape under overlap]
+   9 transformer 12 native               -> native               (M1 missing)
+  10 resnet50    12 native               -> native               (M1 missing)
+  11 transformer 24 fp16-native          -> None                 none           0.00     14.7     -       -     abstain (no intervention run)  [abstention expected]
+  12 resnet50    12 cpu-quant            -> gpu-quant-reducible  placement      0.69    708.0     48.5  +0.93   correct  [bundled placement]
+counts: {"abstain-miss": 4, "correct": 4, "null": 1, "unscored": 2, "abstain (no intervention run)": 1}
