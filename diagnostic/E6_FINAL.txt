@@ -2,12 +2,12 @@ rules v1-2026-09-21; held-out rows: 92
 
 === full procedure (rules.py) ===
 case model       p  original             -> intervention        verdict       exp    T_orig^U  T_int^U   delta   outcome
-   1 transformer 24 gpu-quant            -> gpu-quant-reducible  mixed          0.00     50.0     14.6  +0.71   abstain-miss  [isolated shape] alloc=3459984
-   2 resnet50    24 gpu-quant            -> gpu-quant-reducible  shape          0.34    121.1     49.3  +0.59   correct  [isolated shape] alloc=3459984
+   1 transformer 24 gpu-quant            -> gpu-quant-reducible  mixed          0.00     50.0     14.6  +0.71   abstain-miss  [shape, rank-local substitution] alloc=3459984
+   2 resnet50    24 gpu-quant            -> gpu-quant-reducible  shape          0.34    121.1     49.3  +0.59   correct  [shape, rank-local substitution] alloc=3459984
    3 transformer 12 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.20     27.5     13.5  +0.51   correct  [isolated shape] alloc=3459786
    3 transformer 12 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.20     83.4     17.8  +0.79   correct  [isolated shape] alloc=3460182
    4 resnet50    24 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.36    112.8     49.3  +0.56   correct  [isolated shape] alloc=3459984
-   5 transformer 12 gpu-topk             -> gpu-quant-reducible  placement      0.52     15.2     13.5  +0.11   null  [bundled placement] alloc=3459786
+   5 transformer 12 gpu-topk             -> gpu-quant-reducible  placement      0.52     15.2     13.5  +0.11   short  [bundled placement] alloc=3459786
    6 resnet50    24 gpu-topk             -> gpu-quant-reducible  none           0.00     58.7     49.3  +0.16   abstain-miss  [bundled placement] alloc=3459984
    7 transformer 24 ddp-int8-hook        -> ddp-fp16-hook        none           0.00     44.2     15.3  +0.65   abstain-miss  [shape under overlap] alloc=3459984
    8 resnet50    12 ddp-int8-hook        -> ddp-fp16-hook        none           0.00     89.4     54.3  +0.39   abstain-miss  [shape under overlap] alloc=3459786
@@ -17,12 +17,12 @@ case model       p  original             -> intervention        verdict       ex
   11 transformer 24 fp16-native          -> None                 none           0.00     14.7     -       -     abstain (no intervention run)  [abstention expected] alloc=3459984
   12 resnet50    12 cpu-quant            -> gpu-quant-reducible  placement      0.69    708.0     48.5  +0.93   correct  [bundled placement] alloc=3459786
   12 resnet50    12 cpu-quant            -> gpu-quant-reducible  placement      0.69   1068.5     60.7  +0.94   correct  [bundled placement] alloc=3460182
-counts (cases split equally across their allocations): {"abstain-miss": 4.0, "correct": 4.0, "null": 1.0, "abstain-correct": 2.0, "abstain (no intervention run)": 1.0}
+counts (cases split equally across their allocations): {"abstain-miss": 4.0, "correct": 4.0, "short": 1.0, "abstain-correct": 2.0, "abstain (no intervention run)": 1.0}
 
 === ablation A1 payload-only ===
 case model       p  original             -> intervention        verdict       exp    T_orig^U  T_int^U   delta   outcome
-   1 transformer 24 gpu-quant            -> gpu-quant-reducible  shape          0.00     50.0     14.6  +0.71   correct  [isolated shape] alloc=3459984
-   2 resnet50    24 gpu-quant            -> gpu-quant-reducible  shape          0.00    121.1     49.3  +0.59   correct  [isolated shape] alloc=3459984
+   1 transformer 24 gpu-quant            -> gpu-quant-reducible  shape          0.00     50.0     14.6  +0.71   correct  [shape, rank-local substitution] alloc=3459984
+   2 resnet50    24 gpu-quant            -> gpu-quant-reducible  shape          0.00    121.1     49.3  +0.59   correct  [shape, rank-local substitution] alloc=3459984
    3 transformer 12 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.00     27.5     13.5  +0.51   correct  [isolated shape] alloc=3459786
    3 transformer 12 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.00     83.4     17.8  +0.79   correct  [isolated shape] alloc=3460182
    4 resnet50    24 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.00    112.8     49.3  +0.56   correct  [isolated shape] alloc=3459984
@@ -40,8 +40,8 @@ counts (cases split equally across their allocations): {"correct": 5.0, "abstain
 
 === ablation A2 calibration-only ===
 case model       p  original             -> intervention        verdict       exp    T_orig^U  T_int^U   delta   outcome
-   1 transformer 24 gpu-quant            -> gpu-quant-reducible  shape          0.00     50.0     14.6  +0.71   correct  [isolated shape] alloc=3459984
-   2 resnet50    24 gpu-quant            -> gpu-quant-reducible  shape          0.00    121.1     49.3  +0.59   correct  [isolated shape] alloc=3459984
+   1 transformer 24 gpu-quant            -> gpu-quant-reducible  shape          0.00     50.0     14.6  +0.71   correct  [shape, rank-local substitution] alloc=3459984
+   2 resnet50    24 gpu-quant            -> gpu-quant-reducible  shape          0.00    121.1     49.3  +0.59   correct  [shape, rank-local substitution] alloc=3459984
    3 transformer 12 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.00     27.5     13.5  +0.51   correct  [isolated shape] alloc=3459786
    3 transformer 12 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.00     83.4     17.8  +0.79   correct  [isolated shape] alloc=3460182
    4 resnet50    24 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.00    112.8     49.3  +0.56   correct  [isolated shape] alloc=3459984
@@ -59,12 +59,12 @@ counts (cases split equally across their allocations): {"correct": 7.0, "abstain
 
 === ablation A3 timeline-only ===
 case model       p  original             -> intervention        verdict       exp    T_orig^U  T_int^U   delta   outcome
-   1 transformer 24 gpu-quant            -> gpu-quant-reducible  mixed          0.00     50.0     14.6  +0.71   abstain-miss  [isolated shape] alloc=3459984
-   2 resnet50    24 gpu-quant            -> gpu-quant-reducible  shape          0.51    121.1     49.3  +0.59   correct  [isolated shape] alloc=3459984
+   1 transformer 24 gpu-quant            -> gpu-quant-reducible  mixed          0.00     50.0     14.6  +0.71   abstain-miss  [shape, rank-local substitution] alloc=3459984
+   2 resnet50    24 gpu-quant            -> gpu-quant-reducible  shape          0.51    121.1     49.3  +0.59   correct  [shape, rank-local substitution] alloc=3459984
    3 transformer 12 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.59     27.5     13.5  +0.51   correct  [isolated shape] alloc=3459786
    3 transformer 12 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.59     83.4     17.8  +0.79   correct  [isolated shape] alloc=3460182
    4 resnet50    24 gpu-quant-gathersum  -> gpu-quant-reducible  shape          0.55    112.8     49.3  +0.56   correct  [isolated shape] alloc=3459984
-   5 transformer 12 gpu-topk             -> gpu-quant-reducible  placement      0.52     15.2     13.5  +0.11   null  [bundled placement] alloc=3459786
+   5 transformer 12 gpu-topk             -> gpu-quant-reducible  placement      0.52     15.2     13.5  +0.11   short  [bundled placement] alloc=3459786
    6 resnet50    24 gpu-topk             -> gpu-quant-reducible  none           0.00     58.7     49.3  +0.16   abstain-miss  [bundled placement] alloc=3459984
    7 transformer 24 ddp-int8-hook        -> ddp-fp16-hook        none           0.00     44.2     15.3  +0.65   abstain-miss  [shape under overlap] alloc=3459984
    8 resnet50    12 ddp-int8-hook        -> ddp-fp16-hook        none           0.00     89.4     54.3  +0.39   abstain-miss  [shape under overlap] alloc=3459786
@@ -74,4 +74,4 @@ case model       p  original             -> intervention        verdict       ex
   11 transformer 24 fp16-native          -> None                 none           0.00     14.7     -       -     abstain (no intervention run)  [abstention expected] alloc=3459984
   12 resnet50    12 cpu-quant            -> gpu-quant-reducible  placement      0.69    708.0     48.5  +0.93   correct  [bundled placement] alloc=3459786
   12 resnet50    12 cpu-quant            -> gpu-quant-reducible  placement      0.69   1068.5     60.7  +0.94   correct  [bundled placement] alloc=3460182
-counts (cases split equally across their allocations): {"abstain-miss": 4.0, "correct": 4.0, "null": 2.0, "abstain-correct": 1.0, "abstain (no intervention run)": 1.0}
+counts (cases split equally across their allocations): {"abstain-miss": 4.0, "correct": 4.0, "short": 1.0, "null": 1.0, "abstain-correct": 1.0, "abstain (no intervention run)": 1.0}

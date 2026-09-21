@@ -122,3 +122,29 @@ Reading, recorded now so it cannot be rewritten after J4/J5:
    held-out set, which the budget does not contain.
 
 The rules file hash is unchanged: 71329c336cc3e964.
+
+## Reporting addendum (2026-09-21, after the final scoring)
+
+Two changes to labels, none to the criterion or the rules (hash still
+71329c336cc3e964).
+
+1. The scorer's fall-through branch labeled every non-correct,
+   non-harmful delta "null", which contradicts the definition above
+   (null is |delta| < 0.05). A delta of at least 0.05 that falls short
+   of e/2 is now reported as "short": the named intervention paid, by
+   less than half the predicted magnitude. One case moves: case 5
+   (Transformer Top-k at 12, delta +0.11 against e = 0.52) is short,
+   not null. Its A2 outcome stays "correct" only because A2 predicts no
+   magnitude (e = 0), so any delta of 0.05 or more satisfies its rule.
+2. Cases 1 and 2 (rank-local gather int8 to the shared-scale all-reduce)
+   are relabeled "shape, rank-local substitution". The rank-local
+   implementation encodes with a per-rank scale and dequantizes p
+   payloads; the all-reduce arm encodes with one shared scale and
+   dequantizes once. The substitution therefore changes scale sharing
+   and decode count with the collective. Only cases 3 and 4 (arm B
+   gathersum against arm A, identical encoding, arms verified bit-equal)
+   isolate the collective. Cases 5, 6, and 12 remain "bundled placement".
+
+Final counts, full rules: 4 correct, 1 short, 0 null, 0 harmful, 4
+abstain-miss, 2 abstain-correct, 1 abstention with no intervention
+(case 11). Per-case table in E6_FINAL.txt.

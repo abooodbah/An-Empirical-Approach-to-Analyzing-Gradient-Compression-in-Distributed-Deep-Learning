@@ -20,8 +20,8 @@ from rules import (RULES_VERSION, diagnose, ablation_payload_only,
 
 # (case, model, p, original mode, intervention mode, tau_orig, barrier_orig, tau_int, barrier_int, family)
 MANIFEST = [
-    (1, "transformer", 24, "gpu-quant", "gpu-quant-reducible", 1, "every_iteration", 1, "every_iteration", "isolated shape"),
-    (2, "resnet50", 24, "gpu-quant", "gpu-quant-reducible", 1, "every_iteration", 1, "every_iteration", "isolated shape"),
+    (1, "transformer", 24, "gpu-quant", "gpu-quant-reducible", 1, "every_iteration", 1, "every_iteration", "shape, rank-local substitution"),
+    (2, "resnet50", 24, "gpu-quant", "gpu-quant-reducible", 1, "every_iteration", 1, "every_iteration", "shape, rank-local substitution"),
     (3, "transformer", 12, "gpu-quant-gathersum", "gpu-quant-reducible", 1, "every_iteration", 1, "every_iteration", "isolated shape"),
     (4, "resnet50", 24, "gpu-quant-gathersum", "gpu-quant-reducible", 1, "every_iteration", 1, "every_iteration", "isolated shape"),
     (5, "transformer", 12, "gpu-topk", "gpu-quant-reducible", 1, "every_iteration", 1, "every_iteration", "bundled placement"),
@@ -37,6 +37,12 @@ MANIFEST = [
 # port as the intervention for Top-k; that port is not implemented in v4, so
 # the intervention actually applied is the reduce-shaped GPU int8 exchange
 # (a cheaper encoder AND a reduce-shaped collective: bundled, labeled so).
+# Note on cases 1, 2: gpu-quant encodes with a per-rank scale and dequantizes
+# p payloads; gpu-quant-reducible encodes with one shared scale and
+# dequantizes once. The substitution therefore changes the scale sharing and
+# the decode count together with the collective; only cases 3 and 4
+# (gpu-quant-gathersum, identical encoding, arms verified bit-equal) isolate
+# the collective. The family label records this; scoring is unchanged.
 
 
 def find(rows, model, p, mode, timing, tau, barrier, alloc=None):
@@ -81,6 +87,10 @@ def outcome(verdict, expected, delta, intervention_named):
         return "harmful"
     if delta >= max(0.05, 0.5 * expected):
         return "correct"
+    if delta >= 0.05:
+        # the named intervention paid, but by less than half the predicted
+        # effect: a magnitude shortfall, distinct from a null effect
+        return "short"
     return "null"
 
 
