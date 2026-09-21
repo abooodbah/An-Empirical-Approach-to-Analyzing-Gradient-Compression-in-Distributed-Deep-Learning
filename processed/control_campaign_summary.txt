@@ -69,16 +69,16 @@ C transformer gpu-topk-localef     32 phase    300.44    81.42 p50=   298.33  32
 C transformer native               32 phase    108.97    91.92 p50=   106.95  32 PASS
 C transformer native               32 wall     102.30      nan p50=   101.05  32 PASS
 C transformer powersgd             32 phase     87.19    77.95 p50=    20.09  32 PASS
-L resnet50    ddp-fp16-hook        12 phase     60.14      nan p50=    60.51  12 PASS
-L resnet50    ddp-int8-hook        12 phase    135.04      nan p50=   134.51  12 PASS
-L resnet50    gpu-quant            12 phase    162.74   109.44 p50=   160.66  12 PASS
-L resnet50    gpu-quant-reducible  12 phase     60.04    13.49 p50=    59.36  12 PASS
-L resnet50    native               12 phase     89.87    42.94 p50=    87.08  12 PASS
-L transformer ddp-fp16-hook        12 phase     17.67      nan p50=    16.88  12 PASS
-L transformer ddp-int8-hook        12 phase     51.40      nan p50=    51.31  12 PASS
-L transformer gpu-quant            12 phase    101.68    66.06 p50=    81.34  12 PASS
-L transformer gpu-quant-reducible  12 phase     15.90     6.04 p50=    14.21  12 PASS
-L transformer native               12 phase     29.25    19.00 p50=    27.70  12 PASS
+L resnet50    ddp-fp16-hook        12 phase     78.11      nan p50=    78.03  12 PASS
+L resnet50    ddp-int8-hook        12 phase    168.94      nan p50=   168.71  12 PASS
+L resnet50    gpu-quant            12 phase    191.41   123.44 p50=   189.81  12 PASS
+L resnet50    gpu-quant-reducible  12 phase     66.24    16.18 p50=    65.48  12 PASS
+L resnet50    native               12 phase    118.10    57.37 p50=   116.41  12 PASS
+L transformer ddp-fp16-hook        12 phase     25.72      nan p50=    25.76  12 PASS
+L transformer ddp-int8-hook        12 phase     65.31      nan p50=    64.62  12 PASS
+L transformer gpu-quant            12 phase    107.33    68.10 p50=    86.79  12 PASS
+L transformer gpu-quant-reducible  12 phase     19.18     7.35 p50=    18.07  12 PASS
+L transformer native               12 phase     42.66    24.60 p50=    41.89  12 PASS
 V llama1b     ddp-fp16-hook         8 phase   4384.36      nan p50=  4386.07   8 PASS
 V llama1b     ddp-fp16-hook         8 wall    4348.07      nan p50=  4347.42   8 PASS
 V llama1b     ddp-fp16-hook        16 phase   5556.83      nan p50=  5559.39  16 PASS
@@ -216,5 +216,5 @@ V transformer ws32 wall : ddp-int8-hook=601.6  ddp-fp16-hook=63.9
 V resnet50    ws 8 phase: ddp-int8-hook=891.3  ddp-fp16-hook=882.1
 V resnet50    ws 8 wall : ddp-int8-hook=888.9  ddp-fp16-hook=879.0
 V resnet50    ws32 wall : ddp-int8-hook=2024.3  ddp-fp16-hook=965.9
-L transformer ws12 phase: native=29.2  ddp-int8-hook=51.4  ddp-fp16-hook=17.7  gpu-quant=101.7  gpu-quant-reducible=15.9
-L resnet50    ws12 phase: native=89.9  ddp-int8-hook=135.0  ddp-fp16-hook=60.1  gpu-quant=162.7  gpu-quant-reducible=60.0
+L transformer ws12 phase: native=42.7  ddp-int8-hook=65.3  ddp-fp16-hook=25.7  gpu-quant=107.3  gpu-quant-reducible=19.2
+L resnet50    ws12 phase: native=118.1  ddp-int8-hook=168.9  ddp-fp16-hook=78.1  gpu-quant=191.4  gpu-quant-reducible=66.2
