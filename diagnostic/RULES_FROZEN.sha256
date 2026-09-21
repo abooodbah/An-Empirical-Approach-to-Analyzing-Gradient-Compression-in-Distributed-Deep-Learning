@@ -1,0 +1,5 @@
+71329c336cc3e9646dbb6e6dd4ce20e12305d666c663f2a3e4b35195b535a822 *rules.py
+a3eef19d7bc6a2acc2a913104309b1d2664bbd637475e9a5c5eaf509dcf4d18f *features.py
+frozen_utc=2026-09-21T09:35:42Z
+rules_version=v1-2026-09-21
+development_tags=A,B,C,V (Stampede3); held_out_tags=L (Lonestar6) and all E1-E6 runs
