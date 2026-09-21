@@ -1,9 +1,10 @@
-# Beyond Compression Ratio: measurement artifact
+# Measurement artifact: An Empirical Systems Analysis of Gradient Compression in Distributed Deep Learning
 
 This repository holds the measurement harness, raw per-rank records,
-launch scripts, and processing data behind the paper "Beyond
-Compression Ratio: Collective Shape, Execution Placement, and Scale in
-Distributed Training." Nothing here is post-processed beyond the CSV
+launch scripts, and processing data behind the paper "An Empirical
+Systems Analysis of Gradient Compression in Distributed Deep Learning"
+(earlier drafts carried the working title "Beyond Compression Ratio";
+the repository name keeps it). Nothing here is post-processed beyond the CSV
 aggregations in `processed/`; every number in the paper can be traced
 to a per-rank record in `raw/`.
 
