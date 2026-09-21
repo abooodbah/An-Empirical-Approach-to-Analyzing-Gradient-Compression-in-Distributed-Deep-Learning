@@ -22,7 +22,7 @@ source "$SCRIPT_DIR/common.sh"
 require_slurm_job
 
 RED_ROOT="${RED_ROOT:?set RED_ROOT to the staged campaign root}"
-BENCHMARK="$RED_ROOT/control_workload_benchmark_v3.py"
+BENCHMARK="$RED_ROOT/${RED_BENCHMARK:-control_workload_benchmark_v3.py}"
 PROBE="$SCRIPT_DIR/pvc_ccl_exact_probe.py"
 RED_SET="${RED_SET:?set RED_SET to v3smoke, v3n1, v3n2, or v3n4}"
 RED_TAG="${RED_TAG:-V}"
@@ -33,7 +33,7 @@ PVC_PYTHON="$PVC_VENV/bin/python"
 CAMPAIGN_ID="${CAMPAIGN_ID:-redctl-v3-2026-09-19}"
 PAPER_SEED="${PAPER_SEED:-2026010043}"
 
-case "$RED_SET" in v3smoke|v3n1|v3n2|v3n4|r8|r16|r16b|r32) ;; *) launch_die "RED_SET must be v3smoke, v3n1, v3n2, v3n4, r8, r16, r16b, or r32" ;; esac
+case "$RED_SET" in v3smoke|v3n1|v3n2|v3n4|r8|r16|r16b|r32|psgd1b) ;; *) launch_die "RED_SET must be v3smoke, v3n1, v3n2, v3n4, r8, r16, r16b, r32, or psgd1b" ;; esac
 [[ -f "$BENCHMARK" ]] || launch_die "missing benchmark: $BENCHMARK"
 [[ -f "$PROBE" ]] || launch_die "missing probe: $PROBE"
 [[ -x "$PVC_PYTHON" ]] || launch_die "PVC python is not executable: $PVC_PYTHON"
@@ -234,6 +234,13 @@ case "$RED_SET" in
   r16b)
     llama ddp-fp16-hook
     llama ddp-fp16-hook wall
+    ;;
+  psgd1b)
+    # rerun of the one 1B condition that aborted in oneCCL (zero-length
+    # all-reduce inside the official PowerSGD hook); v4 harness with the
+    # empty-all-reduce guard, phase and wall.
+    llama powersgd
+    llama powersgd wall
     ;;
   r32)
     llama ddp-fp16-hook

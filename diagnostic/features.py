@@ -80,7 +80,8 @@ def load(root, exclude_tags=()):
             timing = row.get("timing_mode", "phase")
             tau = int(row.get("sync_every", 1))
             barrier = row.get("tau_barrier", "every_iteration")
-            key = (tag, row["model"], row["comm_mode"], int(row["world_size"]), timing, tau, barrier)
+            alloc = os.path.basename(run_dir).rsplit("-", 1)[-1]
+            key = (tag, row["model"], row["comm_mode"], int(row["world_size"]), timing, tau, barrier, alloc)
             d = acc[key]
             for f in ("forward_s", "barrier_wait_s", "backward_compute_s", "serialize_s",
                       "network_s", "deserialize_s", "optimizer_step_s", "observed_step_s",
@@ -100,7 +101,7 @@ def features(acc):
     out = []
     for key in sorted(acc):
         d = acc[key]
-        tag, model, mode, ws, timing, tau, barrier = key
+        tag, model, mode, ws, timing, tau, barrier, alloc = key
         by_iter = defaultdict(list)
         for r, i, obs in d["_iters"]:
             by_iter[i].append(obs)
@@ -113,7 +114,7 @@ def features(acc):
         separable = bool(d["network_s"]) and not estimate
         row = {
             "tag": tag, "model": model, "mode": mode, "p": ws,
-            "timing": timing, "tau": tau, "barrier": barrier,
+            "timing": timing, "tau": tau, "barrier": barrier, "alloc": alloc,
             "step_ms": step * 1e3,
             "exchange_share": (net / step) if separable else None,
             "codec_share": codec / step,

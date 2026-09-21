@@ -44,7 +44,7 @@ def rep(old, new, count=1):
 
 
 rep('SCHEMA_VERSION = "tacc-paper-workloads/v2.2-control"',
-    'SCHEMA_VERSION = "tacc-paper-workloads/v2.3-control"')
+    'SCHEMA_VERSION = "tacc-paper-workloads/v2.4-control"')
 
 rep('CONTROL_MODES = ("gpu-quant-reducible", "gpu-topk-localef")',
     'CONTROL_MODES = ("gpu-quant-reducible", "gpu-topk-localef", "gpu-quant-gathersum", "fp16-native")')
@@ -175,6 +175,66 @@ rep('                "timing_mode": args.timing_mode,\n                "sync_eve
     '                "verify_equivalence": args.verify_equivalence,\n'
     '                "equivalence_ok": HOOK_STATE.get("equivalence_ok") if args.verify_equivalence else None,\n'
     '                "sync_every": args.sync_every,\n                "local_batch_size": args.batch_size,')
+
+# --- PowerSGD on oneCCL: guard the zero-length all-reduce ------------------
+# When every tensor in a bucket is compressible (large-matrix workloads), the
+# official hook all-reduces an EMPTY tensor for the "uncompressed" group
+# (powerSGD_hook.py: torch.tensor([]) then dist.all_reduce). NCCL accepts a
+# zero-element collective; oneCCL 1.13 aborts in its worker thread. The guard
+# below is installed only for the powersgd mode and returns a completed work
+# handle for zero-element inputs; every non-empty call passes through
+# unchanged, so the algorithm is identical. Recorded in provenance.
+rep('        ddp_model.register_comm_hook(state, hook)\n'
+    '        details.update({"hook": "official_pytorch_powersgd", **state_kwargs})\n',
+    '        _install_empty_allreduce_guard(module)\n'
+    '        ddp_model.register_comm_hook(state, hook)\n'
+    '        details.update({"hook": "official_pytorch_powersgd", **state_kwargs,\n'
+    '                        "empty_allreduce_guard": HOOK_STATE.get("empty_allreduce_guard", "off")})\n')
+
+rep('def configure_model_for_mode(',
+    'class _CompletedWork:\n'
+    '    """Minimal stand-in for a finished ProcessGroup work handle."""\n'
+    '\n'
+    '    def __init__(self, tensor: torch.Tensor) -> None:\n'
+    '        self._fut = torch.futures.Future()\n'
+    '        self._fut.set_result([tensor])\n'
+    '\n'
+    '    def wait(self, *_args: Any, **_kwargs: Any) -> bool:\n'
+    '        return True\n'
+    '\n'
+    '    def is_completed(self) -> bool:\n'
+    '        return True\n'
+    '\n'
+    '    def get_future(self) -> Any:\n'
+    '        return self._fut\n'
+    '\n'
+    '\n'
+    'def _install_empty_allreduce_guard(hook_module: Any) -> None:\n'
+    '    """Route the hook module\'s dist.all_reduce through a guard that skips\n'
+    '    zero-element tensors. Installed once per process for the powersgd mode."""\n'
+    '    if HOOK_STATE.get("empty_allreduce_guard") == "on":\n'
+    '        return\n'
+    '    real_all_reduce = hook_module.dist.all_reduce\n'
+    '\n'
+    '    def guarded_all_reduce(tensor: torch.Tensor, *args: Any, **kwargs: Any) -> Any:\n'
+    '        if tensor.numel() == 0:\n'
+    '            HOOK_STATE["empty_allreduce_skipped"] = HOOK_STATE.get("empty_allreduce_skipped", 0) + 1\n'
+    '            if kwargs.get("async_op"):\n'
+    '                return _CompletedWork(tensor)\n'
+    '            return None\n'
+    '        return real_all_reduce(tensor, *args, **kwargs)\n'
+    '\n'
+    '    class _DistProxy:\n'
+    '        def __getattr__(self, name: str) -> Any:\n'
+    '            if name == "all_reduce":\n'
+    '                return guarded_all_reduce\n'
+    '            return getattr(dist, name)\n'
+    '\n'
+    '    hook_module.dist = _DistProxy()\n'
+    '    HOOK_STATE["empty_allreduce_guard"] = "on"\n'
+    '\n'
+    '\n'
+    'def configure_model_for_mode(')
 
 rep('"""Control-campaign variant v3 of the frozen July harness (2026-09-19).',
     '"""Control-campaign variant v4 of the frozen July harness (2026-09-21).\n'

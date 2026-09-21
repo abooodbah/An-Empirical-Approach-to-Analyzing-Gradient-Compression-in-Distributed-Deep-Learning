@@ -173,6 +173,26 @@ case "$RED_SET" in
       done
     done
     ;;
+  j5)
+    # E6 pairing job: decisive isolated-shape pairs (cases 3, 12) and the
+    # hook pair (case 8) re-run as M2/M3 inside ONE allocation, plus the
+    # tau=1 wall reference for cases 9 and 10, so every scored delta is a
+    # same-allocation pair.
+    run_condition "paper-resnet50-native" --profile paper --model resnet50 --comm-mode native --sync-every 1 \
+      --batch-size 32 --iters 40 --warmup-iters 10 --run-id "$cal_ref" "${common[@]}"
+    for model in transformer resnet50; do
+      wall "$model" native
+      wall "$model" gpu-quant-reducible
+      wall "$model" gpu-quant-gathersum
+      wall "$model" ddp-int8-hook
+      wall "$model" ddp-fp16-hook
+    done
+    wall resnet50 cpu-quant
+    tau transformer 4 barrier wall
+    tau transformer 4 nobarrier wall
+    tau resnet50 4 barrier wall
+    tau resnet50 4 nobarrier wall
+    ;;
 esac
 
 # Transport verdict from the NCCL logs: GDRDMA on the NET/IB path or not.

@@ -39,11 +39,22 @@ MANIFEST = [
 # (a cheaper encoder AND a reduce-shaped collective: bundled, labeled so).
 
 
-def find(rows, model, p, mode, timing, tau, barrier):
+def find(rows, model, p, mode, timing, tau, barrier, alloc=None):
     for r in rows:
-        if (r["model"], r["p"], r["mode"], r["timing"], r["tau"], r["barrier"]) == (model, p, mode, timing, tau, barrier):
+        if (r["model"], r["p"], r["mode"], r["timing"], r["tau"], r["barrier"]) == (model, p, mode, timing, tau, barrier)                 and (alloc is None or r.get("alloc") == alloc):
             return r
     return None
+
+
+def allocs_with_pair(rows, model, p, orig, intv, tau_o, bar_o, tau_i, bar_i):
+    """Allocations (job ids) that contain the M2 and, if named, the M3 run."""
+    out = []
+    for al in sorted({r.get("alloc") for r in rows}):
+        m2 = find(rows, model, p, orig, "wall", tau_o, bar_o, al)
+        m3 = find(rows, model, p, intv, "wall", tau_i, bar_i, al) if intv else True
+        if m2 is not None and m3:
+            out.append(al)
+    return out
 
 
 def trend_for(rows, r):
@@ -79,8 +90,6 @@ def score(rows, method_name, method):
     counts = {}
     for (c, model, p, orig, intv, tau_o, bar_o, tau_i, bar_i, fam) in MANIFEST:
         m1 = find(rows, model, p, orig, "phase", tau_o, bar_o)
-        m2 = find(rows, model, p, orig, "wall", tau_o, bar_o)
-        m3 = find(rows, model, p, intv, "wall", tau_i, bar_i) if intv else None
         if m1 is None:
             print(f"{c:4d} {model:11s} {p:2d} {orig:20s} -> {str(intv):20s} (M1 missing)")
             counts["unscored"] = counts.get("unscored", 0) + 1
@@ -89,16 +98,22 @@ def score(rows, method_name, method):
             v, named, e = method(m1, trend_for(rows, m1))
         else:
             v, named, e = method(m1)
-        delta = None
-        if m2 is not None and m3 is not None and m2["step_ms"] > 0:
-            delta = (m2["step_ms"] - m3["step_ms"]) / m2["step_ms"]
-        oc = outcome(v, e, delta, named)
-        counts[oc] = counts.get(oc, 0) + 1
-        t2 = f"{m2['step_ms']:8.1f}" if m2 else "    -   "
-        t3 = f"{m3['step_ms']:8.1f}" if m3 else "    -   "
-        dl = f"{delta:+6.2f}" if delta is not None else "   -  "
-        print(f"{c:4d} {model:11s} {p:2d} {orig:20s} -> {str(intv):20s} {v:13s} {e:5.2f} {t2} {t3} {dl}   {oc}  [{fam}]")
-    print("counts:", json.dumps(counts))
+        # one line per allocation that holds the paired M2/M3 runs
+        allocs = allocs_with_pair(rows, model, p, orig, intv, tau_o, bar_o, tau_i, bar_i) or [None]
+        for al in allocs:
+            m2 = find(rows, model, p, orig, "wall", tau_o, bar_o, al)
+            m3 = find(rows, model, p, intv, "wall", tau_i, bar_i, al) if intv else None
+            delta = None
+            if m2 is not None and m3 is not None and m2["step_ms"] > 0:
+                delta = (m2["step_ms"] - m3["step_ms"]) / m2["step_ms"]
+            oc = outcome(v, e, delta, named)
+            key = oc if len(allocs) == 1 else oc + " (per-alloc)"
+            counts[oc] = counts.get(oc, 0) + (1.0 / len(allocs))
+            t2 = f"{m2['step_ms']:8.1f}" if m2 else "    -   "
+            t3 = f"{m3['step_ms']:8.1f}" if m3 else "    -   "
+            dl = f"{delta:+6.2f}" if delta is not None else "   -  "
+            print(f"{c:4d} {model:11s} {p:2d} {orig:20s} -> {str(intv):20s} {v:13s} {e:5.2f} {t2} {t3} {dl}   {oc}  [{fam}] alloc={al}")
+    print("counts (cases split equally across their allocations):", json.dumps({k: round(v, 2) for k, v in counts.items()}))
     return counts
 
 

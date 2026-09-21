@@ -95,7 +95,7 @@ except ModuleNotFoundError as exc:  # pragma: no cover - exercised by no-torch c
     nn = _UnavailableNN()  # type: ignore[assignment]
 
 
-SCHEMA_VERSION = "tacc-paper-workloads/v2.3-control"
+SCHEMA_VERSION = "tacc-paper-workloads/v2.4-control"
 PAPER_BATCH_SIZE = 32
 PAPER_MEASURED_ITERS = 40
 PAPER_WARMUP_ITERS = 10
@@ -1188,6 +1188,48 @@ def _pertensor_int8_hook(process_group, bucket):  # unannotated: DDP checks hook
     return fut.then(quantize_and_allgather).then(dequantize_and_aggregate)
 
 
+class _CompletedWork:
+    """Minimal stand-in for a finished ProcessGroup work handle."""
+
+    def __init__(self, tensor: torch.Tensor) -> None:
+        self._fut = torch.futures.Future()
+        self._fut.set_result([tensor])
+
+    def wait(self, *_args: Any, **_kwargs: Any) -> bool:
+        return True
+
+    def is_completed(self) -> bool:
+        return True
+
+    def get_future(self) -> Any:
+        return self._fut
+
+
+def _install_empty_allreduce_guard(hook_module: Any) -> None:
+    """Route the hook module's dist.all_reduce through a guard that skips
+    zero-element tensors. Installed once per process for the powersgd mode."""
+    if HOOK_STATE.get("empty_allreduce_guard") == "on":
+        return
+    real_all_reduce = hook_module.dist.all_reduce
+
+    def guarded_all_reduce(tensor: torch.Tensor, *args: Any, **kwargs: Any) -> Any:
+        if tensor.numel() == 0:
+            HOOK_STATE["empty_allreduce_skipped"] = HOOK_STATE.get("empty_allreduce_skipped", 0) + 1
+            if kwargs.get("async_op"):
+                return _CompletedWork(tensor)
+            return None
+        return real_all_reduce(tensor, *args, **kwargs)
+
+    class _DistProxy:
+        def __getattr__(self, name: str) -> Any:
+            if name == "all_reduce":
+                return guarded_all_reduce
+            return getattr(dist, name)
+
+    hook_module.dist = _DistProxy()
+    HOOK_STATE["empty_allreduce_guard"] = "on"
+
+
 def configure_model_for_mode(
     model: nn.Module,
     runtime: AcceleratorRuntime,
@@ -1221,8 +1263,10 @@ def configure_model_for_mode(
                 raise
             state_kwargs.pop("random_seed")
             state = state_class(**state_kwargs)
+        _install_empty_allreduce_guard(module)
         ddp_model.register_comm_hook(state, hook)
-        details.update({"hook": "official_pytorch_powersgd", **state_kwargs})
+        details.update({"hook": "official_pytorch_powersgd", **state_kwargs,
+                        "empty_allreduce_guard": HOOK_STATE.get("empty_allreduce_guard", "off")})
         details["process_group"] = "WORLD"
     elif args.comm_mode == "ddp-fp16-hook":
         # 16-bit reducible hook: the official fp16/bf16 hooks are name-gated to
