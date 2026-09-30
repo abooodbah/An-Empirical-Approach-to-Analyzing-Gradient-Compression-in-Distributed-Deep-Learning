@@ -10,7 +10,9 @@ almost no neutral or harmful interventions.
 
 ## 2. Platform and protocol
 Lonestar6 gpu-a100, 2 nodes x 3 A100-PCIe (p = 6), NCCL with
-NCCL_NET_GDR_LEVEL=SYS, as in E6. Harness v4 (the round-4 harness).
+NCCL_NET_GDR_LEVEL=SYS, as in E6. Harness v4 exactly as round 4 ran it
+(sha256 3aecaae1c1021269..., the Lonestar6 file dated 2026-09-21
+09:38 UTC and git 35cf9be).
 Per model: one calibration run (resnet50 native, paper profile, batch 32,
 40 iterations, 10 warm-up), then M1 (phase) for each original and M2/M3
 (wall) for each original and intervention, extension profile, batch 128,
@@ -60,5 +62,5 @@ Case 4 should clear 5%.
 - sha256 928550323d0a5f8e9f48edc66c0b71fbd17489b4ae827afc3cf5d55a5dc9fede `diagnostic/score_e6.py`
 - sha256 bece6f877f38a19b3ab815b3e05b2be2816023af8d89a4f67dc950d96fdd125c `diagnostic/score_e7.py`
 - sha256 246d3f929b2b26978fe5af910177a054d58c4ec7876ea30c61a6ddadf3423dea `diagnostic/v1_1/rescore.py`
-- sha256 e81bc428d364caa3be7bc8789a5bfd6eb06897864fe4ed21b4a7e3b10a2c2c88 `harness/control_workload_benchmark_v4.py`
+- sha256 3aecaae1c1021269ae25a9e0468a7c7a6bcae7c27a7f64c8f275531e10207179 `harness/control_workload_benchmark_v4.py` at git 35cf9be (the file every round-4 job recorded; the current artifact file adds a PowerSGD-only guard in ef3ed2d and is not used)
 - sha256 b920424cfa25bdd751491e9dd80fcb30898662e8c600a81331d2f75e20352f6b `validation_v2/harness/control_workload_benchmark_v5_1.py`
