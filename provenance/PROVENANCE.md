@@ -27,11 +27,14 @@ lonestar6_jobs_utc.tsv (Slurm accounting), and git.
 | 2026-09-26 | R1 3471881 submitted with harness v5.1 (retrospective fix, parameters-only hash) |
 | 2026-09-30 01:21:37 | 218ddee and the records pushed to GitHub |
 
-## Revision 3: E7 and the 24-rank replication
+## Revision 3: E7, the 24-rank replication, and E8
 | Time | Event |
 |---|---|
 | 2026-09-30 06:46:37 | E7 pre-registration (5980d80, harness pin 7ff88a0) and the audit commits pushed to GitHub (2b02a48..4ad1e1b) |
 | 2026-09-30 06:47:43 | window 1 submitted: e7a 3479985, e7b 3479986, j3r 3479987 and 3479988, sensitivity 3479989 (provenance/rev_jobs.tsv) |
+| 2026-09-30 07:01:02 | E8 pre-registration (f84cee6: diagnostic/E8_PROTOCOL.md, e8_sets.sh, ls6_e8.slurm) pushed to GitHub |
+| 2026-09-30 07:01:41 | E8 submitted in window 1: e8s 3480007 and 3480008, e8l 3480009 and 3480010 |
+| 2026-09-30 09:27:12 | E8 analysis frozen and pushed (27b8bb4: diagnostic/e8/E8_FREEZE.md); every E8 job still pending |
 
 ## Harness v4 used by E6
 Every round-4 job recorded harness v4 3aecaae1c1021269ae25a9e0468a7c7a6bcae7c27a7f64c8f275531e10207179,
