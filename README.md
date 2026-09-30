@@ -165,6 +165,23 @@ connection failure at launch and is reported from its single pass; the
 job log and per-condition logs are inside the R1 archive. Follow-up
 code hashes are in `validation_v2/CODE_R1.sha256`.
 
+## Corrections and provenance
+
+`diagnostic/v1_1/` holds a retrospective audit of the E6 evaluation
+(2026-09-29): five corrections applied to copies of the frozen rows
+(`CORRECTIONS.md`), the counts under every reading (`E6_CORRECTED.txt`),
+and the record of the feature extractor's changes after the freeze
+(`EXTRACTOR_FREEZE.md`). The frozen files are unchanged and
+`diagnostic/v1_1/test_frozen_regen.py` regenerates `E6_FINAL.txt` from
+them. `provenance/PROVENANCE.md` gives the chronology with GitHub push
+times and Slurm submission times. It also records that every E6 job ran
+harness v4 with sha256 3aecaae1 (git 35cf9be); the current
+`harness/control_workload_benchmark_v4.py` was edited afterward
+(ef3ed2d), so a rerun of E6 should check out that file from 35cf9be.
+The revision's experiments were pre-registered before submission:
+E7 in `diagnostic/E7_PROTOCOL.md` and E8 in `diagnostic/E8_PROTOCOL.md`;
+`provenance/rev_jobs.tsv` lists their jobs.
+
 ## Boundary
 
 These are execution-cost measurements on synthetic fixed-input
