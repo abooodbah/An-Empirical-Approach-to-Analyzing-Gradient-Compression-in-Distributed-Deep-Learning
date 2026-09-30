@@ -1,4 +1,4 @@
-# Provenance and chronology (compiled 2026-09-29)
+# Provenance and chronology (compiled 2026-09-30)
 
 All times UTC. Sources: provenance/github_push_events.json (GitHub push
 events, retained 90 days by GitHub, captured here), provenance/
@@ -33,9 +33,9 @@ which is git 35cf9be:harness/control_workload_benchmark_v4.py and the Lonestar6 
 2026-09-21 09:38 UTC. The current artifact file differs (ef3ed2d). E7 is pinned to 3aecaae1.
 
 ## Retrospective analyses (devised after the outcomes they analyze)
-- validation_v2/analysis/analyze_r1.py (2026-09-29)
-- diagnostic/v1_1/* (2026-09-29)
-- validation_v2/analysis/identity.py (2026-09-29)
+- validation_v2/analysis/analyze_r1.py (first committed 2026-09-30 01:20:56, 2b02a48)
+- diagnostic/v1_1/* (first committed 2026-09-30 05:55:56, 51abcc3)
+- validation_v2/analysis/identity.py (first committed 2026-09-30 06:00:45, a4be38d)
 
 ## File hashes
 - sha256 71329c336cc3e9646dbb6e6dd4ce20e12305d666c663f2a3e4b35195b535a822 `diagnostic/rules.py`
