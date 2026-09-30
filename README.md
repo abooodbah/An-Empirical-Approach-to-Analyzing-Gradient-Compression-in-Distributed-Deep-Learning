@@ -128,7 +128,13 @@ in `environment/versions.md`.
 The collective cost model in the paper (Section IV) is fitted from
 `processed/h100_fabric_collectives.csv`; the weak-scaling table from
 `processed/intel_step_scaling.csv`; the phase attribution from the
-per-rank records of the three H100 seeds.
+per-rank records of the three H100 seeds, jobs 3328658, 3328659, and
+3328660. `raw/july/h100-3328657.tar.gz` is a qualification job with
+six conditions and is not part of the figure; including it moves the
+Transformer's CPU-staged step from 240.3 to 247.7 ms. To rebuild the
+phase-attribution figure and its numbers, extract the three seed
+archives into one folder and point `TPDS_RAW_SEEDS` at it before
+running `figures/make_figures.py`.
 
 ## Validation campaign (v2)
 
