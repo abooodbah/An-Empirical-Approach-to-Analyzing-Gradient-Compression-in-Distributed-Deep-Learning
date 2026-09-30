@@ -144,3 +144,111 @@ def test_cross_stream_dependency_inferred():
 def test_prediction_is_one_minus_ratio():
     assert R.gain(10.0, 7.5) == pytest.approx(0.25)
     assert R.recommends(0.05) and not R.recommends(0.0499)
+
+
+def _wrap(b, name, t, d, tid=1):
+    b.ev.append({"ph": "X", "cat": "cpu_op", "name": name, "ts": t, "dur": d, "tid": tid, "args": {"External id": 0}})
+
+
+def _gather(b, t, n, gather_us, world):
+    """A c10d all-gather into a list: syncStreams waits, the NCCL kernel,
+    one copy per rank on the NCCL stream, the end record, then the c10d wait."""
+    _wrap(b, "c10d::allgather_", t, 40.0)
+    b.runtime(t + 1, "cudaEventRecord")
+    b.runtime(t + 3, "cudaStreamWaitEvent", op="record_param_comms")
+    b.launch(t + 6, NCCL, gather_us, name="ncclDevKernel_AllGather_RING_LL(x)", op="record_param_comms",
+             rt="cudaLaunchKernelExC", args={"In msg nelems": n, "Group size": world})
+    for i in range(world):
+        b.launch(t + 14 + 6 * i, NCCL, 2.0, name="Memcpy DtoD (Device -> Device)", cat="gpu_memcpy",
+                 op="aten::copy_", rt="cudaMemcpyAsync", cpu_d=2.0)
+    b.runtime(t + 38, "cudaEventRecord")
+    b.runtime(t + 42, "cudaStreamWaitEvent", op="record_param_comms")
+    return t + 50
+
+
+def _gathersum_iteration(b, t0, n=1000, world=4, gather_us=300.0):
+    b.launch(t0, COMPUTE, 100.0, op="aten::mm")
+    b.launch(t0 + 10, COMPUTE, 20.0, op="aten::round")
+    t = _gather(b, t0 + 20, n, gather_us, world)
+    b.launch(t, COMPUTE, 5.0, op="aten::zeros")
+    t += 10
+    for _ in range(world):
+        b.launch(t, COMPUTE, 10.0, op="aten::to")
+        b.launch(t + 10, COMPUTE, 10.0, op="aten::add_")
+        t += 20
+    b.launch(t, COMPUTE, 16.0, op="aten::to")
+    b.launch(t + 10, COMPUTE, 10.0, op="aten::mul_")
+    b.annotate("Optimizer.step#SGD.step", t + 20, 5.0)
+    b.launch(t + 21, COMPUTE, 10.0, op="aten::add_")
+    b.runtime(t + 40, "cudaDeviceSynchronize", d=1500.0)
+
+
+def test_gather_to_reduce_substitution_by_hand():
+    b = TraceBuilder()
+    for i in range(4):
+        _gathersum_iteration(b, i * 3000.0)
+    tr = b.trace()
+    base = R.replay(tr).busy_ms
+    # mm 100, round 20, gather 300, copies 8, zero-fill 5, casts and adds 80, final cast 16, mul 10, optimizer 10
+    assert base == pytest.approx(0.549, abs=0.003)
+    sub = R.substitute_gather_reduce(tr, 10e-6, 40e-9)
+    cand = R.replay(sub).busy_ms
+    # mm 100, round 20, all-reduce 10 + 40, final cast 16 x 5/8 = 10, mul 10, optimizer 10
+    assert cand == pytest.approx(0.200, abs=0.003)
+
+
+def _hook_bucket(b, t, n, gather_us, world):
+    start = t
+    for name in ("aten::min", "aten::max"):
+        b.launch(t, COMPUTE, 5.0, op=name)
+        t += 10
+    t = _gather(b, t, 2, 10.0, world)
+    for name in ("aten::div", "aten::round", "aten::add", "aten::clamp"):
+        b.launch(t, COMPUTE, 8.0, op=name)
+        t += 10
+    b.launch(t, COMPUTE, 5.0, op="aten::to")
+    t = _gather(b, t + 10, n, gather_us, world)
+    for _ in range(world):
+        for name in ("aten::to", "aten::sub", "aten::mul", "aten::add_"):
+            b.launch(t, COMPUTE, 2.0, op=name)
+            t += 10
+    b.launch(t, COMPUTE, 2.0, op="aten::div")
+    t += 10
+    _wrap(b, "autograd::engine::evaluate_function: torch::autograd::AccumulateGrad", start - 1, t - start + 1)
+    return t
+
+
+def _hook_iteration(b, t0, world=4):
+    b.annotate("DistributedDataParallel.forward", t0, 1.0)
+    b.launch(t0, COMPUTE, 100.0, op="aten::mm")
+    t = _hook_bucket(b, t0 + 10, 1000, 200.0, world)
+    b.launch(t, COMPUTE, 300.0, op="aten::mm")
+    t = _hook_bucket(b, t + 10, 2000, 400.0, world)
+    b.launch(t, COMPUTE, 10.0, op="aten::copy_")
+    b.annotate("Optimizer.step#SGD.step", t + 10, 5.0)
+    b.launch(t + 11, COMPUTE, 10.0, op="aten::add_")
+    b.runtime(t + 30, "cudaDeviceSynchronize", d=2500.0)
+
+
+def test_hook_buckets_found():
+    b = TraceBuilder()
+    for i in range(3):
+        _hook_iteration(b, i * 4000.0)
+    bk = R.hook_buckets(b.trace())
+    assert [x["n"] for x in bk] == [1000, 2000] * 3
+
+
+def test_int8_to_fp16_hook_substitution_by_hand():
+    b = TraceBuilder()
+    for i in range(4):
+        _hook_iteration(b, i * 4000.0)
+    tr = b.trace()
+    base = R.replay(tr).busy_ms
+    sub = R.substitute_hook_fp16(tr, 10e-6, 50e-9)
+    cand = R.replay(sub).busy_ms
+    # bandwidth 2000 B/us; bucket 1 all-reduce 110 us overlaps backward B (300 us); bucket 2:
+    # cast 6, divide 4, all-reduce 210, copy back 6 on the side stream; the finalize copy waits
+    # for both copies: A 100, cast+divide 5, B 300, cast+divide 10, all-reduce 210, copy 6,
+    # finalize 10, optimizer 10
+    assert cand == pytest.approx(0.651, abs=0.003)
+    assert base > 1.2 and R.gain(base, cand) > 0.4

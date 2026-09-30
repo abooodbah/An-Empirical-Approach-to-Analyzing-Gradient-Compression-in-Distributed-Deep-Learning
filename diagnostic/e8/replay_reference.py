@@ -27,13 +27,17 @@ Substitutions (costs from the allocation's all-reduce calibration, alpha +
 beta x bytes, and from the elementwise bandwidth measured in the same trace)
 - H, ddp-int8-hook to ddp-fp16-hook: each bucket's hook (encode, the scale
   and data all-gathers with their copies, and the per-source dequantization)
-  becomes a cast to fp16, a divide, an all-reduce of 2n bytes, and a copy
-  back, where n is the bucket's element count.
+  becomes a cast to fp16 and a divide on the compute stream, an all-reduce of
+  2n bytes after them, and a copy back on a side stream after the
+  all-reduce, where n is the bucket's element count. As in the traced fp16
+  hook, the compute stream waits for the copies once, at the first compute
+  op after the iteration's last hook (DDP's end of backward).
 - G, gpu-quant-gathersum to gpu-quant-reducible: the gradient all-gather and
   its copies become an all-reduce of the same int8 bytes; the int32 zero-fill
   and the per-source casts and adds are removed; the final cast reads int8
   (5n bytes) instead of int32 (8n bytes).
 """
+import bisect
 import copy
 import io
 import json
@@ -171,7 +175,10 @@ def _traced_dependencies(tr, deps):
         c = it["corr"]
         g = tr.gpu[c]
         s = g["stream"]
-        held = max([prev_on.get(s, -1e30)] + [tr.gpu[p]["ts"] + tr.gpu[p]["dur"] for p in deps.get(c, ()) if p in tr.gpu])
+        if g["ts"] is None:  # a substituted op has no traced time
+            continue
+        held = max([prev_on.get(s, -1e30)] + [tr.gpu[p]["ts"] + tr.gpu[p]["dur"] for p in deps.get(c, ())
+                                              if p in tr.gpu and tr.gpu[p]["ts"] is not None])
         # launch-limited ops only: started soon after their launch and not
         # right behind a predecessor (queued kernels leave gaps of a few us)
         if 0.0 <= g["ts"] - it["t"] < MAX_LAUNCH_LATENCY_US and g["ts"] - held > 1.0:
@@ -182,7 +189,8 @@ def _traced_dependencies(tr, deps):
     for it in tr.items:
         if it["kind"] == "launch":
             g = tr.gpu[it["corr"]]
-            fin = max(fin, g["ts"] + g["dur"])
+            if g["ts"] is not None:
+                fin = max(fin, g["ts"] + g["dur"])
         elif it["kind"] == "sync" and it["d"] > 50.0:
             end = it["t"] + it["d"]
             if end >= fin:
@@ -442,15 +450,23 @@ def substitute_hook_fp16(tr, alpha_s, beta_s_per_byte):
     bw = _elementwise_bandwidth(tr, big["quant"])
     compute = tr.gpu[big["quant"][0][0]]["stream"]
     nccl = tr.gpu[big["data"]]["stream"]
+    side = max(g["stream"] for g in tr.gpu.values() if isinstance(g["stream"], int)) + 1000
+    end_times = [tr.items[k]["t"] for k in iteration_ends(tr)]
+    backs, last_end = defaultdict(list), {}
+    removed_idx = set()
     rw = _Rewrite(tr)
     for b in buckets:
         n = b["n"]
         cast = rw.op(compute, 6.0 * n / bw, "fp16 cast (substituted)")
         div = rw.op(compute, 4.0 * n / bw, "fp16 divide (substituted)")
         ar = rw.op(nccl, 1e6 * (alpha_s + beta_s_per_byte * 2.0 * n), "ncclAllReduce fp16 (substituted)")
-        back = rw.op(compute, 6.0 * n / bw, "fp16 copy back (substituted)")
+        back = rw.op(side, 6.0 * n / bw, "fp16 copy back (substituted)")
         rw.new.forced_deps[ar] = {div}
         rw.new.forced_deps[back] = {ar}
+        it = bisect.bisect_left(end_times, b["t_end"])
+        backs[it].append(back)
+        last_end[it] = max(last_end.get(it, -1e30), b["t_end"])
+        removed_idx.update(b["idx"])
         t = b["t_start"]
         oc = b["op_cpu"]
         new_items = [_new_launch(t, oc, cast), _new_launch(t + oc, oc, div),
@@ -460,81 +476,91 @@ def substitute_hook_fp16(tr, alpha_s, beta_s_per_byte):
         removed = _launches(tr, b["idx"])
         redirect = {c: (ar if tr.gpu[c]["stream"] == nccl else back) for c in removed}
         rw.replace(b["idx"], new_items, new_cpu - old_cpu, redirect)
+    for it, t_last in last_end.items():
+        k = next((k for k, x in enumerate(tr.items) if x["t"] > t_last and x["kind"] == "launch"
+                  and k not in removed_idx and tr.gpu[x["corr"]]["stream"] == compute), None)
+        if k is not None:
+            rw.new.forced_deps.setdefault(tr.items[k]["corr"], set()).update(backs[it])
     return rw.build()
 
 
-def gather_region(tr):
-    """G: the gradient all-gather (int8, the largest), its item indices, the
-    decode items to remove (int32 zero-fill, per-source casts and adds), and
-    the final int32-to-float cast."""
-    gathers = [e for e in tr.cpu_ops if e.get("name") == "c10d::allgather_"]
-    best = None
-    for g in gathers:
+def gather_regions(tr):
+    """G: every gradient all-gather (int8, the largest element count; one per
+    iteration) with its item indices, the decode items to remove (int32
+    zero-fill, per-source casts and adds), and the final int32-to-float cast."""
+    found = []
+    for g in (e for e in tr.cpu_ops if e.get("name") == "c10d::allgather_"):
         idx = _items_in(tr, g.get("tid"), *_span(g))
         nc = _nccl_of(tr, idx)
-        if nc is None:
-            continue
-        n = int(tr.gpu[nc]["args"].get("In msg nelems", 0))
-        if best is None or n > best[2]:
-            best = (g, idx, n, nc)
-    if best is None:
+        if nc is not None:
+            found.append((float(g["ts"]), g, idx, int(tr.gpu[nc]["args"].get("In msg nelems", 0)), nc))
+    if not found:
         raise ValueError("no all-gather with a NCCL kernel")
-    g, idx, n, nc = best
-    tid = g.get("tid")
-    world = int(tr.gpu[nc]["args"].get("Group size", 0)) or None
-    top = _siblings(tr, g)
-    after = [e for e in top if float(e["ts"]) > float(g["ts"])]
-    zi = next((i for i, e in enumerate(after) if e.get("name") == "aten::zeros"), None)
-    if zi is None or world is None:
-        raise ValueError("decode start (aten::zeros) or world size not found")
-    remove_ops, adds, final_cast = [after[zi]], 0, None
-    for e in after[zi + 1:]:
-        name = e.get("name")
-        if adds < world and name in ("aten::to", "aten::_to_copy", "aten::add_", "aten::add"):
-            remove_ops.append(e)
-            adds += name in ("aten::add_", "aten::add")
-        elif adds >= world and name in ("aten::to", "aten::_to_copy"):
-            final_cast = e
-            break
-    if adds < world or final_cast is None:
-        raise ValueError("decode pattern not found (adds %d of %s)" % (adds, world))
-    dec_idx = []
-    for e in remove_ops:
-        dec_idx.extend(_items_in(tr, tid, *_span(e)))
-    return {"gather": g, "gather_idx": idx, "n": n, "nccl": nc, "world": world,
-            "decode_idx": dec_idx, "final_cast": _launches(tr, _items_in(tr, tid, *_span(final_cast)))}
+    nmax = max(f[3] for f in found)
+    regions = []
+    for _, g, idx, n, nc in sorted((f for f in found if f[3] == nmax), key=lambda f: f[0]):
+        world = int(tr.gpu[nc]["args"].get("Group size", 0)) or None
+        after = [e for e in _siblings(tr, g) if float(e["ts"]) > float(g["ts"])]
+        zi = next((i for i, e in enumerate(after) if e.get("name") == "aten::zeros"), None)
+        if zi is None or world is None:
+            raise ValueError("decode start (aten::zeros) or world size not found")
+        remove_ops, adds, final_cast = [after[zi]], 0, None
+        for e in after[zi + 1:]:
+            name = e.get("name")
+            if adds < world and name in ("aten::to", "aten::_to_copy", "aten::add_", "aten::add"):
+                remove_ops.append(e)
+                adds += name in ("aten::add_", "aten::add")
+            elif adds >= world and name in ("aten::to", "aten::_to_copy"):
+                final_cast = e
+                break
+        if adds < world or final_cast is None:
+            raise ValueError("decode pattern not found (adds %d of %s)" % (adds, world))
+        tid = g.get("tid")
+        dec_idx = []
+        for e in remove_ops:
+            dec_idx.extend(_items_in(tr, tid, *_span(e)))
+        regions.append({"gather": g, "gather_idx": idx, "n": n, "nccl": nc, "world": world, "decode_idx": dec_idx,
+                        "decode_cpu": max(_span(e)[1] for e in remove_ops) - min(_span(e)[0] for e in remove_ops),
+                        "final_cast": _launches(tr, _items_in(tr, tid, *_span(final_cast)))})
+    return regions
+
+
+def _shift_item(t, delta):
+    return {"t": t, "d": 0.0, "name": "shift", "kind": "shift", "delta": delta, "corr": None, "ext": None,
+            "tid": None, "blocking": False}
 
 
 def substitute_gather_reduce(tr, alpha_s, beta_s_per_byte):
     """G: gather-sum becomes the reducible all-reduce (see module doc)."""
-    r = gather_region(tr)
+    regions = gather_regions(tr)
+    deps = infer_dependencies(tr)
     rw = _Rewrite(tr)
-    nccl = tr.gpu[r["nccl"]]["stream"]
-    ar = rw.op(nccl, 1e6 * (alpha_s + beta_s_per_byte * r["n"]), "ncclAllReduce int8 (substituted)")
-    gidx = r["gather_idx"]
-    memcpy_cpu = sum(tr.items[k]["d"] for k in gidx if tr.items[k]["kind"] == "launch"
-                     and tr.gpu[tr.items[k]["corr"]]["cat"] == "gpu_memcpy")
-    k_launch = next(k for k in gidx if tr.items[k]["corr"] == r["nccl"])
-    new_gather = []
-    for k in gidx:
-        it = tr.items[k]
-        if it["kind"] == "launch" and tr.gpu[it["corr"]]["cat"] == "gpu_memcpy":
-            continue
-        new_gather.append(_new_launch(it["t"], it["d"], ar) if k == k_launch else it)
-    removed = _launches(tr, gidx)
-    rw.remove.update(gidx)
-    rw.insert[min(gidx)] = new_gather + [{"t": tr.items[min(gidx)]["t"], "d": 0.0, "name": "shift", "kind": "shift",
-                                          "delta": -memcpy_cpu, "corr": None, "ext": None, "tid": None, "blocking": False}]
-    rw.redirect.update({c: ar for c in removed})
-    dec = r["decode_idx"]
-    dec_cpu = sum(tr.items[k]["d"] for k in dec)
-    dec_removed = _launches(tr, dec)
-    rw.remove.update(dec)
-    rw.insert[min(dec)] = [{"t": tr.items[min(dec)]["t"], "d": 0.0, "name": "shift", "kind": "shift",
-                            "delta": -dec_cpu, "corr": None, "ext": None, "tid": None, "blocking": False}]
-    rw.redirect.update({c: ar for c in dec_removed})
+    casts = []
+    for r in regions:
+        nccl = tr.gpu[r["nccl"]]["stream"]
+        ar = rw.op(nccl, 1e6 * (alpha_s + beta_s_per_byte * r["n"]), "ncclAllReduce int8 (substituted)")
+        rw.new.forced_deps[ar] = set(deps.get(r["nccl"], ()))  # the gather's waits
+        gidx = r["gather_idx"]
+        memcpy_cpu = sum(tr.items[k]["d"] for k in gidx if tr.items[k]["kind"] == "launch"
+                         and tr.gpu[tr.items[k]["corr"]]["cat"] == "gpu_memcpy")
+        new_gather = []
+        for k in gidx:
+            it = tr.items[k]
+            if it["kind"] == "launch" and tr.gpu[it["corr"]]["cat"] == "gpu_memcpy":
+                continue
+            new_gather.append(_new_launch(it["t"], it["d"], ar) if it["corr"] == r["nccl"] else it)
+        rw.remove.update(gidx)
+        rw.insert[min(gidx)] = new_gather + [_shift_item(tr.items[min(gidx)]["t"], -memcpy_cpu)]
+        rw.redirect.update({c: ar for c in _launches(tr, gidx)})
+        dec = r["decode_idx"]
+        rw.remove.update(dec)
+        rw.insert[min(dec)] = [_shift_item(tr.items[min(dec)]["t"], -r["decode_cpu"])]
+        rw.redirect.update({c: ar for c in _launches(tr, dec)})
+        for c in r["final_cast"][:1]:
+            rw.new.forced_deps.setdefault(c, set()).add(ar)
+        casts.extend(r["final_cast"])
     out = rw.build()
-    for c in r["final_cast"]:
+    for c in casts:
         g = dict(out.gpu[c])
         g["dur"] = g["dur"] * 5.0 / 8.0
         out.gpu[c] = g
