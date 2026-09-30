@@ -27,6 +27,12 @@ lonestar6_jobs_utc.tsv (Slurm accounting), and git.
 | 2026-09-26 | R1 3471881 submitted with harness v5.1 (retrospective fix, parameters-only hash) |
 | 2026-09-30 01:21:37 | 218ddee and the records pushed to GitHub |
 
+## Revision 3: E7 and the 24-rank replication
+| Time | Event |
+|---|---|
+| 2026-09-30 06:46:37 | E7 pre-registration (5980d80, harness pin 7ff88a0) and the audit commits pushed to GitHub (2b02a48..4ad1e1b) |
+| 2026-09-30 06:47:43 | window 1 submitted: e7a 3479985, e7b 3479986, j3r 3479987 and 3479988, sensitivity 3479989 (provenance/rev_jobs.tsv) |
+
 ## Harness v4 used by E6
 Every round-4 job recorded harness v4 3aecaae1c1021269ae25a9e0468a7c7a6bcae7c27a7f64c8f275531e10207179,
 which is git 35cf9be:harness/control_workload_benchmark_v4.py and the Lonestar6 file dated
