@@ -1,0 +1,94 @@
+E6 held-out evaluation, corrected readings (RETROSPECTIVE, 2026-09-29).
+Frozen rules and extractor unchanged; see CORRECTIONS.md and EXTRACTOR_FREEZE.md.
+
+== reading frozen (e_same=False, c5=False) ==
+full cleared 5%: 5 | correct 4, short 1, abstain-miss 4, abstain-correct 2, abstain (no intervention run) 1
+A1   cleared 5%: 5 | correct 5, abstain-miss 4, abstain-correct 2, abstain (no intervention run) 1
+A2   cleared 5%: 7 | correct 7, abstain-miss 2, abstain-correct 2, unscored (no paired wall run) 1
+A3   cleared 5%: 5 | correct 4, short 1, null 1, abstain-miss 4, abstain-correct 1, abstain (no intervention run) 1
+
+== reading described (e_same=True, c5=True) ==
+full cleared 5%: 5 | correct 4, short 1, abstain-miss 4, abstain-correct 2, abstain (no intervention run) 1
+A1   cleared 5%: 6 | correct 6, abstain-miss 3, abstain-correct 2, abstain (no intervention run) 1
+A2   cleared 5%: 7 | correct 7, inapplicable 1, abstain-miss 2, abstain-correct 2
+A3   cleared 5%: 5 | correct 4, short 1, inapplicable 1, abstain-miss 4, abstain-correct 1, abstain (no intervention run) 1
+
+== reading nominal_frozen_hooks (e_same=False, c5=False) ==
+full cleared 5%: 4 | correct 3, short 1, abstain-miss 5, abstain-correct 2, abstain (no intervention run) 1
+A1   cleared 5%: 3 | correct 3, abstain-miss 6, abstain-correct 2, abstain (no intervention run) 1
+A2   cleared 5%: 7 | correct 7, abstain-miss 2, abstain-correct 2, unscored (no paired wall run) 1
+A3   cleared 5%: 5 | correct 4, short 1, null 1, abstain-miss 4, abstain-correct 1, abstain (no intervention run) 1
+
+== reading nominal (e_same=True, c5=True) ==
+full cleared 5%: 4 | correct 3, short 1, abstain-miss 5, abstain-correct 2, abstain (no intervention run) 1
+A1   cleared 5%: 4 | correct 4, abstain-miss 5, abstain-correct 2, abstain (no intervention run) 1
+A2   cleared 5%: 7 | correct 7, inapplicable 1, abstain-miss 2, abstain-correct 2
+A3   cleared 5%: 5 | correct 4, short 1, inapplicable 1, abstain-miss 4, abstain-correct 1, abstain (no intervention run) 1
+
+== reading as_frozen_extractor (e_same=False, c5=False) ==
+full cleared 5%: 3 | correct 2, short 1, abstain-miss 6, abstain-correct 2, abstain (no intervention run) 1
+A1   cleared 5%: 3 | correct 3, abstain-miss 6, abstain-correct 2, abstain (no intervention run) 1
+A2   cleared 5%: 0 | abstain-miss 9, abstain-correct 2, abstain (no intervention run) 1
+A3   cleared 5%: 5 | correct 4, short 1, null 1, abstain-miss 4, abstain-correct 1, abstain (no intervention run) 1
+
+== per-case lines, reading described (e_same, c5) ==
+full case  1 alloc=3459984  mixed         e=0.000 delta= +0.71 abstain-miss
+full case  2 alloc=3459984  shape         e=0.464 delta= +0.59 correct
+full case  3 alloc=3459786  shape         e=0.492 delta= +0.51 correct
+full case  3 alloc=3460182  shape         e=0.492 delta= +0.79 correct
+full case  4 alloc=3459984  shape         e=0.501 delta= +0.56 correct
+full case  5 alloc=3459786  placement     e=0.524 delta= +0.11 short
+full case  6 alloc=3459984  none          e=0.000 delta= +0.16 abstain-miss
+full case  7 alloc=3459984  insufficient  e=0.000 delta= +0.65 abstain-miss
+full case  8 alloc=3459786  insufficient  e=0.000 delta= +0.39 abstain-miss
+full case  8 alloc=3460182  insufficient  e=0.000 delta= +0.53 abstain-miss
+full case  9 alloc=3460161  none          e=0.000 delta= +0.01 abstain-correct
+full case 10 alloc=3460161  none          e=0.000 delta= -0.00 abstain-correct
+full case 11 alloc=3459984  none          e=0.000 delta=   -   abstain (no intervention run)
+full case 12 alloc=3459786  placement     e=0.694 delta= +0.93 correct
+full case 12 alloc=3460182  placement     e=0.694 delta= +0.94 correct
+A1   case  1 alloc=3459984  shape         e=0.484 delta= +0.71 correct
+A1   case  2 alloc=3459984  shape         e=0.464 delta= +0.59 correct
+A1   case  3 alloc=3459786  shape         e=0.492 delta= +0.51 correct
+A1   case  3 alloc=3460182  shape         e=0.492 delta= +0.79 correct
+A1   case  4 alloc=3459984  shape         e=0.501 delta= +0.56 correct
+A1   case  5 alloc=3459786  none          e=0.000 delta= +0.11 abstain-miss
+A1   case  6 alloc=3459984  none          e=0.000 delta= +0.16 abstain-miss
+A1   case  7 alloc=3459984  shape         e=0.000 delta= +0.65 correct
+A1   case  8 alloc=3459786  none          e=0.000 delta= +0.39 abstain-miss
+A1   case  8 alloc=3460182  none          e=0.000 delta= +0.53 abstain-miss
+A1   case  9 alloc=3460161  none          e=0.000 delta= +0.01 abstain-correct
+A1   case 10 alloc=3460161  none          e=0.000 delta= -0.00 abstain-correct
+A1   case 11 alloc=3459984  none          e=0.000 delta=   -   abstain (no intervention run)
+A1   case 12 alloc=3459786  shape         e=0.069 delta= +0.93 correct
+A1   case 12 alloc=3460182  shape         e=0.069 delta= +0.94 correct
+A2   case  1 alloc=3459984  shape         e=0.484 delta= +0.71 correct
+A2   case  2 alloc=3459984  shape         e=0.464 delta= +0.59 correct
+A2   case  3 alloc=3459786  shape         e=0.492 delta= +0.51 correct
+A2   case  3 alloc=3460182  shape         e=0.492 delta= +0.79 correct
+A2   case  4 alloc=3459984  shape         e=0.501 delta= +0.56 correct
+A2   case  5 alloc=3459786  shape         e=0.147 delta= +0.11 correct
+A2   case  6 alloc=3459984  shape         e=0.182 delta= +0.16 correct
+A2   case  7 alloc=3459984  insufficient  e=0.000 delta= +0.65 abstain-miss
+A2   case  8 alloc=3459786  insufficient  e=0.000 delta= +0.39 abstain-miss
+A2   case  8 alloc=3460182  insufficient  e=0.000 delta= +0.53 abstain-miss
+A2   case  9 alloc=3460161  none          e=0.000 delta= +0.01 abstain-correct
+A2   case 10 alloc=3460161  none          e=0.000 delta= -0.00 abstain-correct
+A2   case 11 alloc=3459984  shape         e=0.357 delta=   -   inapplicable
+A2   case 12 alloc=3459786  shape         e=0.069 delta= +0.93 correct
+A2   case 12 alloc=3460182  shape         e=0.069 delta= +0.94 correct
+A3   case  1 alloc=3459984  mixed         e=0.000 delta= +0.71 abstain-miss
+A3   case  2 alloc=3459984  shape         e=0.464 delta= +0.59 correct
+A3   case  3 alloc=3459786  shape         e=0.492 delta= +0.51 correct
+A3   case  3 alloc=3460182  shape         e=0.492 delta= +0.79 correct
+A3   case  4 alloc=3459984  shape         e=0.501 delta= +0.56 correct
+A3   case  5 alloc=3459786  placement     e=0.524 delta= +0.11 short
+A3   case  6 alloc=3459984  none          e=0.000 delta= +0.16 abstain-miss
+A3   case  7 alloc=3459984  insufficient  e=0.000 delta= +0.65 abstain-miss
+A3   case  8 alloc=3459786  insufficient  e=0.000 delta= +0.39 abstain-miss
+A3   case  8 alloc=3460182  insufficient  e=0.000 delta= +0.53 abstain-miss
+A3   case  9 alloc=3460161  shape         e=0.347 delta= +0.01 inapplicable
+A3   case 10 alloc=3460161  none          e=0.000 delta= -0.00 abstain-correct
+A3   case 11 alloc=3459984  none          e=0.000 delta=   -   abstain (no intervention run)
+A3   case 12 alloc=3459786  placement     e=0.694 delta= +0.93 correct
+A3   case 12 alloc=3460182  placement     e=0.694 delta= +0.94 correct
