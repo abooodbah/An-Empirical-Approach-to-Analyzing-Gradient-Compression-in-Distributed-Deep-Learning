@@ -1,0 +1,149 @@
+job,check,value,flag
+L1,anchor drift,0.0021,
+R1,anchor drift,missing,FLAG
+R1,pass gap A-resnet50-gpu-topk-B,0.1320,FLAG
+R1,single pass A-resnet50-gpu-topk-S,1,FLAG
+R1,excluded A-resnet50-gpu-topk-S-p1,no records,EXCLUDED
+R1,warm-up trend A-resnet50-gpu-topk-E-p1,-0.0827,FLAG
+R1,warm-up trend A-resnet50-gpu-topk-E-p2,-0.0902,FLAG
+SMOKE,anchor drift,-0.0130,
+V1,anchor drift,-0.0311,
+V1,pass gap A-transformer-gpu-quant-gathersum-B,0.0857,FLAG
+V1,pass gap A-transformer-gpu-topk-E,0.3832,FLAG
+V1,pass gap A-transformer-gpu-topk-S,0.0914,FLAG
+V1,warm-up trend A-transformer-gpu-quant-reducible-E-p1,-0.0853,FLAG
+V1,warm-up trend A-transformer-gpu-topk-S-p1,-0.1753,FLAG
+V1,excluded B-resnet50-ddp-overlap-bs128-p1,final parameter hashes differ,EXCLUDED
+V1,warm-up trend A-transformer-gpu-topk-E-p1,-0.7649,FLAG
+V1,warm-up trend A-transformer-gpu-quant-gathersum-E-p1,-0.0770,FLAG
+V1,warm-up trend A-transformer-gpu-quant-reducible-S-p1,-0.0875,FLAG
+V1,excluded B-resnet50-ddp-fp16-hook-bs32-p1,final parameter hashes differ,EXCLUDED
+V1,excluded B-resnet50-ddp-overlap-bs32-p1,final parameter hashes differ,EXCLUDED
+V1,excluded B-resnet50-ddp-fp16-hook-bs128-p1,final parameter hashes differ,EXCLUDED
+V1,excluded A-resnet50-gpu-quant-gathersum-B-p1,final parameter hashes differ,EXCLUDED
+V1,excluded A-resnet50-gpu-quant-gathersum-S-p1,final parameter hashes differ,EXCLUDED
+V1,excluded A-resnet50-gpu-topk-S-p1,final parameter hashes differ,EXCLUDED
+V1,excluded A-resnet50-gpu-quant-gathersum-E-p1,final parameter hashes differ,EXCLUDED
+V1,excluded B-resnet50-ddp-int8-hook-bs32-p1,final parameter hashes differ,EXCLUDED
+V1,excluded A-resnet50-gpu-quant-reducible-B-p1,final parameter hashes differ,EXCLUDED
+V1,excluded B-resnet50-ddp-int8-hook-bs128-p1,final parameter hashes differ,EXCLUDED
+V1,warm-up trend A-transformer-gpu-quant-gathersum-S-p1,-0.1510,FLAG
+V1,excluded A-resnet50-gpu-quant-reducible-E-p1,final parameter hashes differ,EXCLUDED
+V1,excluded A-resnet50-gpu-topk-B-p1,final parameter hashes differ,EXCLUDED
+V1,excluded A-resnet50-gpu-quant-reducible-S-p1,final parameter hashes differ,EXCLUDED
+V1,excluded A-resnet50-gpu-topk-E-p1,final parameter hashes differ,EXCLUDED
+V1,warm-up trend A-resnet50-gpu-topk-E-p1,-0.0555,FLAG
+V1,excluded A-resnet50-gpu-topk-E-p2,final parameter hashes differ,EXCLUDED
+V1,warm-up trend A-resnet50-gpu-topk-E-p2,-0.0688,FLAG
+V1,excluded A-resnet50-gpu-quant-reducible-S-p2,final parameter hashes differ,EXCLUDED
+V1,excluded A-resnet50-gpu-topk-B-p2,final parameter hashes differ,EXCLUDED
+V1,excluded A-resnet50-gpu-quant-reducible-E-p2,final parameter hashes differ,EXCLUDED
+V1,warm-up trend A-resnet50-gpu-quant-reducible-E-p2,-0.4203,FLAG
+V1,warm-up trend A-transformer-gpu-quant-gathersum-S-p2,-0.0753,FLAG
+V1,excluded B-resnet50-ddp-int8-hook-bs128-p2,final parameter hashes differ,EXCLUDED
+V1,excluded A-resnet50-gpu-quant-reducible-B-p2,final parameter hashes differ,EXCLUDED
+V1,excluded B-resnet50-ddp-int8-hook-bs32-p2,final parameter hashes differ,EXCLUDED
+V1,excluded A-resnet50-gpu-quant-gathersum-E-p2,final parameter hashes differ,EXCLUDED
+V1,excluded A-resnet50-gpu-topk-S-p2,final parameter hashes differ,EXCLUDED
+V1,excluded A-resnet50-gpu-quant-gathersum-S-p2,final parameter hashes differ,EXCLUDED
+V1,excluded A-resnet50-gpu-quant-gathersum-B-p2,final parameter hashes differ,EXCLUDED
+V1,excluded B-resnet50-ddp-fp16-hook-bs128-p2,final parameter hashes differ,EXCLUDED
+V1,excluded B-resnet50-ddp-overlap-bs32-p2,final parameter hashes differ,EXCLUDED
+V1,excluded B-resnet50-ddp-fp16-hook-bs32-p2,final parameter hashes differ,EXCLUDED
+V1,warm-up trend A-transformer-gpu-quant-reducible-S-p2,-0.2036,FLAG
+V1,warm-up trend A-transformer-gpu-quant-gathersum-E-p2,-0.0717,FLAG
+V1,warm-up trend A-transformer-gpu-topk-E-p2,-0.1131,FLAG
+V1,excluded B-resnet50-ddp-overlap-bs128-p2,final parameter hashes differ,EXCLUDED
+V1,warm-up trend A-transformer-gpu-topk-S-p2,-0.1306,FLAG
+V1,warm-up trend A-transformer-gpu-quant-reducible-E-p2,-0.1427,FLAG
+V2,anchor drift,-0.0492,
+V2,pass gap A-transformer-gpu-quant-reducible-E,0.0666,FLAG
+V2,pass gap A-transformer-gpu-topk-E,0.0634,FLAG
+V2,excluded B-resnet50-ddp-fp16-hook-bs32-p1,final parameter hashes differ,EXCLUDED
+V2,warm-up trend A-transformer-gpu-quant-reducible-S-p1,-0.0974,FLAG
+V2,excluded A-resnet50-gpu-quant-gathersum-E-p1,final parameter hashes differ,EXCLUDED
+V2,excluded A-resnet50-gpu-quant-reducible-E-p1,final parameter hashes differ,EXCLUDED
+V2,excluded A-resnet50-gpu-quant-gathersum-B-p1,final parameter hashes differ,EXCLUDED
+V2,excluded B-resnet50-ddp-fp16-hook-bs128-p1,final parameter hashes differ,EXCLUDED
+V2,excluded B-resnet50-ddp-int8-hook-bs32-p1,final parameter hashes differ,EXCLUDED
+V2,excluded A-resnet50-gpu-topk-E-p1,final parameter hashes differ,EXCLUDED
+V2,warm-up trend A-resnet50-gpu-topk-E-p1,-0.0668,FLAG
+V2,excluded B-resnet50-ddp-overlap-bs32-p1,final parameter hashes differ,EXCLUDED
+V2,warm-up trend A-transformer-gpu-topk-E-p1,-0.2203,FLAG
+V2,excluded A-resnet50-gpu-quant-gathersum-S-p1,final parameter hashes differ,EXCLUDED
+V2,excluded B-resnet50-ddp-overlap-bs128-p1,final parameter hashes differ,EXCLUDED
+V2,warm-up trend A-transformer-gpu-topk-S-p1,-0.1746,FLAG
+V2,excluded A-resnet50-gpu-quant-reducible-S-p1,final parameter hashes differ,EXCLUDED
+V2,warm-up trend A-transformer-gpu-quant-reducible-E-p1,-0.0605,FLAG
+V2,excluded A-resnet50-gpu-topk-S-p1,final parameter hashes differ,EXCLUDED
+V2,excluded A-resnet50-gpu-quant-reducible-B-p1,final parameter hashes differ,EXCLUDED
+V2,excluded A-resnet50-gpu-topk-B-p1,final parameter hashes differ,EXCLUDED
+V2,excluded B-resnet50-ddp-int8-hook-bs128-p1,final parameter hashes differ,EXCLUDED
+V2,excluded B-resnet50-ddp-int8-hook-bs128-p2,no records,EXCLUDED
+V2,excluded A-resnet50-gpu-topk-B-p2,no records,EXCLUDED
+V2,warm-up trend A-transformer-gpu-quant-gathersum-E-p2,-0.0515,FLAG
+V2,excluded A-resnet50-gpu-quant-reducible-B-p2,final parameter hashes differ,EXCLUDED
+V2,warm-up trend A-transformer-gpu-quant-gathersum-S-p2,-0.1289,FLAG
+V2,excluded A-resnet50-gpu-topk-S-p2,final parameter hashes differ,EXCLUDED
+V2,warm-up trend A-resnet50-gpu-topk-S-p2,-0.1459,FLAG
+V2,warm-up trend A-transformer-gpu-quant-reducible-E-p2,-0.0952,FLAG
+V2,excluded A-resnet50-gpu-quant-reducible-S-p2,final parameter hashes differ,EXCLUDED
+V2,warm-up trend A-transformer-gpu-topk-S-p2,-0.2008,FLAG
+V2,excluded B-resnet50-ddp-overlap-bs128-p2,final parameter hashes differ,EXCLUDED
+V2,excluded A-resnet50-gpu-quant-gathersum-S-p2,final parameter hashes differ,EXCLUDED
+V2,warm-up trend A-transformer-gpu-topk-E-p2,-0.1309,FLAG
+V2,excluded B-resnet50-ddp-overlap-bs32-p2,final parameter hashes differ,EXCLUDED
+V2,excluded A-resnet50-gpu-topk-E-p2,final parameter hashes differ,EXCLUDED
+V2,warm-up trend A-resnet50-gpu-topk-E-p2,-0.0637,FLAG
+V2,excluded B-resnet50-ddp-int8-hook-bs32-p2,final parameter hashes differ,EXCLUDED
+V2,excluded B-resnet50-ddp-fp16-hook-bs128-p2,final parameter hashes differ,EXCLUDED
+V2,excluded A-resnet50-gpu-quant-gathersum-B-p2,final parameter hashes differ,EXCLUDED
+V2,excluded A-resnet50-gpu-quant-reducible-E-p2,final parameter hashes differ,EXCLUDED
+V2,excluded A-resnet50-gpu-quant-gathersum-E-p2,final parameter hashes differ,EXCLUDED
+V2,warm-up trend A-transformer-gpu-quant-reducible-S-p2,-0.1157,FLAG
+V2,excluded B-resnet50-ddp-fp16-hook-bs32-p2,final parameter hashes differ,EXCLUDED
+V3,anchor drift,-0.0118,
+V3,pass gap A-transformer-gpu-quant-gathersum-B,0.0503,FLAG
+V3,pass gap B-transformer-ddp-int8-hook-bs32,0.0515,FLAG
+V3,pass gap B-transformer-ddp-overlap-bs128,0.0671,FLAG
+V3,excluded B-resnet50-ddp-overlap-bs32-p1,final parameter hashes differ,EXCLUDED
+V3,warm-up trend A-transformer-gpu-quant-reducible-S-p1,-0.1218,FLAG
+V3,warm-up trend A-transformer-gpu-topk-S-p1,-0.1281,FLAG
+V3,excluded B-resnet50-ddp-fp16-hook-bs32-p1,final parameter hashes differ,EXCLUDED
+V3,excluded A-resnet50-gpu-quant-gathersum-S-p1,final parameter hashes differ,EXCLUDED
+V3,excluded A-resnet50-gpu-topk-E-p1,final parameter hashes differ,EXCLUDED
+V3,warm-up trend A-resnet50-gpu-topk-E-p1,-0.0776,FLAG
+V3,excluded B-resnet50-ddp-int8-hook-bs128-p1,final parameter hashes differ,EXCLUDED
+V3,excluded B-resnet50-ddp-overlap-bs128-p1,final parameter hashes differ,EXCLUDED
+V3,excluded A-resnet50-gpu-quant-reducible-E-p1,final parameter hashes differ,EXCLUDED
+V3,excluded A-resnet50-gpu-quant-gathersum-E-p1,final parameter hashes differ,EXCLUDED
+V3,excluded A-resnet50-gpu-quant-reducible-S-p1,final parameter hashes differ,EXCLUDED
+V3,excluded A-resnet50-gpu-topk-B-p1,final parameter hashes differ,EXCLUDED
+V3,warm-up trend A-transformer-gpu-topk-E-p1,-0.1610,FLAG
+V3,excluded A-resnet50-gpu-topk-S-p1,final parameter hashes differ,EXCLUDED
+V3,excluded B-resnet50-ddp-int8-hook-bs32-p1,final parameter hashes differ,EXCLUDED
+V3,excluded B-resnet50-ddp-fp16-hook-bs128-p1,final parameter hashes differ,EXCLUDED
+V3,excluded A-resnet50-gpu-quant-reducible-B-p1,final parameter hashes differ,EXCLUDED
+V3,excluded A-resnet50-gpu-quant-gathersum-B-p1,final parameter hashes differ,EXCLUDED
+V3,warm-up trend A-transformer-gpu-quant-gathersum-E-p1,-0.1010,FLAG
+V3,warm-up trend A-transformer-gpu-quant-gathersum-E-p2,-0.0550,FLAG
+V3,excluded A-resnet50-gpu-quant-gathersum-B-p2,final parameter hashes differ,EXCLUDED
+V3,excluded A-resnet50-gpu-quant-reducible-B-p2,final parameter hashes differ,EXCLUDED
+V3,excluded B-resnet50-ddp-fp16-hook-bs128-p2,final parameter hashes differ,EXCLUDED
+V3,excluded B-resnet50-ddp-int8-hook-bs32-p2,final parameter hashes differ,EXCLUDED
+V3,excluded A-resnet50-gpu-topk-S-p2,final parameter hashes differ,EXCLUDED
+V3,warm-up trend A-transformer-gpu-topk-E-p2,-0.1130,FLAG
+V3,excluded A-resnet50-gpu-topk-B-p2,final parameter hashes differ,EXCLUDED
+V3,excluded A-resnet50-gpu-quant-reducible-S-p2,final parameter hashes differ,EXCLUDED
+V3,excluded A-resnet50-gpu-quant-gathersum-E-p2,final parameter hashes differ,EXCLUDED
+V3,excluded A-resnet50-gpu-quant-reducible-E-p2,final parameter hashes differ,EXCLUDED
+V3,excluded B-resnet50-ddp-overlap-bs128-p2,final parameter hashes differ,EXCLUDED
+V3,excluded B-resnet50-ddp-int8-hook-bs128-p2,final parameter hashes differ,EXCLUDED
+V3,excluded A-resnet50-gpu-topk-E-p2,final parameter hashes differ,EXCLUDED
+V3,warm-up trend A-resnet50-gpu-topk-E-p2,-0.0853,FLAG
+V3,excluded A-resnet50-gpu-quant-gathersum-S-p2,final parameter hashes differ,EXCLUDED
+V3,warm-up trend A-transformer-gpu-quant-reducible-E-p2,-0.1230,FLAG
+V3,excluded B-resnet50-ddp-fp16-hook-bs32-p2,final parameter hashes differ,EXCLUDED
+V3,warm-up trend A-transformer-gpu-topk-S-p2,-0.1164,FLAG
+V3,warm-up trend A-transformer-gpu-quant-reducible-S-p2,-0.0943,FLAG
+V3,excluded B-resnet50-ddp-overlap-bs32-p2,final parameter hashes differ,EXCLUDED

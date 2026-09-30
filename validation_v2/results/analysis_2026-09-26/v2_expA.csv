@@ -1,0 +1,10 @@
+job,model,convention,T_gpu-quant-reducible_ms,T_gpu-quant-gathersum_ms,T_gpu-topk_ms,rho_gpu-quant-reducible,rho_gpu-quant-gathersum,rho_gpu-topk,g_matched,h_topk,ranking
+V1,transformer,E,13.6551,27.3469,19.8856,1.196,1.05829,1.59031,0.500671,0.313317,reduce<topk<gather
+V1,transformer,S,11.691,25.7995,13.275,1.02397,0.998409,1.06164,0.546853,0.119322,reduce<topk<gather
+V1,transformer,B,11.4173,25.8406,12.5042,1,1,1,0.558165,0.0869248,reduce<topk<gather
+V2,transformer,E,13.5293,27.961,15.1762,1.16493,1.13632,1.21511,0.516136,0.108513,reduce<topk<gather
+V2,transformer,S,12.2568,26.6517,12.652,1.05536,1.08311,1.01301,0.54011,0.0312332,reduce<topk<gather
+V2,transformer,B,11.6139,24.6066,12.4895,1,1,1,0.528019,0.070112,reduce<topk<gather
+V3,transformer,E,14,27.7863,15.1154,1.21123,1.0956,1.17417,0.496153,0.0737885,reduce<topk<gather
+V3,transformer,S,12.1047,26.1709,13.236,1.04726,1.03191,1.02818,0.537474,0.0854715,reduce<topk<gather
+V3,transformer,B,11.5585,25.3616,12.8732,1,1,1,0.544253,0.102129,reduce<topk<gather
