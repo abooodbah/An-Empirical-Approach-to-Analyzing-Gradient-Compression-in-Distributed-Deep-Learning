@@ -16,7 +16,7 @@ allocations.
 
 ## Layout
 
-- `harness/` — the benchmark programs and launch scripts.
+- `harness/`: the benchmark programs and launch scripts.
   `paper_workload_benchmark.py` is the frozen July harness that
   produced the main campaign. `control_workload_benchmark.py` is the
   September control variant, generated from the frozen file by
@@ -32,17 +32,17 @@ allocations.
   per-tensor int8 hook, the latter ported with device-agnostic tensor
   placement so the same algorithm runs on the XPU track. Each generator
   leaves its source unchanged and asserts every edit.
-- `contract/` — the experiment contract and campaign protocol the July
+- `contract/`: the experiment contract and campaign protocol the July
   runs were validated against.
-- `raw/july/` — the July campaign archives: three independent H100 2x4
+- `raw/july/`: the July campaign archives: three independent H100 2x4
   seed jobs (3328658 to 3328660, host-staged NDR InfiniBand) and the
   four-node Intel weak-scaling job (3323561), with checksums. Each
   archive holds per-rank CSV, JSONL, and provenance records for every
   condition, plus transport validations.
-- `raw/control/` — the September control campaign: the reducible int8
+- `raw/control/`: the September control campaign: the reducible int8
   and local-error-feedback conditions, uninstrumented timing repeats,
   and second-allocation Intel endpoint repeats.
-- `raw/round4/` — the Lonestar6 A100 campaign behind Section VII and
+- `raw/round4/`: the Lonestar6 A100 campaign behind Section VII and
   the lower block of Table VII: pilot and 12-rank sweep (jobs 3459209,
   3459786), 24-rank sweep (3459984), synchronization-interval sweep
   (3460161), 12-rank intervention pairs in a second allocation
@@ -51,12 +51,12 @@ allocations.
   `make_control_harness_v4.py`, which adds the exact-sum all-gather arm,
   FP16 dense, bit-equality verification, and the barrier-free
   synchronization-interval mode) through `harness/launch/ls6_r4.slurm`.
-- `diagnostic/` — the frozen diagnostic procedure and its held-out
+- `diagnostic/`: the frozen diagnostic procedure and its held-out
   evaluation (below).
-- `processed/` — the aggregated CSVs the figures and tables read.
-- `figures/` — the scripts that regenerate every figure from `raw/`
+- `processed/`: the aggregated CSVs the figures and tables read.
+- `figures/`: the scripts that regenerate every figure from `raw/`
   and `processed/`.
-- `environment/` — software identity per platform track.
+- `environment/`: software identity per platform track.
 
 ## Diagnostic procedure and held-out evaluation (Section VII)
 
