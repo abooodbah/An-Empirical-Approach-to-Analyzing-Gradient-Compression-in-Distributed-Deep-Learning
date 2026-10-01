@@ -1,0 +1,5 @@
+v330-019.ls6.tacc.utexas.edu
+GPU 0: NVIDIA A100-PCIE-40GB (UUID: GPU-5287fe19-4e69-e762-ec25-81c143a8de80)
+1
+env_choice=redctl-venv+cuda12.8-module
+2.4.1+cu121 12.1 1

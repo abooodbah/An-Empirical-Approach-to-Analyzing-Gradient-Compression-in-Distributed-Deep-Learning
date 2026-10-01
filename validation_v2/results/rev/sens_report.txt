@@ -1,0 +1,64 @@
+cpu_decode         resnet50    heavy     ratio 0.971  95% [0.968, 0.985] inside
+cpu_decode         resnet50    outlier   ratio 0.972  95% [0.964, 0.983] inside
+cpu_decode         resnet50    zero_tied ratio 0.977  95% [0.970, 0.992] inside
+cpu_decode         transformer heavy     ratio 0.980  95% [0.955, 0.987] inside
+cpu_decode         transformer outlier   ratio 1.003  95% [0.979, 1.018] inside
+cpu_decode         transformer zero_tied ratio 1.006  95% [0.980, 1.013] inside
+cpu_encode         resnet50    heavy     ratio 1.008  95% [0.996, 1.028] inside
+cpu_encode         resnet50    outlier   ratio 1.002  95% [0.994, 1.007] inside
+cpu_encode         resnet50    zero_tied ratio 1.005  95% [0.992, 1.019] inside
+cpu_encode         transformer heavy     ratio 0.995  95% [0.930, 1.001] OUTSIDE
+cpu_encode         transformer outlier   ratio 1.002  95% [0.993, 1.006] inside
+cpu_encode         transformer zero_tied ratio 1.001  95% [0.994, 1.011] inside
+rank_local_decode  resnet50    heavy     ratio 1.345  95% [1.000, 1.363] OUTSIDE
+rank_local_decode  resnet50    outlier   ratio 1.003  95% [0.996, 1.203] OUTSIDE
+rank_local_decode  resnet50    zero_tied ratio 1.002  95% [0.995, 1.005] inside
+rank_local_decode  transformer heavy     ratio 1.000  95% [0.998, 1.007] inside
+rank_local_decode  transformer outlier   ratio 1.002  95% [0.998, 1.004] inside
+rank_local_decode  transformer zero_tied ratio 1.003  95% [0.999, 1.006] inside
+rank_local_encode  resnet50    heavy     ratio 1.000  95% [0.997, 1.006] inside
+rank_local_encode  resnet50    outlier   ratio 1.005  95% [1.002, 1.011] inside
+rank_local_encode  resnet50    zero_tied ratio 1.028  95% [1.025, 1.031] inside
+rank_local_encode  transformer heavy     ratio 1.000  95% [0.994, 1.005] inside
+rank_local_encode  transformer outlier   ratio 1.001  95% [0.999, 1.007] inside
+rank_local_encode  transformer zero_tied ratio 1.156  95% [1.035, 1.293] OUTSIDE
+shared_decode      resnet50    heavy     ratio 1.000  95% [0.994, 1.006] inside
+shared_decode      resnet50    outlier   ratio 0.999  95% [0.994, 1.001] inside
+shared_decode      resnet50    zero_tied ratio 1.000  95% [0.994, 1.002] inside
+shared_decode      transformer heavy     ratio 1.001  95% [1.000, 1.007] inside
+shared_decode      transformer outlier   ratio 1.001  95% [1.000, 1.023] inside
+shared_decode      transformer zero_tied ratio 1.012  95% [1.002, 1.405] OUTSIDE
+shared_encode      resnet50    heavy     ratio 1.000  95% [0.995, 1.004] inside
+shared_encode      resnet50    outlier   ratio 1.001  95% [0.998, 1.099] OUTSIDE
+shared_encode      resnet50    zero_tied ratio 1.045  95% [1.041, 1.048] inside
+shared_encode      transformer heavy     ratio 1.000  95% [0.997, 1.003] inside
+shared_encode      transformer outlier   ratio 1.002  95% [0.996, 1.005] inside
+shared_encode      transformer zero_tied ratio 1.052  95% [1.045, 1.110] OUTSIDE
+topk_reconstruct   resnet50    heavy     ratio 1.001  95% [0.998, 1.005] inside
+topk_reconstruct   resnet50    outlier   ratio 1.003  95% [0.999, 1.005] inside
+topk_reconstruct   resnet50    zero_tied ratio 0.998  95% [0.996, 1.002] inside
+topk_reconstruct   transformer heavy     ratio 0.998  95% [0.992, 1.009] inside
+topk_reconstruct   transformer outlier   ratio 0.998  95% [0.992, 1.010] inside
+topk_reconstruct   transformer zero_tied ratio 0.995  95% [0.990, 1.004] inside
+topk_select        resnet50    heavy     ratio 0.973  95% [0.968, 0.999] inside
+topk_select        resnet50    outlier   ratio 0.981  95% [0.974, 0.985] inside
+topk_select        resnet50    zero_tied ratio 0.966  95% [0.964, 0.968] inside
+topk_select        transformer heavy     ratio 1.004  95% [0.995, 1.009] inside
+topk_select        transformer outlier   ratio 1.007  95% [1.001, 1.033] inside
+topk_select        transformer zero_tied ratio 0.994  95% [0.988, 0.998] inside
+cpu_decode resnet50: insensitive
+cpu_decode transformer: insensitive
+cpu_encode resnet50: insensitive
+cpu_encode transformer: SENSITIVE
+rank_local_decode resnet50: SENSITIVE
+rank_local_decode transformer: insensitive
+rank_local_encode resnet50: insensitive
+rank_local_encode transformer: SENSITIVE
+shared_decode resnet50: insensitive
+shared_decode transformer: SENSITIVE
+shared_encode resnet50: SENSITIVE
+shared_encode transformer: SENSITIVE
+topk_reconstruct resnet50: insensitive
+topk_reconstruct transformer: insensitive
+topk_select resnet50: insensitive
+topk_select transformer: insensitive
