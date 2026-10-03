@@ -1,0 +1,27 @@
+24-rank replication of the E6 scored pairs
+
+case 1 transformer alloc=3459984  delta=+0.707 frozen-verdict=mixed -> abstain-miss | own M1 verdict=mixed
+case 1 transformer alloc=3479987  delta=+0.281 frozen-verdict=mixed -> abstain-miss | own M1 verdict=mixed
+case 1 transformer alloc=3479988  delta=+0.717 frozen-verdict=mixed -> abstain-miss | own M1 verdict=shape
+case 2 resnet50    alloc=3459984  delta=+0.593 frozen-verdict=shape -> correct | own M1 verdict=shape
+case 2 resnet50    alloc=3479987  delta=+0.585 frozen-verdict=shape -> correct | own M1 verdict=shape
+case 2 resnet50    alloc=3479988  delta=+0.561 frozen-verdict=shape -> correct | own M1 verdict=shape
+case 4 resnet50    alloc=3459984  delta=+0.563 frozen-verdict=shape -> correct | own M1 verdict=shape
+case 4 resnet50    alloc=3479987  delta=+0.554 frozen-verdict=shape -> correct | own M1 verdict=shape
+case 4 resnet50    alloc=3479988  delta=+0.528 frozen-verdict=shape -> correct | own M1 verdict=shape
+case 6 resnet50    alloc=3459984  delta=+0.160 frozen-verdict=none -> abstain-miss | own M1 verdict=none
+case 6 resnet50    alloc=3479987  delta=+0.135 frozen-verdict=none -> abstain-miss | own M1 verdict=none
+case 6 resnet50    alloc=3479988  delta=+0.079 frozen-verdict=none -> abstain-miss | own M1 verdict=none
+case 7 transformer alloc=3459984  delta=+0.653 frozen-verdict=none -> abstain-miss | own M1 verdict=none
+case 7 transformer alloc=3479987  delta=+0.657 frozen-verdict=none -> abstain-miss | own M1 verdict=none
+case 7 transformer alloc=3479988  delta=+0.675 frozen-verdict=none -> abstain-miss | own M1 verdict=none
+
+hook / dense DDP step at 24 ranks
+transformer alloc=3479987  ddp-fp16-hook  0.861
+transformer alloc=3479987  ddp-int8-hook  2.512
+transformer alloc=3479988  ddp-fp16-hook  0.882
+transformer alloc=3479988  ddp-int8-hook  2.713
+resnet50    alloc=3479987  ddp-fp16-hook  1.017
+resnet50    alloc=3479987  ddp-int8-hook  2.206
+resnet50    alloc=3479988  ddp-fp16-hook  1.008
+resnet50    alloc=3479988  ddp-int8-hook  2.207
