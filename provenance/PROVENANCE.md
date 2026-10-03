@@ -35,6 +35,8 @@ lonestar6_jobs_utc.tsv (Slurm accounting), and git.
 | 2026-09-30 07:01:02 | E8 pre-registration (f84cee6: diagnostic/E8_PROTOCOL.md, e8_sets.sh, ls6_e8.slurm) pushed to GitHub |
 | 2026-09-30 07:01:41 | E8 submitted in window 1: e8s 3480007 and 3480008, e8l 3480009 and 3480010 |
 | 2026-09-30 09:27:12 | E8 analysis frozen and pushed (27b8bb4: diagnostic/e8/E8_FREEZE.md); every E8 job still pending |
+| 2026-09-30 21:41 to 2026-10-02 17:36 | all nine jobs ran and completed (provenance/rev_su.tsv: 20.3 SU) |
+| 2026-10-03 05:48 | e7a development errors of the frozen E8 reference (DEV_REPORT_E7A.md) and the window-1 results pushed (fe2c2f5); E8 records fetched and scored afterward |
 
 ## Harness v4 used by E6
 Every round-4 job recorded harness v4 3aecaae1c1021269ae25a9e0468a7c7a6bcae7c27a7f64c8f275531e10207179,
