@@ -182,6 +182,18 @@ The revision's experiments were pre-registered before submission:
 E7 in `diagnostic/E7_PROTOCOL.md` and E8 in `diagnostic/E8_PROTOCOL.md`;
 `provenance/rev_jobs.tsv` lists their jobs.
 
+## Revision jobs (E7, 24-rank replication, sensitivity, E8)
+
+Nine Lonestar6 jobs, listed with submit times in `provenance/rev_jobs.tsv` and with
+elapsed time and SU in `provenance/rev_su.tsv`; their records are in `raw/rev/`.
+Results: E7 in `diagnostic/E7_RESULT.txt` (and `_described`), the 24-rank
+replication in `diagnostic/v1_1/REPLICATION_24.txt`, E8 in
+`diagnostic/E8_RESULT.json` (and `_described`), the frozen E8 reference's
+development errors in `diagnostic/e8/DEV_REPORT.md` and `DEV_REPORT_E7A.md`, and
+the input-sensitivity study in `validation_v2/results/rev/`.
+`provenance/PROVENANCE.md` orders the pushes of each protocol, the E8 freeze,
+and the e7a check against the jobs' submit and fetch times.
+
 ## Boundary
 
 These are execution-cost measurements on synthetic fixed-input
