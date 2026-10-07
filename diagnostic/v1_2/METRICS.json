@@ -1,0 +1,1524 @@
+{
+ "E6 as scored (post hoc)": {
+  "A1": {
+   "all_allocations": {
+    "cleared": 5,
+    "false_positive": 0,
+    "recommended": 5
+   },
+   "any_allocation": {
+    "cleared": 5,
+    "false_positive": 0,
+    "recommended": 5
+   },
+   "counts": {
+    "abstain_correct": 2.0,
+    "abstain_miss": 4.0,
+    "cases": 12.0,
+    "cleared": 5.0,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 1.0,
+    "not_paying": 3.0,
+    "not_tested": 0.0,
+    "paying": 9.0,
+    "recommended": 5.0
+   },
+   "intervals": {
+    "coverage": [
+     0.16666666666666666,
+     0.6666666666666666,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0,
+     294
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     19
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     19
+    ],
+    "recall": [
+     0.2222222222222222,
+     0.8888888888888888,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.4166666666666667,
+    "false_positive_rate": 0.0,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 0.5555555555555556
+   }
+  },
+  "A2": {
+   "all_allocations": {
+    "cleared": 7,
+    "false_positive": 0,
+    "recommended": 8
+   },
+   "any_allocation": {
+    "cleared": 7,
+    "false_positive": 0,
+    "recommended": 8
+   },
+   "counts": {
+    "abstain_correct": 2.0,
+    "abstain_miss": 2.0,
+    "cases": 12.0,
+    "cleared": 7.0,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 1.0,
+    "not_paying": 3.0,
+    "not_tested": 0.0,
+    "paying": 9.0,
+    "recommended": 8.0
+   },
+   "intervals": {
+    "coverage": [
+     0.4166666666666667,
+     0.9166666666666666,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0,
+     294
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     0
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     0
+    ],
+    "recall": [
+     0.5,
+     1.0,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.6666666666666666,
+    "false_positive_rate": 0.0,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 0.7777777777777778
+   }
+  },
+  "A3": {
+   "all_allocations": {
+    "cleared": 5,
+    "false_positive": 1,
+    "recommended": 6
+   },
+   "any_allocation": {
+    "cleared": 5,
+    "false_positive": 1,
+    "recommended": 6
+   },
+   "counts": {
+    "abstain_correct": 1.0,
+    "abstain_miss": 4.0,
+    "cases": 12.0,
+    "cleared": 5.0,
+    "false_positive": 1.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 1.0,
+    "not_paying": 3.0,
+    "not_tested": 0.0,
+    "paying": 9.0,
+    "recommended": 6.0
+   },
+   "intervals": {
+    "coverage": [
+     0.25,
+     0.75,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     1.0,
+     294
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     1
+    ],
+    "precision": [
+     0.5,
+     1.0,
+     1
+    ],
+    "recall": [
+     0.2222222222222222,
+     0.875,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.5,
+    "false_positive_rate": 0.3333333333333333,
+    "harmful_rate": 0.0,
+    "precision": 0.8333333333333334,
+    "recall": 0.5555555555555556
+   }
+  },
+  "full": {
+   "all_allocations": {
+    "cleared": 5,
+    "false_positive": 0,
+    "recommended": 5
+   },
+   "any_allocation": {
+    "cleared": 5,
+    "false_positive": 0,
+    "recommended": 5
+   },
+   "counts": {
+    "abstain_correct": 2.0,
+    "abstain_miss": 4.0,
+    "cases": 12.0,
+    "cleared": 5.0,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 1.0,
+    "not_paying": 3.0,
+    "not_tested": 0.0,
+    "paying": 9.0,
+    "recommended": 5.0
+   },
+   "intervals": {
+    "coverage": [
+     0.16666666666666666,
+     0.6666666666666666,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0,
+     294
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     15
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     15
+    ],
+    "recall": [
+     0.2222222222222222,
+     0.875,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.4166666666666667,
+    "false_positive_rate": 0.0,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 0.5555555555555556
+   }
+  }
+ },
+ "E6 corrected (post hoc)": {
+  "A1": {
+   "all_allocations": {
+    "cleared": 6,
+    "false_positive": 0,
+    "recommended": 6
+   },
+   "any_allocation": {
+    "cleared": 6,
+    "false_positive": 0,
+    "recommended": 6
+   },
+   "counts": {
+    "abstain_correct": 2.0,
+    "abstain_miss": 3.0,
+    "cases": 12.0,
+    "cleared": 6.0,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 1.0,
+    "not_paying": 3.0,
+    "not_tested": 0.0,
+    "paying": 9.0,
+    "recommended": 6.0
+   },
+   "intervals": {
+    "coverage": [
+     0.25,
+     0.75,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0,
+     294
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     2
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     2
+    ],
+    "recall": [
+     0.3333333333333333,
+     1.0,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.5,
+    "false_positive_rate": 0.0,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 0.6666666666666666
+   }
+  },
+  "A2": {
+   "all_allocations": {
+    "cleared": 7,
+    "false_positive": 1,
+    "recommended": 8
+   },
+   "any_allocation": {
+    "cleared": 7,
+    "false_positive": 1,
+    "recommended": 8
+   },
+   "counts": {
+    "abstain_correct": 2.0,
+    "abstain_miss": 2.0,
+    "cases": 12.0,
+    "cleared": 7.0,
+    "false_positive": 1.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 0.0,
+    "not_paying": 3.0,
+    "not_tested": 0.0,
+    "paying": 9.0,
+    "recommended": 8.0
+   },
+   "intervals": {
+    "coverage": [
+     0.4166666666666667,
+     0.9166666666666666,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     1.0,
+     294
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     0
+    ],
+    "precision": [
+     0.6,
+     1.0,
+     0
+    ],
+    "recall": [
+     0.5,
+     1.0,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.6666666666666666,
+    "false_positive_rate": 0.3333333333333333,
+    "harmful_rate": 0.0,
+    "precision": 0.875,
+    "recall": 0.7777777777777778
+   }
+  },
+  "A3": {
+   "all_allocations": {
+    "cleared": 5,
+    "false_positive": 1,
+    "recommended": 6
+   },
+   "any_allocation": {
+    "cleared": 5,
+    "false_positive": 1,
+    "recommended": 6
+   },
+   "counts": {
+    "abstain_correct": 1.0,
+    "abstain_miss": 4.0,
+    "cases": 12.0,
+    "cleared": 5.0,
+    "false_positive": 1.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 1.0,
+    "not_paying": 3.0,
+    "not_tested": 0.0,
+    "paying": 9.0,
+    "recommended": 6.0
+   },
+   "intervals": {
+    "coverage": [
+     0.25,
+     0.75,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     1.0,
+     294
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     1
+    ],
+    "precision": [
+     0.5,
+     1.0,
+     1
+    ],
+    "recall": [
+     0.2222222222222222,
+     0.875,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.5,
+    "false_positive_rate": 0.3333333333333333,
+    "harmful_rate": 0.0,
+    "precision": 0.8333333333333334,
+    "recall": 0.5555555555555556
+   }
+  },
+  "full": {
+   "all_allocations": {
+    "cleared": 5,
+    "false_positive": 0,
+    "recommended": 5
+   },
+   "any_allocation": {
+    "cleared": 5,
+    "false_positive": 0,
+    "recommended": 5
+   },
+   "counts": {
+    "abstain_correct": 2.0,
+    "abstain_miss": 4.0,
+    "cases": 12.0,
+    "cleared": 5.0,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 1.0,
+    "not_paying": 3.0,
+    "not_tested": 0.0,
+    "paying": 9.0,
+    "recommended": 5.0
+   },
+   "intervals": {
+    "coverage": [
+     0.16666666666666666,
+     0.6666666666666666,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0,
+     294
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     15
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     15
+    ],
+    "recall": [
+     0.2222222222222222,
+     0.875,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.4166666666666667,
+    "false_positive_rate": 0.0,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 0.5555555555555556
+   }
+  }
+ },
+ "E6 extractor as frozen": {
+  "A1": {
+   "all_allocations": {
+    "cleared": 3,
+    "false_positive": 0,
+    "recommended": 3
+   },
+   "any_allocation": {
+    "cleared": 3,
+    "false_positive": 0,
+    "recommended": 3
+   },
+   "counts": {
+    "abstain_correct": 2.0,
+    "abstain_miss": 6.0,
+    "cases": 12.0,
+    "cleared": 3.0,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 1.0,
+    "not_paying": 3.0,
+    "not_tested": 0.0,
+    "paying": 9.0,
+    "recommended": 3.0
+   },
+   "intervals": {
+    "coverage": [
+     0.0,
+     0.5,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0,
+     294
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     307
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     307
+    ],
+    "recall": [
+     0.0,
+     0.6666666666666666,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.25,
+    "false_positive_rate": 0.0,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 0.3333333333333333
+   }
+  },
+  "A2": {
+   "all_allocations": {
+    "cleared": 0,
+    "false_positive": 0,
+    "recommended": 0
+   },
+   "any_allocation": {
+    "cleared": 0,
+    "false_positive": 0,
+    "recommended": 0
+   },
+   "counts": {
+    "abstain_correct": 2.0,
+    "abstain_miss": 9.0,
+    "cases": 12.0,
+    "cleared": 0.0,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 1.0,
+    "not_paying": 3.0,
+    "not_tested": 0.0,
+    "paying": 9.0,
+    "recommended": 0.0
+   },
+   "intervals": {
+    "coverage": [
+     0.0,
+     0.0,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0,
+     294
+    ],
+    "recall": [
+     0.0,
+     0.0,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.0,
+    "false_positive_rate": 0.0,
+    "harmful_rate": null,
+    "precision": null,
+    "recall": 0.0
+   }
+  },
+  "A3": {
+   "all_allocations": {
+    "cleared": 5,
+    "false_positive": 1,
+    "recommended": 6
+   },
+   "any_allocation": {
+    "cleared": 5,
+    "false_positive": 1,
+    "recommended": 6
+   },
+   "counts": {
+    "abstain_correct": 1.0,
+    "abstain_miss": 4.0,
+    "cases": 12.0,
+    "cleared": 5.0,
+    "false_positive": 1.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 1.0,
+    "not_paying": 3.0,
+    "not_tested": 0.0,
+    "paying": 9.0,
+    "recommended": 6.0
+   },
+   "intervals": {
+    "coverage": [
+     0.25,
+     0.75,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     1.0,
+     294
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     1
+    ],
+    "precision": [
+     0.5,
+     1.0,
+     1
+    ],
+    "recall": [
+     0.2222222222222222,
+     0.875,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.5,
+    "false_positive_rate": 0.3333333333333333,
+    "harmful_rate": 0.0,
+    "precision": 0.8333333333333334,
+    "recall": 0.5555555555555556
+   }
+  },
+  "full": {
+   "all_allocations": {
+    "cleared": 3,
+    "false_positive": 0,
+    "recommended": 3
+   },
+   "any_allocation": {
+    "cleared": 3,
+    "false_positive": 0,
+    "recommended": 3
+   },
+   "counts": {
+    "abstain_correct": 2.0,
+    "abstain_miss": 6.0,
+    "cases": 12.0,
+    "cleared": 3.0,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 1.0,
+    "not_paying": 3.0,
+    "not_tested": 0.0,
+    "paying": 9.0,
+    "recommended": 3.0
+   },
+   "intervals": {
+    "coverage": [
+     0.0,
+     0.5,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0,
+     294
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     333
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     333
+    ],
+    "recall": [
+     0.0,
+     0.6666666666666666,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.25,
+    "false_positive_rate": 0.0,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 0.3333333333333333
+   }
+  }
+ },
+ "E7": {
+  "A1": {
+   "all_allocations": {
+    "cleared": 0,
+    "false_positive": 0,
+    "recommended": 0
+   },
+   "any_allocation": {
+    "cleared": 0,
+    "false_positive": 0,
+    "recommended": 0
+   },
+   "counts": {
+    "abstain_correct": 2.0,
+    "abstain_miss": 8.0,
+    "cases": 12.0,
+    "cleared": 0.0,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 2.0,
+    "not_paying": 4.0,
+    "not_tested": 0.0,
+    "paying": 8.0,
+    "recommended": 0.0
+   },
+   "intervals": {
+    "coverage": [
+     0.0,
+     0.0,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0,
+     74
+    ],
+    "recall": [
+     0.0,
+     0.0,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.0,
+    "false_positive_rate": 0.0,
+    "harmful_rate": null,
+    "precision": null,
+    "recall": 0.0
+   }
+  },
+  "A2": {
+   "all_allocations": {
+    "cleared": 4,
+    "false_positive": 3,
+    "recommended": 9
+   },
+   "any_allocation": {
+    "cleared": 4,
+    "false_positive": 4,
+    "recommended": 10
+   },
+   "counts": {
+    "abstain_correct": 0.0,
+    "abstain_miss": 2.0,
+    "cases": 12.0,
+    "cleared": 4.0,
+    "false_positive": 3.5,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 0.5,
+    "not_paying": 4.0,
+    "not_tested": 2.0,
+    "paying": 8.0,
+    "recommended": 9.5
+   },
+   "intervals": {
+    "coverage": [
+     0.5416666666666666,
+     1.0,
+     0
+    ],
+    "false_positive_rate": [
+     0.5,
+     1.0,
+     74
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     0
+    ],
+    "precision": [
+     0.16666666666666666,
+     0.875,
+     0
+    ],
+    "recall": [
+     0.14285714285714285,
+     0.8571428571428571,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.7916666666666666,
+    "false_positive_rate": 0.875,
+    "harmful_rate": 0.0,
+    "precision": 0.5333333333333333,
+    "recall": 0.5
+   }
+  },
+  "A3": {
+   "all_allocations": {
+    "cleared": 2,
+    "false_positive": 0,
+    "recommended": 2
+   },
+   "any_allocation": {
+    "cleared": 2,
+    "false_positive": 0,
+    "recommended": 3
+   },
+   "counts": {
+    "abstain_correct": 2.0,
+    "abstain_miss": 5.5,
+    "cases": 12.0,
+    "cleared": 2.0,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 2.0,
+    "not_paying": 4.0,
+    "not_tested": 0.5,
+    "paying": 8.0,
+    "recommended": 2.5
+   },
+   "intervals": {
+    "coverage": [
+     0.0,
+     0.4583333333333333,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0,
+     74
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     296
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     1107
+    ],
+    "recall": [
+     0.0,
+     0.5714285714285714,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.20833333333333334,
+    "false_positive_rate": 0.0,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 0.25
+   }
+  },
+  "full": {
+   "all_allocations": {
+    "cleared": 2,
+    "false_positive": 0,
+    "recommended": 2
+   },
+   "any_allocation": {
+    "cleared": 2,
+    "false_positive": 0,
+    "recommended": 3
+   },
+   "counts": {
+    "abstain_correct": 2.0,
+    "abstain_miss": 5.5,
+    "cases": 12.0,
+    "cleared": 2.0,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 2.0,
+    "not_paying": 4.0,
+    "not_tested": 0.5,
+    "paying": 8.0,
+    "recommended": 2.5
+   },
+   "intervals": {
+    "coverage": [
+     0.0,
+     0.4583333333333333,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0,
+     74
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     296
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     1107
+    ],
+    "recall": [
+     0.0,
+     0.5714285714285714,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.20833333333333334,
+    "false_positive_rate": 0.0,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 0.25
+   }
+  }
+ },
+ "E7 and E8": {
+  "A1": {
+   "all_allocations": {
+    "cleared": 2,
+    "false_positive": 0,
+    "recommended": 2
+   },
+   "any_allocation": {
+    "cleared": 2,
+    "false_positive": 0,
+    "recommended": 2
+   },
+   "counts": {
+    "abstain_correct": 2.0,
+    "abstain_miss": 14.0,
+    "cases": 20.0,
+    "cleared": 2.0,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 2.0,
+    "not_paying": 4.0,
+    "not_tested": 0.0,
+    "paying": 16.0,
+    "recommended": 2.0
+   },
+   "intervals": {
+    "coverage": [
+     0.0,
+     0.25,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0,
+     107
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     1243
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     1243
+    ],
+    "recall": [
+     0.0,
+     0.3076923076923077,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.1,
+    "false_positive_rate": 0.0,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 0.125
+   }
+  },
+  "A2": {
+   "all_allocations": {
+    "cleared": 8,
+    "false_positive": 3,
+    "recommended": 13
+   },
+   "any_allocation": {
+    "cleared": 8,
+    "false_positive": 4,
+    "recommended": 14
+   },
+   "counts": {
+    "abstain_correct": 0.0,
+    "abstain_miss": 6.0,
+    "cases": 20.0,
+    "cleared": 8.0,
+    "false_positive": 3.5,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 0.5,
+    "not_paying": 4.0,
+    "not_tested": 2.0,
+    "paying": 16.0,
+    "recommended": 13.5
+   },
+   "intervals": {
+    "coverage": [
+     0.475,
+     0.875,
+     0
+    ],
+    "false_positive_rate": [
+     0.5,
+     1.0,
+     107
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     0
+    ],
+    "precision": [
+     0.4166666666666667,
+     0.9285714285714286,
+     0
+    ],
+    "recall": [
+     0.25,
+     0.75,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.675,
+    "false_positive_rate": 0.875,
+    "harmful_rate": 0.0,
+    "precision": 0.6956521739130435,
+    "recall": 0.5
+   }
+  },
+  "A3": {
+   "all_allocations": {
+    "cleared": 3,
+    "false_positive": 0,
+    "recommended": 3
+   },
+   "any_allocation": {
+    "cleared": 4,
+    "false_positive": 0,
+    "recommended": 5
+   },
+   "counts": {
+    "abstain_correct": 2.0,
+    "abstain_miss": 12.0,
+    "cases": 20.0,
+    "cleared": 3.5,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 2.0,
+    "not_paying": 4.0,
+    "not_tested": 0.5,
+    "paying": 16.0,
+    "recommended": 4.0
+   },
+   "intervals": {
+    "coverage": [
+     0.05,
+     0.375,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0,
+     107
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     30
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     118
+    ],
+    "recall": [
+     0.05263157894736842,
+     0.42857142857142855,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.2,
+    "false_positive_rate": 0.0,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 0.21875
+   }
+  },
+  "full": {
+   "all_allocations": {
+    "cleared": 3,
+    "false_positive": 0,
+    "recommended": 3
+   },
+   "any_allocation": {
+    "cleared": 3,
+    "false_positive": 0,
+    "recommended": 4
+   },
+   "counts": {
+    "abstain_correct": 2.0,
+    "abstain_miss": 12.5,
+    "cases": 20.0,
+    "cleared": 3.0,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 2.0,
+    "not_paying": 4.0,
+    "not_tested": 0.5,
+    "paying": 16.0,
+    "recommended": 3.5
+   },
+   "intervals": {
+    "coverage": [
+     0.05,
+     0.35,
+     0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0,
+     107
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     101
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     361
+    ],
+    "recall": [
+     0.0,
+     0.4,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.175,
+    "false_positive_rate": 0.0,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 0.1875
+   }
+  },
+  "replay": {
+   "all_allocations": {
+    "cleared": 8,
+    "false_positive": 0,
+    "recommended": 8
+   },
+   "any_allocation": {
+    "cleared": 8,
+    "false_positive": 0,
+    "recommended": 8
+   },
+   "counts": {
+    "abstain_correct": 0.0,
+    "abstain_miss": 0.0,
+    "cases": 7.5,
+    "cleared": 7.5,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.5,
+    "no_outcome": 0.0,
+    "not_paying": 0.0,
+    "not_tested": 0.0,
+    "paying": 7.5,
+    "recommended": 7.5
+   },
+   "intervals": {
+    "coverage": [
+     1.0,
+     1.0,
+     0
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     0
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     0
+    ],
+    "recall": [
+     1.0,
+     1.0,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 1.0,
+    "false_positive_rate": null,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 1.0
+   }
+  }
+ },
+ "E8": {
+  "A1": {
+   "all_allocations": {
+    "cleared": 2,
+    "false_positive": 0,
+    "recommended": 2
+   },
+   "any_allocation": {
+    "cleared": 2,
+    "false_positive": 0,
+    "recommended": 2
+   },
+   "counts": {
+    "abstain_correct": 0.0,
+    "abstain_miss": 6.0,
+    "cases": 8.0,
+    "cleared": 2.0,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 0.0,
+    "not_paying": 0.0,
+    "not_tested": 0.0,
+    "paying": 8.0,
+    "recommended": 2.0
+   },
+   "intervals": {
+    "coverage": [
+     0.0,
+     0.625,
+     0
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     999
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     999
+    ],
+    "recall": [
+     0.0,
+     0.625,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.25,
+    "false_positive_rate": null,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 0.25
+   }
+  },
+  "A2": {
+   "all_allocations": {
+    "cleared": 4,
+    "false_positive": 0,
+    "recommended": 4
+   },
+   "any_allocation": {
+    "cleared": 4,
+    "false_positive": 0,
+    "recommended": 4
+   },
+   "counts": {
+    "abstain_correct": 0.0,
+    "abstain_miss": 4.0,
+    "cases": 8.0,
+    "cleared": 4.0,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 0.0,
+    "not_paying": 0.0,
+    "not_tested": 0.0,
+    "paying": 8.0,
+    "recommended": 4.0
+   },
+   "intervals": {
+    "coverage": [
+     0.125,
+     0.875,
+     0
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     46
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     46
+    ],
+    "recall": [
+     0.125,
+     0.875,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.5,
+    "false_positive_rate": null,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 0.5
+   }
+  },
+  "A3": {
+   "all_allocations": {
+    "cleared": 1,
+    "false_positive": 0,
+    "recommended": 1
+   },
+   "any_allocation": {
+    "cleared": 2,
+    "false_positive": 0,
+    "recommended": 2
+   },
+   "counts": {
+    "abstain_correct": 0.0,
+    "abstain_miss": 6.5,
+    "cases": 8.0,
+    "cleared": 1.5,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 0.0,
+    "not_paying": 0.0,
+    "not_tested": 0.0,
+    "paying": 8.0,
+    "recommended": 1.5
+   },
+   "intervals": {
+    "coverage": [
+     0.0,
+     0.4375,
+     0
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     1036
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     1036
+    ],
+    "recall": [
+     0.0,
+     0.4375,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.1875,
+    "false_positive_rate": null,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 0.1875
+   }
+  },
+  "full": {
+   "all_allocations": {
+    "cleared": 1,
+    "false_positive": 0,
+    "recommended": 1
+   },
+   "any_allocation": {
+    "cleared": 1,
+    "false_positive": 0,
+    "recommended": 1
+   },
+   "counts": {
+    "abstain_correct": 0.0,
+    "abstain_miss": 7.0,
+    "cases": 8.0,
+    "cleared": 1.0,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.0,
+    "no_outcome": 0.0,
+    "not_paying": 0.0,
+    "not_tested": 0.0,
+    "paying": 8.0,
+    "recommended": 1.0
+   },
+   "intervals": {
+    "coverage": [
+     0.0,
+     0.375,
+     0
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     3472
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     3472
+    ],
+    "recall": [
+     0.0,
+     0.375,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 0.125,
+    "false_positive_rate": null,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 0.125
+   }
+  },
+  "replay": {
+   "all_allocations": {
+    "cleared": 8,
+    "false_positive": 0,
+    "recommended": 8
+   },
+   "any_allocation": {
+    "cleared": 8,
+    "false_positive": 0,
+    "recommended": 8
+   },
+   "counts": {
+    "abstain_correct": 0.0,
+    "abstain_miss": 0.0,
+    "cases": 7.5,
+    "cleared": 7.5,
+    "false_positive": 0.0,
+    "harmful": 0.0,
+    "missing": 0.5,
+    "no_outcome": 0.0,
+    "not_paying": 0.0,
+    "not_tested": 0.0,
+    "paying": 7.5,
+    "recommended": 7.5
+   },
+   "intervals": {
+    "coverage": [
+     1.0,
+     1.0,
+     0
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0,
+     0
+    ],
+    "precision": [
+     1.0,
+     1.0,
+     0
+    ],
+    "recall": [
+     1.0,
+     1.0,
+     0
+    ]
+   },
+   "rates": {
+    "coverage": 1.0,
+    "false_positive_rate": null,
+    "harmful_rate": 0.0,
+    "precision": 1.0,
+    "recall": 1.0
+   }
+  }
+ }
+}
