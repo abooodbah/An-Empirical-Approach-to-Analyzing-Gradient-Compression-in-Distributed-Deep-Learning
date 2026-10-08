@@ -131,3 +131,109 @@ def test_what_the_paper_says_about_the_24_rank_fit_is_in_the_committed_file():
         assert 5.4 < g["from_16_to_64_mib"]["gather_over_ring"] < 5.8
         assert 5.7 < g["rule_1_to_64_mib"]["gather_over_ring"] < 5.8
         assert 12.0 < g["tree_over_ring_time_at_1024_mib"] < 12.5
+
+
+# ---- added after the second review (2026-10-08): points that are not on a line
+def curved(tmp_path, run="e9-q24a-8n-9"):
+    """Probes whose points bend, so that every fit range gives its own ratio
+    and a mistake in a range, a divisor or a probe shows."""
+    ring_ar = {("allreduce", 1): 0.010, ("allreduce", 16): 0.004, ("allreduce", 64): 0.012,
+               ("allreduce", 256): 0.050, ("allreduce", 1024): 0.175}
+    ring_ag = {("allgather", 1): 0.003, ("allgather", 16): 0.033, ("allgather", 64): 0.134,
+               ("allgather", 256): 0.536}
+    default_ar = {("allreduce", 1): 0.003, ("allreduce", 16): 0.0037, ("allreduce", 64): 0.0121,
+                  ("allreduce", 256): 0.0525, ("allreduce", 1024): 0.200}
+    default_ag = {("allgather", 1): 0.003, ("allgather", 16): 0.040, ("allgather", 64): 0.160,
+                  ("allgather", 256): 0.640}
+    tree_ar = {("allreduce", 1): 0.003, ("allreduce", 16): 0.011, ("allreduce", 64): 0.124,
+               ("allreduce", 256): 0.522, ("allreduce", 1024): 2.100}
+    probe(tmp_path, run, "ring", allreduce=1e-10, allgather=1e-10, world=24, slow=dict(ring_ar, **ring_ag))
+    probe(tmp_path, run, "default", allreduce=1e-10, allgather=1e-10, world=24, slow=dict(default_ar, **default_ag))
+    return probe(tmp_path, run, "tree", allreduce=1e-10, world=24, slow=tree_ar)
+
+
+def secant(points, a, b):
+    return (points[b] - points[a]) / ((b - a) * MIB)
+
+
+def test_each_fit_range_uses_its_own_points_and_the_ring_probes_own_gather(tmp_path):
+    gdr = P.allocation(curved(tmp_path))["gdr"]
+    ring_ar = {16: 0.004, 64: 0.012, 256: 0.050}
+    ring_ag = {16: 0.033, 64: 0.134, 256: 0.536}
+    default_ar = {16: 0.0037, 64: 0.0121, 256: 0.0525}
+    # two points: the line is the secant
+    assert gdr["from_16_to_64_mib"]["gather_over_ring"] == pytest.approx(
+        secant(ring_ag, 16, 64) / secant(ring_ar, 16, 64))                      # 12.625
+    assert gdr["from_64_to_256_mib"]["gather_over_ring"] == pytest.approx(
+        secant(ring_ag, 64, 256) / secant(ring_ar, 64, 256))                    # 10.579
+    assert gdr["from_16_to_64_mib"]["default_over_ring"] == pytest.approx(
+        secant(default_ar, 16, 64) / secant(ring_ar, 16, 64))
+    # three points: least squares, checked against numpy
+    import numpy
+    sizes = [16 * MIB, 64 * MIB, 256 * MIB]
+    b_ag = numpy.polyfit(sizes, [ring_ag[k] for k in (16, 64, 256)], 1)[0]
+    b_ar = numpy.polyfit(sizes, [ring_ar[k] for k in (16, 64, 256)], 1)[0]
+    assert gdr["from_16_to_256_mib"]["gather_over_ring"] == pytest.approx(b_ag / b_ar)
+    assert not gdr["from_16_to_64_mib"]["gather_over_ring"] == pytest.approx(
+        gdr["from_16_to_256_mib"]["gather_over_ring"], rel=0.02)
+
+
+def test_the_prediction_error_is_relative_to_the_measured_time_above_the_ranges_top(tmp_path):
+    gdr = P.allocation(curved(tmp_path))["gdr"]
+    default_ar = {16: 0.0037, 64: 0.0121, 256: 0.0525, 1024: 0.200}
+    slope = secant(default_ar, 16, 64)
+    predicted = {k: default_ar[64] + slope * (k - 64) * MIB for k in (256, 1024)}
+    errors = gdr["from_16_to_64_mib"]["prediction_errors"]
+    assert sorted(errors) == ["allgather 256 MiB", "allreduce 1024 MiB", "allreduce 256 MiB"]   # 64 MiB is not scored
+    assert errors["allreduce 256 MiB"] == pytest.approx(abs(predicted[256] - 0.0525) / 0.0525)
+    assert errors["allreduce 1024 MiB"] == pytest.approx(abs(predicted[1024] - 0.200) / 0.200)
+    # a range that ends at 256 MiB predicts the 1 GiB point only
+    assert sorted(gdr["from_64_to_256_mib"]["prediction_errors"]) == ["allreduce 1024 MiB"]
+    assert sorted(gdr["rule_1_to_64_mib"]["prediction_errors"]) == sorted(errors)
+
+
+def test_the_tree_is_set_against_the_forced_ring_not_the_default_probe(tmp_path):
+    gdr = P.allocation(curved(tmp_path))["gdr"]
+    assert gdr["tree_over_ring_time_at_1024_mib"] == pytest.approx(2.100 / 0.175)       # the default took 0.200 s
+    assert gdr["from_16_to_64_mib"]["tree_over_ring"] == pytest.approx(
+        secant({16: 0.011, 64: 0.124}, 16, 64) / secant({16: 0.004, 64: 0.012}, 16, 64))
+
+
+def test_the_script_on_a_committed_archive_gives_the_committed_entry():
+    # ties the script to its committed output; reproduce_diagnostic.sh compares all four
+    import glob
+    import shutil
+    import tarfile
+    import tempfile
+    archive = glob.glob(os.path.join(ROOT, "raw", "rev4", "e9-q24b-*.tgz"))
+    assert len(archive) == 1
+    work = tempfile.mkdtemp(prefix="e9p", dir=os.environ.get("REV4_SHORT_TMP"))
+    try:
+        with tarfile.open(archive[0]) as tf:
+            members = [m for m in tf.getmembers() if "/probes/" in m.name]
+            try:
+                tf.extractall(work, members=members, filter="data")
+            except TypeError:
+                tf.extractall(work, members=members)
+        run = glob.glob(os.path.join(work, "e9-q24b-*"))[0].replace("\\", "/") + "/"
+        got = json.loads(json.dumps(P.allocation(run)))
+    finally:
+        shutil.rmtree(work, ignore_errors=True)
+    want = [a for a in committed()["allocations"] if a["run_dir"] == got["run_dir"]]
+    assert len(want) == 1 and got == want[0]
+
+
+def test_the_second_reading_of_all_three_checks_is_in_the_committed_file():
+    # what the paper's second paragraph states for 24 ranks over GPUDirect
+    late = [a["gdr"] for a in committed()["allocations"] if a["world"] == 24]
+    assert [round(g["from_16_to_64_mib"]["default_over_ring"], 3) for g in late] == [0.977, 1.058]
+    assert [round(max(g["from_16_to_64_mib"]["prediction_errors"].values()), 3) for g in late] == [0.134, 0.103]
+    ratios = [g[name]["gather_over_ring"] for g in late
+              for name in ("from_16_to_64_mib", "from_16_to_256_mib", "from_64_to_256_mib")]
+    assert round(min(ratios), 1) == 10.5 and round(max(ratios), 1) == 12.1
+    assert [round(g["from_16_to_256_mib"]["gather_over_ring"], 2) for g in late] == [10.63, 11.07]
+    assert [round(g["from_64_to_256_mib"]["gather_over_ring"], 2) for g in late] == [10.46, 10.91]
+    # the host-staged path has no slow point and a different tree ratio
+    host = [a["host_staged"] for a in committed()["allocations"] if "host_staged" in a]
+    assert all(h["ring_allreduce_1_mib_over_16_mib"] < 1 for h in host) and len(host) == 2
+    assert [round(h["tree_over_ring_time_at_1024_mib"], 2) for h in host] == [4.22, 4.05]
