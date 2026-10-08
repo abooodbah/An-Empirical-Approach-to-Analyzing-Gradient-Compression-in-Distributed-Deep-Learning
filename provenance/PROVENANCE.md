@@ -41,7 +41,7 @@ lonestar6_jobs_utc.tsv (Slurm accounting), and git.
 ## Revision 4: E9 and E10
 | Time | Event |
 |---|---|
-| 2026-10-08 00:14:19 | E9 and E10 pre-registration pushed to GitHub (fce4c1b..78b077e: harness v5.2, diagnostic/E9_PROTOCOL.md and E10_PROTOCOL.md, both scorers, the launch scripts, and the freeze hashes diagnostic/E9_FREEZE.sha256 and E10_FREEZE.sha256). The time is the repository's `pushed_at`; the author approved the push at 00:13 |
+| 2026-10-08 00:14:19 | E9 and E10 pre-registration pushed to GitHub (fce4c1b..78b077e: harness v5.2, diagnostic/E9_PROTOCOL.md and E10_PROTOCOL.md, both scorers, the launch scripts, and the freeze hashes diagnostic/E9_FREEZE.sha256 and E10_FREEZE.sha256). The time is the repository's `pushed_at` and the push in its activity list (provenance/github_activity_rev4.json); the author approved the push at 00:13 |
 | 2026-10-08 00:15:54 | E10 submitted on Stampede3: s2 3579138 and s1 3579139 (provenance/rev4_jobs.tsv) |
 | 2026-10-08 00:16:07 | E9 submitted on Lonestar6 with `--nice=100`: q12a 3495229, q12b 3495230, q24a 3495231, q24b 3495232 |
 | 2026-10-08 00:15:57 to 01:06:06 | E10 s2 3579138 (32 ranks) ran 3009 s to its time limit. Both check runs and the probe returned 0; the timed gather stalled after initialization and no timed run completed. TACC drained node c552-003 with "GPU missing" at 01:06:50 |
