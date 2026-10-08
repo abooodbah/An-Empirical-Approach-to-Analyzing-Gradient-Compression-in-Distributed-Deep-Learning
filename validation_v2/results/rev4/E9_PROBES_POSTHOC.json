@@ -2,6 +2,18 @@
  "allocations": [
   {
    "gdr": {
+    "from_16_to_256_mib": {
+     "allgather_ns_per_byte": 0.9683440138806542,
+     "default_over_ring": 1.0122181007420032,
+     "gather_over_ring": 5.161420883363149,
+     "gather_over_tree": 0.5063308342902852,
+     "prediction_errors": {
+      "allreduce 1024 MiB": 0.23637164847654546
+     },
+     "ring_allreduce_ns_per_byte": 0.1876119068301377,
+     "tree_allreduce_ns_per_byte": 1.9124729293604337,
+     "tree_over_ring": 10.193771609026772
+    },
     "from_16_to_64_mib": {
      "allgather_ns_per_byte": 0.9514097966246817,
      "default_over_ring": 0.9684793715508927,
@@ -15,6 +27,18 @@
      "ring_allreduce_ns_per_byte": 0.174595800780016,
      "tree_allreduce_ns_per_byte": 1.79417790809507,
      "tree_over_ring": 10.27618018348371
+    },
+    "from_64_to_256_mib": {
+     "allgather_ns_per_byte": 0.9711663834233164,
+     "default_over_ring": 1.0189245923235914,
+     "gather_over_ring": 5.117293427624997,
+     "gather_over_tree": 0.5026250024805778,
+     "prediction_errors": {
+      "allreduce 1024 MiB": 0.25403585676535195
+     },
+     "ring_allreduce_ns_per_byte": 0.18978125783849129,
+     "tree_allreduce_ns_per_byte": 1.932188766237994,
+     "tree_over_ring": 10.181135841571542
     },
     "points_ms": {
      "default_allreduce": {
@@ -63,6 +87,18 @@
     "tree_over_ring_time_at_1024_mib": 12.171400217832923
    },
    "host_staged": {
+    "from_16_to_256_mib": {
+     "allgather_ns_per_byte": 2.7272933805513215,
+     "default_over_ring": 1.0017588409126443,
+     "gather_over_ring": 6.8363436126012775,
+     "gather_over_tree": 1.753281168541404,
+     "prediction_errors": {
+      "allreduce 1024 MiB": 0.0023345807210692075
+     },
+     "ring_allreduce_ns_per_byte": 0.39894035980347203,
+     "tree_allreduce_ns_per_byte": 1.555536801219522,
+     "tree_over_ring": 3.8991712996544603
+    },
     "from_16_to_64_mib": {
      "allgather_ns_per_byte": 2.6983834241119573,
      "default_over_ring": 1.004553751747931,
@@ -76,6 +112,18 @@
      "ring_allreduce_ns_per_byte": 0.4038518932849813,
      "tree_allreduce_ns_per_byte": 1.2379149927355115,
      "tree_over_ring": 3.065269751903743
+    },
+    "from_64_to_256_mib": {
+     "allgather_ns_per_byte": 2.732111706624549,
+     "default_over_ring": 1.0012863179665994,
+     "gather_over_ring": 6.862502647161686,
+     "gather_over_tree": 1.698573989063699,
+     "prediction_errors": {
+      "allreduce 1024 MiB": 0.004300862564986423
+     },
+     "ring_allreduce_ns_per_byte": 0.39812177088988715,
+     "tree_allreduce_ns_per_byte": 1.6084737693001907,
+     "tree_over_ring": 4.040155266326955
     },
     "points_ms": {
      "default_allreduce": {
@@ -128,6 +176,18 @@
   },
   {
    "gdr": {
+    "from_16_to_256_mib": {
+     "allgather_ns_per_byte": 0.967529768604512,
+     "default_over_ring": 1.0112207748466258,
+     "gather_over_ring": 5.485718801564958,
+     "gather_over_tree": 0.5080330510118856,
+     "prediction_errors": {
+      "allreduce 1024 MiB": 0.1569653256356705
+     },
+     "ring_allreduce_ns_per_byte": 0.17637246887837135,
+     "tree_allreduce_ns_per_byte": 1.904462252362153,
+     "tree_over_ring": 10.79795653184111
+    },
     "from_16_to_64_mib": {
      "allgather_ns_per_byte": 0.95277509955712,
      "default_over_ring": 1.0404285415136232,
@@ -141,6 +201,18 @@
      "ring_allreduce_ns_per_byte": 0.1676549269783815,
      "tree_allreduce_ns_per_byte": 1.8760884450901787,
      "tree_over_ring": 11.190177818824814
+    },
+    "from_64_to_256_mib": {
+     "allgather_ns_per_byte": 0.9699888801124108,
+     "default_over_ring": 1.0066312297146167,
+     "gather_over_ring": 5.4547264950232695,
+     "gather_over_tree": 0.5080627177774586,
+     "prediction_errors": {
+      "allreduce 1024 MiB": 0.1602724248659073
+     },
+     "ring_allreduce_ns_per_byte": 0.17782539252836962,
+     "tree_allreduce_ns_per_byte": 1.9091912202408148,
+     "tree_over_ring": 10.73632507200134
     },
     "points_ms": {
      "default_allreduce": {
@@ -193,6 +265,18 @@
   },
   {
    "gdr": {
+    "from_16_to_256_mib": {
+     "allgather_ns_per_byte": 1.9968226310767139,
+     "default_over_ring": 1.0420399522611437,
+     "gather_over_ring": 10.625949052490848,
+     "gather_over_tree": 0.9908334083346483,
+     "prediction_errors": {
+      "allreduce 1024 MiB": 0.21112811332767187
+     },
+     "ring_allreduce_ns_per_byte": 0.18791946217816988,
+     "tree_allreduce_ns_per_byte": 2.015296026839558,
+     "tree_over_ring": 10.724253908990113
+    },
     "from_16_to_64_mib": {
      "allgather_ns_per_byte": 1.995043021217767,
      "default_over_ring": 0.9768428332163711,
@@ -206,6 +290,18 @@
      "ring_allreduce_ns_per_byte": 0.16979330750041854,
      "tree_allreduce_ns_per_byte": 2.2512739234543173,
      "tree_over_ring": 13.258908472872335
+    },
+    "from_64_to_256_mib": {
+     "allgather_ns_per_byte": 1.997119232719872,
+     "default_over_ring": 1.051702678939763,
+     "gather_over_ring": 10.459380585438272,
+     "gather_over_tree": 1.0107050684454968,
+     "prediction_errors": {
+      "allreduce 1024 MiB": 0.2352838507792966
+     },
+     "ring_allreduce_ns_per_byte": 0.19094048795779509,
+     "tree_allreduce_ns_per_byte": 1.9759663774037644,
+     "tree_over_ring": 10.348598134097815
     },
     "points_ms": {
      "default_allreduce": {
@@ -254,6 +350,18 @@
     "tree_over_ring_time_at_1024_mib": 11.78929660695406
    },
    "host_staged": {
+    "from_16_to_256_mib": {
+     "allgather_ns_per_byte": 5.7423737128894965,
+     "default_over_ring": 0.9948826561506393,
+     "gather_over_ring": 13.697335222006334,
+     "gather_over_tree": 3.706768581072353,
+     "prediction_errors": {
+      "allreduce 1024 MiB": 0.008464762986364092
+     },
+     "ring_allreduce_ns_per_byte": 0.41923291062218565,
+     "tree_allreduce_ns_per_byte": 1.5491589472867096,
+     "tree_over_ring": 3.69522265078759
+    },
     "from_16_to_64_mib": {
      "allgather_ns_per_byte": 5.7498900162760656,
      "default_over_ring": 1.011539922671586,
@@ -267,6 +375,18 @@
      "ring_allreduce_ns_per_byte": 0.43102485007088615,
      "tree_allreduce_ns_per_byte": 1.2277399374927,
      "tree_over_ring": 2.8484203110117354
+    },
+    "from_64_to_256_mib": {
+     "allgather_ns_per_byte": 5.741120995658402,
+     "default_over_ring": 0.9920149137147241,
+     "gather_over_ring": 13.758847246431147,
+     "gather_over_tree": 3.582091405128557,
+     "prediction_errors": {
+      "allreduce 1024 MiB": 0.014319024046582281
+     },
+     "ring_allreduce_ns_per_byte": 0.4172675873807356,
+     "tree_allreduce_ns_per_byte": 1.6027287822523781,
+     "tree_over_ring": 3.8410095361420176
     },
     "points_ms": {
      "default_allreduce": {
@@ -319,6 +439,18 @@
   },
   {
    "gdr": {
+    "from_16_to_256_mib": {
+     "allgather_ns_per_byte": 1.9955691740824306,
+     "default_over_ring": 1.099487566569317,
+     "gather_over_ring": 11.066048852532678,
+     "gather_over_tree": 1.1261038440903834,
+     "prediction_errors": {
+      "allreduce 1024 MiB": 0.21587933718315502
+     },
+     "ring_allreduce_ns_per_byte": 0.18033258308142264,
+     "tree_allreduce_ns_per_byte": 1.772100490158936,
+     "tree_over_ring": 9.826845819420267
+    },
     "from_16_to_64_mib": {
      "allgather_ns_per_byte": 2.003787517085915,
      "default_over_ring": 1.058112076393731,
@@ -332,6 +464,18 @@
      "ring_allreduce_ns_per_byte": 0.16537802763030543,
      "tree_allreduce_ns_per_byte": 2.2416182891375294,
      "tree_over_ring": 13.554510966526692
+    },
+    "from_64_to_256_mib": {
+     "allgather_ns_per_byte": 1.9941994502485163,
+     "default_over_ring": 1.105725404776171,
+     "gather_over_ring": 10.907695075558422,
+     "gather_over_tree": 1.1773193409620364,
+     "prediction_errors": {
+      "allreduce 1024 MiB": 0.23448971685642897
+     },
+     "ring_allreduce_ns_per_byte": 0.18282500898994217,
+     "tree_allreduce_ns_per_byte": 1.6938475236625037,
+     "tree_over_ring": 9.264856777639695
     },
     "points_ms": {
      "default_allreduce": {
@@ -383,5 +527,5 @@
    "world": 24
   }
  ],
- "label": "POST HOC: the E9 probes read after the records. rule_1_to_64_mib repeats the frozen scorer's range; from_16_to_64_mib leaves out the 1 MiB point; the tree probe is not part of the frozen scorer"
+ "label": "POST HOC: the E9 probes read after the records. rule_1_to_64_mib repeats the frozen scorer's range; from_16_to_64_mib, from_16_to_256_mib and from_64_to_256_mib leave out the 1 MiB point; the tree probe is not part of the frozen scorer"
 }

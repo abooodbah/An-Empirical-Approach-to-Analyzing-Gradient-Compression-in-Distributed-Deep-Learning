@@ -1,43 +1,170 @@
 {
- "facts": {
-  "adapter": {
-   "Mellanox Technologies MT28908 Family [ConnectX-6]": 22,
-   "Mellanox Technologies MT42822 BlueField-2 integrated ConnectX-6 Dx network controller": 2
+ "by_node": {
+  "c302-004": {
+   "adapter": "Mellanox Technologies MT28908 Family [ConnectX-6]",
+   "adapter_firmware": "20.32.2004",
+   "adapter_numa_node": "0",
+   "cpu": "2 x AMD EPYC 7763 64-Core Processor",
+   "gpu": "NVIDIA A100-PCIE-40GB, 40960 MiB",
+   "gpu_driver": "570.195.03",
+   "gpu_numa_nodes": "0, 1, 1",
+   "gpu_to_adapter": "NODE, SYS, SYS",
+   "gpu_vbios": "92.00.25.00.08",
+   "kernel": "4.18.0-553.150.1.el8_10.x86_64"
   },
-  "adapter_firmware": {
-   "20.32.2004": 22,
-   "24.33.1048": 2
+  "c309-001": {
+   "adapter": "Mellanox Technologies MT42822 BlueField-2 integrated ConnectX-6 Dx network controller",
+   "adapter_firmware": "24.33.1048",
+   "adapter_numa_node": "0",
+   "cpu": "2 x AMD EPYC 7763 64-Core Processor",
+   "gpu": "NVIDIA A100-PCIE-40GB, 40960 MiB",
+   "gpu_driver": "570.195.03",
+   "gpu_numa_nodes": "0, 1, 1",
+   "gpu_to_adapter": "NODE, SYS, SYS",
+   "gpu_vbios": "92.00.25.00.08",
+   "kernel": "4.18.0-553.150.1.el8_10.x86_64"
   },
-  "adapter_numa_node": {
-   "0": 24
+  "c315-001": {
+   "adapter": "Mellanox Technologies MT28908 Family [ConnectX-6]",
+   "adapter_firmware": "20.32.2004",
+   "adapter_numa_node": "0",
+   "cpu": "2 x AMD EPYC 7763 64-Core Processor",
+   "gpu": "NVIDIA A100-PCIE-40GB, 40960 MiB",
+   "gpu_driver": "570.195.03",
+   "gpu_numa_nodes": "0, 1, 1",
+   "gpu_to_adapter": "NODE, SYS, SYS",
+   "gpu_vbios": "92.00.25.00.08",
+   "kernel": "4.18.0-553.150.1.el8_10.x86_64"
   },
-  "cpu": {
-   "2 x AMD EPYC 7763 64-Core Processor": 24
+  "c315-003": {
+   "adapter": "Mellanox Technologies MT28908 Family [ConnectX-6]",
+   "adapter_firmware": "20.32.2004",
+   "adapter_numa_node": "0",
+   "cpu": "2 x AMD EPYC 7763 64-Core Processor",
+   "gpu": "NVIDIA A100-PCIE-40GB, 40960 MiB",
+   "gpu_driver": "570.195.03",
+   "gpu_numa_nodes": "0, 1, 1",
+   "gpu_to_adapter": "NODE, SYS, SYS",
+   "gpu_vbios": "92.00.25.00.08",
+   "kernel": "4.18.0-553.150.1.el8_10.x86_64"
   },
-  "gpu": {
-   "NVIDIA A100-PCIE-40GB, 40960 MiB": 24
+  "c315-010": {
+   "adapter": "Mellanox Technologies MT28908 Family [ConnectX-6]",
+   "adapter_firmware": "20.32.2004",
+   "adapter_numa_node": "0",
+   "cpu": "2 x AMD EPYC 7763 64-Core Processor",
+   "gpu": "NVIDIA A100-PCIE-40GB, 40960 MiB",
+   "gpu_driver": "570.195.03",
+   "gpu_numa_nodes": "0, 1, 1",
+   "gpu_to_adapter": "NODE, SYS, SYS",
+   "gpu_vbios": "92.00.25.00.08",
+   "kernel": "4.18.0-553.150.1.el8_10.x86_64"
   },
-  "gpu_driver": {
-   "570.195.03": 24
+  "c315-011": {
+   "adapter": "Mellanox Technologies MT28908 Family [ConnectX-6]",
+   "adapter_firmware": "20.32.2004",
+   "adapter_numa_node": "0",
+   "cpu": "2 x AMD EPYC 7763 64-Core Processor",
+   "gpu": "NVIDIA A100-PCIE-40GB, 40960 MiB",
+   "gpu_driver": "570.195.03",
+   "gpu_numa_nodes": "0, 1, 1",
+   "gpu_to_adapter": "NODE, SYS, SYS",
+   "gpu_vbios": "92.00.25.00.08",
+   "kernel": "4.18.0-553.150.1.el8_10.x86_64"
   },
-  "gpu_numa_nodes": {
-   "0, 1, 1": 24
+  "c316-012": {
+   "adapter": "Mellanox Technologies MT28908 Family [ConnectX-6]",
+   "adapter_firmware": "20.32.2004",
+   "adapter_numa_node": "0",
+   "cpu": "2 x AMD EPYC 7763 64-Core Processor",
+   "gpu": "NVIDIA A100-PCIE-40GB, 40960 MiB",
+   "gpu_driver": "570.195.03",
+   "gpu_numa_nodes": "0, 1, 1",
+   "gpu_to_adapter": "NODE, SYS, SYS",
+   "gpu_vbios": "92.00.25.00.08",
+   "kernel": "4.18.0-553.150.1.el8_10.x86_64"
   },
-  "gpu_to_adapter": {
-   "NODE, SYS, SYS": 24
-  },
-  "gpu_vbios": {
-   "92.00.25.00.08": 24
-  },
-  "kernel": {
-   "4.18.0-553.150.1.el8_10.x86_64": 24
+  "c317-014": {
+   "adapter": "Mellanox Technologies MT28908 Family [ConnectX-6]",
+   "adapter_firmware": "20.32.2004",
+   "adapter_numa_node": "0",
+   "cpu": "2 x AMD EPYC 7763 64-Core Processor",
+   "gpu": "NVIDIA A100-PCIE-40GB, 40960 MiB",
+   "gpu_driver": "570.195.03",
+   "gpu_numa_nodes": "0, 1, 1",
+   "gpu_to_adapter": "NODE, SYS, SYS",
+   "gpu_vbios": "92.00.25.00.08",
+   "kernel": "4.18.0-553.150.1.el8_10.x86_64"
   }
  },
+ "facts": {
+  "adapter": {
+   "Mellanox Technologies MT28908 Family [ConnectX-6]": 7,
+   "Mellanox Technologies MT42822 BlueField-2 integrated ConnectX-6 Dx network controller": 1
+  },
+  "adapter_firmware": {
+   "20.32.2004": 7,
+   "24.33.1048": 1
+  },
+  "adapter_numa_node": {
+   "0": 8
+  },
+  "cpu": {
+   "2 x AMD EPYC 7763 64-Core Processor": 8
+  },
+  "gpu": {
+   "NVIDIA A100-PCIE-40GB, 40960 MiB": 8
+  },
+  "gpu_driver": {
+   "570.195.03": 8
+  },
+  "gpu_numa_nodes": {
+   "0, 1, 1": 8
+  },
+  "gpu_to_adapter": {
+   "NODE, SYS, SYS": 8
+  },
+  "gpu_vbios": {
+   "92.00.25.00.08": 8
+  },
+  "kernel": {
+   "4.18.0-553.150.1.el8_10.x86_64": 8
+  }
+ },
+ "nodes": 8,
  "records": 24,
  "runs": {
-  "e9-q12a-4n-3495229": 4,
-  "e9-q12b-4n-3495230": 4,
-  "e9-q24a-8n-3495231": 8,
-  "e9-q24b-8n-3495232": 8
+  "e9-q12a-4n-3495229": [
+   "c315-001",
+   "c315-003",
+   "c315-010",
+   "c315-011"
+  ],
+  "e9-q12b-4n-3495230": [
+   "c315-001",
+   "c315-003",
+   "c315-010",
+   "c315-011"
+  ],
+  "e9-q24a-8n-3495231": [
+   "c302-004",
+   "c309-001",
+   "c315-001",
+   "c315-003",
+   "c315-010",
+   "c315-011",
+   "c316-012",
+   "c317-014"
+  ],
+  "e9-q24b-8n-3495232": [
+   "c302-004",
+   "c309-001",
+   "c315-001",
+   "c315-003",
+   "c315-010",
+   "c315-011",
+   "c316-012",
+   "c317-014"
+  ]
  }
 }

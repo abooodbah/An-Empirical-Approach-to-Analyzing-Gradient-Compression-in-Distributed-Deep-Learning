@@ -81,9 +81,11 @@ mkdir -p "$W/e9"
 for a in raw/rev4/e9-*.tgz; do tar xzf "$a" -C "$W/e9"; done
 python validation_v2/analysis/score_e9.py "$PYW"/e9/e9-*/ --json "$PYW/E9.json" > /dev/null
 samejson "$PYW/E9.json" validation_v2/results/rev4/E9_RESULT.json
-echo "== E9: the post hoc reading of the probes, and the expectations record"
+echo "== E9: the post hoc readings (probes, spread between passes), and the expectations record"
 python validation_v2/analysis/e9_probes_posthoc.py "$PYW"/e9/e9-*/ --json "$PYW/E9_PROBES.json" > /dev/null
 cmp "$W/E9_PROBES.json" validation_v2/results/rev4/E9_PROBES_POSTHOC.json && echo "E9_PROBES_POSTHOC.json identical"
+python validation_v2/analysis/e9_pass_spread_posthoc.py "$PYW"/e9/e9-*/ --json "$PYW/E9_SPREAD.json" > /dev/null
+cmp "$W/E9_SPREAD.json" validation_v2/results/rev4/E9_PASS_SPREAD_POSTHOC.json && echo "E9_PASS_SPREAD_POSTHOC.json identical"
 for f in validation_v2/results/rev4/E9_EXPECTATIONS.json validation_v2/results/rev4/E9_EXPECTATIONS.md; do keep "$f"; done
 python validation_v2/analysis/e9_expectations.py > /dev/null
 for f in validation_v2/results/rev4/E9_EXPECTATIONS.json validation_v2/results/rev4/E9_EXPECTATIONS.md; do same "$f"; done
@@ -102,5 +104,6 @@ python provenance/make_rev4_su.py > /dev/null
 same provenance/rev4_su.tsv
 echo "== tests of the retrospective modules"
 (cd diagnostic/v1_2 && REV4_MEM_ROOT="$PYW/mem" python -m pytest -q -p no:cacheprovider | tail -1)
-(cd validation_v2/analysis && REV4_JULY_ROOT="$PYW/july" python -m pytest tests/test_step_spread.py tests/test_intervals.py tests/test_traffic_models.py tests/test_e9_probes_posthoc.py tests/test_e9_expectations.py -q -p no:cacheprovider | tail -1)
+(cd validation_v2/analysis && REV4_JULY_ROOT="$PYW/july" python -m pytest tests/test_step_spread.py tests/test_intervals.py tests/test_traffic_models.py tests/test_e9_probes_posthoc.py tests/test_e9_pass_spread_posthoc.py tests/test_e9_expectations.py -q -p no:cacheprovider | tail -1)
+python -m pytest environment -q -p no:cacheprovider | tail -1
 echo "ALL REGENERATED"

@@ -1,13 +1,20 @@
 # -*- coding: utf-8 -*-
 """E9: the expectations of protocol section 5 and the probe checks of
-section 6, set against the scored result.
+section 6, set against the scored result. Written on 2026-10-08, after the
+E9 records were read.
 
-diagnostic/E9_PROTOCOL.md states them before the jobs ran and does not use
-them in scoring. This script reads E9_RESULT.json, the frozen scorer's
-output, and says of each whether it held and in which cell it did not. The
-last section of the Markdown file repeats the probe ratios from
-E9_PROBES_POSTHOC.json, a reading made after the records were read, and is
-labeled so. Nothing here changes a frozen file or a scored number.
+diagnostic/E9_PROTOCOL.md states the expectations before the jobs ran and
+does not use them in scoring. Each is one sentence, and this script had to
+fix how each sentence is read (READINGS below); those readings were chosen
+after the records were read and are printed in the output. The probe checks
+P1 to P3 are not read here at all: their verdicts are the frozen scorer's.
+
+The script reads E9_RESULT.json, the frozen scorer's output, and says of
+each expectation whether it held and in which cell it did not. The last
+section of the Markdown file repeats the probe checks from
+E9_PROBES_POSTHOC.json with lines that leave out the 1 MiB point; that
+reading was made after the records were read and is labeled so. Nothing
+here changes a frozen file or a scored number.
 
 usage: python e9_expectations.py        (reads and writes validation_v2/results/rev4)
 """
@@ -20,6 +27,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 RESULTS = os.path.join(os.path.dirname(HERE), "results", "rev4")
 MODELS = ("transformer", "resnet50")
 CHECKS = ("P1", "P2", "P3")
+EPS = 1e-9          # a ratio that is exactly on a bound counts as on it, whatever its binary form
 STATEMENT = {
     "X1": "gpu-quant-sr-int8 is within 10% of gpu-quant-reducible in step time.",
     "X2": "gpu-quant-sr-fp16 is not faster than fp16-native.",
@@ -30,6 +38,16 @@ STATEMENT = {
     "P2": "The default all-reduce slope is not more than 5% above the Ring slope.",
     "P3": "The 1 MiB to 64 MiB line predicts the 256 MiB and 1 GiB times within 15%.",
 }
+READINGS = (
+    "X1: in every allocation, and on both sides: the ratio of the two steps is between 0.90 and 1.10.",
+    "X2: fails in a cell only if every allocation that ran is at or below 0.95, the protocol's bound for faster.",
+    "X3: the protocol's call is slower in every cell, and every value of a workload at the larger scale is "
+    "above every value at the smaller scale.",
+    "X4: holds in a cell if every allocation is below 1.05, the protocol's bound for slower.",
+    "X5: strictly below, in every cell that measured both.",
+)
+POSTHOC_RANGES = (("16 to 64 MiB", "from_16_to_64_mib"), ("16 to 256 MiB", "from_16_to_256_mib"),
+                  ("64 to 256 MiB", "from_64_to_256_mib"))
 
 
 def live(result):
@@ -62,11 +80,11 @@ def outcomes(result):
             new, old = (a["table"].get("%s|%s" % (model, m)) for m in ("gpu-quant-sr-int8", "gpu-quant-reducible"))
             if new and old:
                 values.setdefault("%d|%s" % (a["world"], model), []).append(new["T_ms"] / old["T_ms"])
-    failed = [k for k, v in values.items() if any(abs(r - 1.0) > 0.10 for r in v)]
+    failed = [k for k, v in values.items() if any(abs(r - 1.0) > 0.10 + EPS for r in v)]
     out["X1"] = {"statement": STATEMENT["X1"], "values": values, "failed": failed, "held": bool(values) and not failed}
 
     found = summary_cells(result, "gpu-quant-sr-fp16", "fp16-native")
-    failed = [k for k, c in found.items() if c["call"] == "faster"]
+    failed = [k for k, c in found.items() if c["values"] and all(r <= 0.95 + EPS for r in c["values"])]
     out["X2"] = {"statement": STATEMENT["X2"], "calls": {k: c["call"] for k, c in found.items()},
                  "values": {k: c["values"] for k, c in found.items()}, "failed": failed,
                  "held": bool(found) and not failed}
@@ -74,7 +92,7 @@ def outcomes(result):
     found = summary_cells(result, "ddp-int8-hook", "ddp-overlap")
     failed = [k for k, c in found.items() if c["call"] != "slower"]
     scales = worlds(result)
-    for model in MODELS:
+    for model in MODELS if scales else ():
         low, high = (found.get("%d|%s" % (w, model)) for w in (scales[0], scales[-1]))
         if len(scales) < 2 or not low or not high or min(high["values"]) <= max(low["values"]):
             failed.append("%s: not larger at %d ranks" % (model, scales[-1]))
@@ -83,7 +101,7 @@ def outcomes(result):
                  "held": bool(found) and not failed}
 
     found = summary_cells(result, "ddp-fp16-hook", "ddp-overlap")
-    failed = [k for k, c in found.items() if c["call"] not in ("faster", "within 5%")]
+    failed = [k for k, c in found.items() if any(r >= 1.05 - EPS for r in c["values"])]
     out["X4"] = {"statement": STATEMENT["X4"], "calls": {k: c["call"] for k, c in found.items()},
                  "values": {k: c["values"] for k, c in found.items()}, "failed": failed,
                  "held": bool(found) and not failed}
@@ -139,18 +157,36 @@ def by_cell(values, fmt="%.2f", calls=None):
 
 
 def probe_cell(entry, check, transport, world):
+    """The frozen verdict of one check in one group: held only if it held in
+    every allocation of the group."""
     holds = entry[transport].get(world)
     if not holds:
         return "not run"
     numbers = entry["values"][transport][world]
+    if any(n is None for n in numbers):
+        return "not held: no point above 64 MiB"
     shown = pair([100 * n for n in numbers], "%.1f%%") if check == "P3" else pair(numbers)
     return "%s: %s" % ("held" if all(holds) else "not held", shown)
 
 
-def second_reading(posthoc, transport, world, value):
-    cells_ = [value(a[transport]) for a in posthoc["allocations"]
-              if a.get("world") == world and transport in a]
-    return "; ".join(cells_) if cells_ else "not run"
+def verdict(ok, shown):
+    return "%s: %s" % ("held" if ok else "not held", shown)
+
+
+def posthoc_row(group, world, key):
+    """The three checks of one group of allocations under one line that
+    leaves out the 1 MiB point, each with the protocol's own bound."""
+    readings = [g[key] for g in group if key in g]
+    cells_ = []
+    ratios = [r["gather_over_ring"] for r in readings if "gather_over_ring" in r]
+    cells_.append(verdict(all(world / 3.0 - EPS <= r <= 0.75 * world + EPS for r in ratios), pair(ratios))
+                  if ratios else "not run")
+    defaults = [r["default_over_ring"] for r in readings if "default_over_ring" in r]
+    cells_.append(verdict(all(r <= 1.05 + EPS for r in defaults), pair(defaults)) if defaults else "not run")
+    errors = [max(r["prediction_errors"].values()) for r in readings if r.get("prediction_errors")]
+    cells_.append(verdict(all(e <= 0.15 + EPS for e in errors), pair([100 * e for e in errors], "%.1f%%"))
+                  if errors else "not run")
+    return cells_
 
 
 def render(out, posthoc):
@@ -177,10 +213,20 @@ def render(out, posthoc):
     }
     for name in ("X1", "X2", "X3", "X4", "X5"):
         e = out[name]
-        outcome = "held" if e["held"] else "not held (%s)" % "; ".join(words(k) for k in e["failed"])
+        outcome = ("held" if e["held"] else
+                   "not held (%s)" % "; ".join(words(k) for k in e["failed"]) if e["failed"] else
+                   "not held (no cell measured it)")
         fmt = "%.3f" if name == "X5" else "%.2f"
         lines.append("| %s | %s | %s | %s%s |" % (name, e["statement"], outcome, notes[name],
                                                   by_cell(e["values"], fmt, e.get("calls"))))
+    lines += [
+        "",
+        "## Readings of the expectations",
+        "",
+        "The protocol states each expectation in one sentence. How each sentence is read was fixed when this",
+        "script was written, after the records were read:",
+        "",
+    ] + ["- %s" % r for r in READINGS]
     lines += [
         "",
         "## Probe checks by the protocol's rule (the line through 1 MiB to 64 MiB)",
@@ -194,7 +240,7 @@ def render(out, posthoc):
         lines.append("| %s | %s | " % (check, e["statement"])
                      + " | ".join(probe_cell(e, check, t, w) for t in ("gdr", "host_staged") for w in scales) + " |")
     lines += ["", "P1 gives the slope ratio (the model is p/2), P2 the default slope over the Ring slope, P3 the",
-              "largest prediction error of each allocation."]
+              "largest prediction error of each allocation. These verdicts are the frozen scorer's."]
     if not all(h for t in ("gdr", "host_staged") for holds in out["P1"][t].values() for h in holds):
         lines += ["P1 does not hold in every allocation. By section 6 the paper says that the traffic model does",
                   "not explain the slope ratio on this system."]
@@ -204,34 +250,31 @@ def render(out, posthoc):
         "",
         "Made after the records were read, by `validation_v2/analysis/e9_probes_posthoc.py` into",
         "`E9_PROBES_POSTHOC.json`. The protocol's line passes through three points of the probe grid: 1, 16",
-        "and 64 MiB. The rows below use the line through 16 MiB and 64 MiB, give the measured 1 MiB and",
-        "16 MiB times of the forced-ring all-reduce, and add the forced-tree probe, which the frozen scorer",
-        "does not read. They replace no number above.",
-        "",
-        "| | " + " | ".join("GPUDirect, %s ranks" % w for w in scales) + " | "
-        + " | ".join("Host-staged, %s ranks" % w for w in scales) + " |",
-        "|---|" + "---|" * (2 * len(scales)),
+        "and 64 MiB. The tables below repeat the three checks, each with the protocol's own bound, for three",
+        "lines that leave the 1 MiB point out. They replace no verdict above. A check reads held only if it",
+        "holds in every allocation of the group; a value that prints on a bound may lie on either side of it.",
     ]
-    late = "from_16_to_64_mib"
-    rows = (
-        ("All-gather slope over Ring all-reduce slope, from 16 MiB",
-         lambda g: "%.2f" % g[late]["gather_over_ring"] if "gather_over_ring" in g[late] else "not run"),
-        ("Default all-reduce slope over Ring slope, from 16 MiB",
-         lambda g: "%.2f" % g[late]["default_over_ring"] if "default_over_ring" in g[late] else "not run"),
-        ("Largest prediction error above 64 MiB, from 16 MiB",
-         lambda g: "%.1f%%" % (100 * max(g[late]["prediction_errors"].values()))
-         if g[late].get("prediction_errors") else "not run"),
-        ("Forced-ring all-reduce, 1 MiB then 16 MiB, ms",
-         lambda g: "%.2f then %.2f" % (g["points_ms"]["ring_allreduce"]["1"], g["points_ms"]["ring_allreduce"]["16"])
-         if "ring_allreduce" in g["points_ms"] else "not run"),
-        ("Forced-tree all-reduce time over forced-ring time at 1 GiB",
-         lambda g: "%.2f" % g["tree_over_ring_time_at_1024_mib"]
-         if "tree_over_ring_time_at_1024_mib" in g else "not run"),
-    )
-    for title, value in rows:
-        lines.append("| %s | " % title
-                     + " | ".join(second_reading(posthoc, t, int(w), value)
-                                  for t in ("gdr", "host_staged") for w in scales) + " |")
+    names = {"gdr": "GPUDirect", "host_staged": "Host-staged"}
+    for transport in ("gdr", "host_staged"):
+        for world in sorted({a["world"] for a in posthoc.get("allocations", []) if a.get("world") and transport in a}):
+            group = [a[transport] for a in posthoc["allocations"] if a.get("world") == world and transport in a]
+            lines += ["", "### %s, %d ranks" % (names[transport], world), "",
+                      "| Line through | P1: all-gather slope over Ring slope (p/2 = %g) | "
+                      "P2: default slope over Ring slope | P3: largest prediction error |" % (world / 2.0),
+                      "|---|---|---|---|"]
+            for title, key in POSTHOC_RANGES:
+                lines.append("| %s | %s |" % (title, " | ".join(posthoc_row(group, world, key))))
+            ring = [g["points_ms"]["ring_allreduce"] for g in group if "ring_allreduce" in g.get("points_ms", {})]
+            ring = [r for r in ring if "1" in r and "16" in r]
+            tree = [g["tree_over_ring_time_at_1024_mib"] for g in group if "tree_over_ring_time_at_1024_mib" in g]
+            notes_ = []
+            if ring:
+                notes_.append("Forced-ring all-reduce, 1 MiB then 16 MiB, ms: %s."
+                              % "; ".join("%.2f then %.2f" % (r["1"], r["16"]) for r in ring))
+            if tree:
+                notes_.append("Forced-tree all-reduce time over forced-ring time at 1 GiB: %s." % pair(tree))
+            if notes_:
+                lines += ["", " ".join(notes_)]
     return "\n".join(lines) + "\n"
 
 

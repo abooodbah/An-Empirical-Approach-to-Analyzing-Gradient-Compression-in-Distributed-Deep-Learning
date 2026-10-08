@@ -11,13 +11,17 @@ Two readings the frozen scorer (score_e9.py) does not make.
 
 2. The fit range. The protocol's slope is the least-squares line through the
    points from 1 MiB to 64 MiB, and the probe grid has three points there:
-   1, 16 and 64 MiB. At 24 ranks the 1 MiB all-reduce lies above the line of
-   the larger payloads; under the forced ring it took longer than the 16 MiB
-   all-reduce. That one point lowers the fitted ring slope and so moves the
-   three pre-registered checks. This script repeats every ratio with the line
-   through 16 MiB and 64 MiB (rev4_records.slope with low=16 MiB, the same
-   rule on a shorter range) and prints the measured points, so a reader can
-   see what the 1 MiB point does.
+   1, 16 and 64 MiB. At 24 ranks over GPUDirect the 1 MiB all-reduce lies
+   above the line of the larger payloads. Under the forced ring it took
+   longer than the 16 MiB all-reduce; that point lowers the fitted ring
+   slope, which is the denominator of P1 and P2. P3 is scored on the default
+   probe, whose own 1 MiB point is also high (as long as its 16 MiB point),
+   so the forced ring's point does not enter P3. This script repeats every
+   ratio and every prediction error with the line through 16 MiB and 64 MiB
+   (rev4_records.slope, the same rule on a shorter range), and with two
+   other ranges that leave the 1 MiB point out (16 to 256 MiB, 64 to
+   256 MiB), so that a reader can see how much the second reading depends on
+   the range chosen. It prints the measured points.
 
 Under the protocol's own range this script repeats the frozen scorer's
 numbers (tests/test_e9_probes_posthoc.py compares them). A probe file that
@@ -33,7 +37,9 @@ import sys
 import rev4_records as R
 
 MIB = 1 << 20
-RANGES = (("rule_1_to_64_mib", 1 * MIB), ("from_16_to_64_mib", 16 * MIB))
+# name, lowest and highest payload of the line. The first is the protocol's.
+RANGES = (("rule_1_to_64_mib", 1 * MIB, 64 * MIB), ("from_16_to_64_mib", 16 * MIB, 64 * MIB),
+          ("from_16_to_256_mib", 16 * MIB, 256 * MIB), ("from_64_to_256_mib", 64 * MIB, 256 * MIB))
 
 
 def read(run_dir, name, unreadable):
@@ -53,13 +59,14 @@ def series(probe, collective):
     return probe[collective]["sizes_bytes"], probe[collective]["times_s"]
 
 
-def line(probe, collective, low):
-    """(seconds per byte, intercept) of the protocol's line from low to 64 MiB."""
+def line(probe, collective, low, high):
+    """(seconds per byte, intercept) of the least-squares line through the
+    points from low to high, by the protocol's own rule (rev4_records.slope)."""
     s = series(probe, collective)
     if s is None:
         return None
     try:
-        return R.slope(s[0], s[1], low=low)
+        return R.slope(s[0], s[1], low=low, high=high)
     except ValueError:
         return None
 
@@ -71,24 +78,25 @@ def points_ms(probe, collective):
     return {"%d" % (size >> 20): 1e3 * t for size, t in zip(*s) if size >= MIB}
 
 
-def prediction_errors(default, low):
-    """P3's rule: the line of the default probe against its points above 64 MiB."""
+def prediction_errors(default, low, high):
+    """P3's rule: the line of the default probe against its measured points
+    above the line's last point, as a fraction of the measured time."""
     errors = {}
     for name in ("allreduce", "allgather"):
-        fit, s = line(default, name, low), series(default, name)
+        fit, s = line(default, name, low, high), series(default, name)
         if fit is None:
             continue
         b, a = fit
         for size, t in zip(*s):
-            if size > 64 * MIB:
+            if size > high:
                 errors["%s %d MiB" % (name, size >> 20)] = abs(a + b * size - t) / t
     return errors
 
 
-def reading(default, ring, tree, low):
+def reading(default, ring, tree, low, high):
     out = {}
-    ar, ag = line(ring, "allreduce", low), line(ring, "allgather", low)
-    de, tr = line(default, "allreduce", low), line(tree, "allreduce", low)
+    ar, ag = line(ring, "allreduce", low, high), line(ring, "allgather", low, high)
+    de, tr = line(default, "allreduce", low, high), line(tree, "allreduce", low, high)
     if ar:
         out["ring_allreduce_ns_per_byte"] = 1e9 * ar[0]
         if ag:
@@ -101,7 +109,7 @@ def reading(default, ring, tree, low):
             out["tree_over_ring"] = tr[0] / ar[0]
     if ag and tr:
         out["gather_over_tree"] = ag[0] / tr[0]
-    errors = prediction_errors(default, low)
+    errors = prediction_errors(default, low, high)
     if errors:
         out["prediction_errors"] = errors
     return out
@@ -111,7 +119,7 @@ def transport(run_dir, prefix, unreadable):
     default, ring, tree = (read(run_dir, prefix + name, unreadable) for name in ("default", "ring", "tree"))
     if not (default or ring or tree):
         return None
-    out = {name: reading(default, ring, tree, low) for name, low in RANGES}
+    out = {name: reading(default, ring, tree, low, high) for name, low, high in RANGES}
     points = {"default_allreduce": points_ms(default, "allreduce"), "ring_allreduce": points_ms(ring, "allreduce"),
               "tree_allreduce": points_ms(tree, "allreduce"), "ring_allgather": points_ms(ring, "allgather")}
     out["points_ms"] = {k: v for k, v in points.items() if v}
@@ -140,8 +148,8 @@ def main(argv):
     out = argv[argv.index("--json") + 1] if "--json" in argv else None
     dirs = [a for a in argv if not a.startswith("--") and a != out]
     result = {"label": "POST HOC: the E9 probes read after the records. rule_1_to_64_mib repeats the frozen "
-                       "scorer's range; from_16_to_64_mib leaves out the 1 MiB point; the tree probe is not "
-                       "part of the frozen scorer",
+                       "scorer's range; from_16_to_64_mib, from_16_to_256_mib and from_64_to_256_mib leave out "
+                       "the 1 MiB point; the tree probe is not part of the frozen scorer",
               "allocations": [allocation(d) for d in dirs]}
     if out:
         json.dump(result, io.open(out, "w", encoding="utf-8", newline="\n"), indent=1, sort_keys=True)

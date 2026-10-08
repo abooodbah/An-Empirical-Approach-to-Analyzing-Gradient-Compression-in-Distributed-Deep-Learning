@@ -15,6 +15,17 @@ are the two allocations of that scale.
 | X4 | ddp-fp16-hook is within 5% of ddp-overlap or faster. | not held (resnet50 at 24 ranks) | step of ddp-fp16-hook over step of ddp-overlap: 12 ranks transformer 0.84, 0.85 (faster); 12 ranks resnet50 1.02, 1.01 (within 5%); 24 ranks transformer 0.86, 0.90 (faster); 24 ranks resnet50 1.06, 1.06 (slower) |
 | X5 | The relative error of gpu-quant-sr-fp16 is below that of gpu-quant-sr-int8. | held | relative L2 error of gpu-quant-sr-fp16, then of gpu-quant-sr-int8: 12 ranks transformer 0.468, 2.772; 12 ranks resnet50 0.246, 1.418; 24 ranks transformer 0.830, 4.142; 24 ranks resnet50 0.414, 2.088 |
 
+## Readings of the expectations
+
+The protocol states each expectation in one sentence. How each sentence is read was fixed when this
+script was written, after the records were read:
+
+- X1: in every allocation, and on both sides: the ratio of the two steps is between 0.90 and 1.10.
+- X2: fails in a cell only if every allocation that ran is at or below 0.95, the protocol's bound for faster.
+- X3: the protocol's call is slower in every cell, and every value of a workload at the larger scale is above every value at the smaller scale.
+- X4: holds in a cell if every allocation is below 1.05, the protocol's bound for slower.
+- X5: strictly below, in every cell that measured both.
+
 ## Probe checks by the protocol's rule (the line through 1 MiB to 64 MiB)
 
 | | Statement | GPUDirect, 12 ranks | GPUDirect, 24 ranks | Host-staged, 12 ranks | Host-staged, 24 ranks |
@@ -24,7 +35,7 @@ are the two allocations of that scale.
 | P3 | The 1 MiB to 64 MiB line predicts the 256 MiB and 1 GiB times within 15%. | held: 11.4%, 8.8% | not held: 23.7%, 21.0% | held: 2.0% | held: 7.8% |
 
 P1 gives the slope ratio (the model is p/2), P2 the default slope over the Ring slope, P3 the
-largest prediction error of each allocation.
+largest prediction error of each allocation. These verdicts are the frozen scorer's.
 P1 does not hold in every allocation. By section 6 the paper says that the traffic model does
 not explain the slope ratio on this system.
 
@@ -32,14 +43,46 @@ not explain the slope ratio on this system.
 
 Made after the records were read, by `validation_v2/analysis/e9_probes_posthoc.py` into
 `E9_PROBES_POSTHOC.json`. The protocol's line passes through three points of the probe grid: 1, 16
-and 64 MiB. The rows below use the line through 16 MiB and 64 MiB, give the measured 1 MiB and
-16 MiB times of the forced-ring all-reduce, and add the forced-tree probe, which the frozen scorer
-does not read. They replace no number above.
+and 64 MiB. The tables below repeat the three checks, each with the protocol's own bound, for three
+lines that leave the 1 MiB point out. They replace no verdict above. A check reads held only if it
+holds in every allocation of the group; a value that prints on a bound may lie on either side of it.
 
-| | GPUDirect, 12 ranks | GPUDirect, 24 ranks | Host-staged, 12 ranks | Host-staged, 24 ranks |
-|---|---|---|---|---|
-| All-gather slope over Ring all-reduce slope, from 16 MiB | 5.45; 5.68 | 11.75; 12.12 | 6.68 | 13.34 |
-| Default all-reduce slope over Ring slope, from 16 MiB | 0.97; 1.04 | 0.98; 1.06 | 1.00 | 1.01 |
-| Largest prediction error above 64 MiB, from 16 MiB | 10.6%; 13.2% | 13.4%; 10.3% | 1.3% | 4.0% |
-| Forced-ring all-reduce, 1 MiB then 16 MiB, ms | 1.14 then 3.01; 1.14 then 3.41 | 10.26 then 3.80; 10.64 then 4.01 | 1.16 then 6.69 | 2.15 then 6.62 |
-| Forced-tree all-reduce time over forced-ring time at 1 GiB | 12.17; 12.32 | 11.79; 11.95 | 4.22 | 4.05 |
+### GPUDirect, 12 ranks
+
+| Line through | P1: all-gather slope over Ring slope (p/2 = 6) | P2: default slope over Ring slope | P3: largest prediction error |
+|---|---|---|---|
+| 16 to 64 MiB | held: 5.45, 5.68 | held: 0.97, 1.04 | held: 10.6%, 13.2% |
+| 16 to 256 MiB | held: 5.16, 5.49 | held: 1.01, 1.01 | not held: 23.6%, 15.7% |
+| 64 to 256 MiB | held: 5.12, 5.45 | held: 1.02, 1.01 | not held: 25.4%, 16.0% |
+
+Forced-ring all-reduce, 1 MiB then 16 MiB, ms: 1.14 then 3.01; 1.14 then 3.41. Forced-tree all-reduce time over forced-ring time at 1 GiB: 12.17, 12.32.
+
+### GPUDirect, 24 ranks
+
+| Line through | P1: all-gather slope over Ring slope (p/2 = 12) | P2: default slope over Ring slope | P3: largest prediction error |
+|---|---|---|---|
+| 16 to 64 MiB | held: 11.75, 12.12 | not held: 0.98, 1.06 | held: 13.4%, 10.3% |
+| 16 to 256 MiB | held: 10.63, 11.07 | not held: 1.04, 1.10 | not held: 21.1%, 21.6% |
+| 64 to 256 MiB | held: 10.46, 10.91 | not held: 1.05, 1.11 | not held: 23.5%, 23.4% |
+
+Forced-ring all-reduce, 1 MiB then 16 MiB, ms: 10.26 then 3.80; 10.64 then 4.01. Forced-tree all-reduce time over forced-ring time at 1 GiB: 11.79, 11.95.
+
+### Host-staged, 12 ranks
+
+| Line through | P1: all-gather slope over Ring slope (p/2 = 6) | P2: default slope over Ring slope | P3: largest prediction error |
+|---|---|---|---|
+| 16 to 64 MiB | held: 6.68 | held: 1.00 | held: 1.3% |
+| 16 to 256 MiB | held: 6.84 | held: 1.00 | held: 0.2% |
+| 64 to 256 MiB | held: 6.86 | held: 1.00 | held: 0.4% |
+
+Forced-ring all-reduce, 1 MiB then 16 MiB, ms: 1.16 then 6.69. Forced-tree all-reduce time over forced-ring time at 1 GiB: 4.22.
+
+### Host-staged, 24 ranks
+
+| Line through | P1: all-gather slope over Ring slope (p/2 = 12) | P2: default slope over Ring slope | P3: largest prediction error |
+|---|---|---|---|
+| 16 to 64 MiB | held: 13.34 | held: 1.01 | held: 4.0% |
+| 16 to 256 MiB | held: 13.70 | held: 0.99 | held: 0.8% |
+| 64 to 256 MiB | held: 13.76 | held: 0.99 | held: 1.4% |
+
+Forced-ring all-reduce, 1 MiB then 16 MiB, ms: 2.15 then 6.62. Forced-tree all-reduce time over forced-ring time at 1 GiB: 4.05.
