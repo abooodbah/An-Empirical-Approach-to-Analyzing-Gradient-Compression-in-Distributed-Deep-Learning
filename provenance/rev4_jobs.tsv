@@ -1,0 +1,7 @@
+submitted_utc	system	set	job_id	partition	nodes	time_limit
+2026-10-08T00:15:54	stampede3	s2	3579138	pvc	4	00:50:00
+2026-10-08T00:15:54	stampede3	s1	3579139	pvc	2	00:55:00
+2026-10-08T00:16:07	lonestar6	q12a	3495229	gpu-a100	4	00:50:00
+2026-10-08T00:16:07	lonestar6	q12b	3495230	gpu-a100	4	00:35:00
+2026-10-08T00:16:07	lonestar6	q24a	3495231	gpu-a100	8	00:50:00
+2026-10-08T00:16:07	lonestar6	q24b	3495232	gpu-a100	8	00:35:00

@@ -38,6 +38,13 @@ lonestar6_jobs_utc.tsv (Slurm accounting), and git.
 | 2026-09-30 21:41 to 2026-10-02 17:36 | all nine jobs ran and completed (provenance/rev_su.tsv: 20.3 SU) |
 | 2026-10-03 05:48 | e7a development errors of the frozen E8 reference (DEV_REPORT_E7A.md) and the window-1 results pushed (fe2c2f5); E8 records fetched and scored afterward |
 
+## Revision 4: E9 and E10
+| Time | Event |
+|---|---|
+| 2026-10-08 00:14:19 | E9 and E10 pre-registration pushed to GitHub (fce4c1b..78b077e: harness v5.2, diagnostic/E9_PROTOCOL.md and E10_PROTOCOL.md, both scorers, the launch scripts, and the freeze hashes diagnostic/E9_FREEZE.sha256 and E10_FREEZE.sha256). The time is the repository's `pushed_at`; the author approved the push at 00:13 |
+| 2026-10-08 00:15:54 | E10 submitted on Stampede3: s2 3579138 and s1 3579139 (provenance/rev4_jobs.tsv) |
+| 2026-10-08 00:16:07 | E9 submitted on Lonestar6 with `--nice=100`: q12a 3495229, q12b 3495230, q24a 3495231, q24b 3495232 |
+
 ## Harness v4 used by E6
 Every round-4 job recorded harness v4 3aecaae1c1021269ae25a9e0468a7c7a6bcae7c27a7f64c8f275531e10207179,
 which is git 35cf9be:harness/control_workload_benchmark_v4.py and the Lonestar6 file dated
