@@ -167,3 +167,101 @@ def test_the_numbers_the_readme_states_about_e9_are_the_committed_records():
     times = [g["tree_over_ring_time_at_1024_mib"] for w in (12, 24) for g in gdr[w]]
     assert "took %.1f to %.1f times the ring's time" % (min(times), max(times)) in readme
     assert "e9_tree_posthoc.py` of commit 5573a1d" in readme and "E9_EXPECTATIONS.md" in readme
+
+
+# ---- added after the second review (2026-10-08): the boundaries of each reading
+def with_step(r, key, allocation_index, t_ms):
+    r["allocations"][allocation_index]["table"][key]["T_ms"] = t_ms
+    return r
+
+
+def test_x1_is_two_sided_and_its_bound_is_ten_percent_inclusive():
+    for t_ms, held in ((9.0, True), (11.0, True), (8.9, False), (11.1, False), (8.0, False)):
+        out = X.outcomes(with_step(result(), "transformer|gpu-quant-sr-int8", 0, t_ms))["X1"]
+        assert out["held"] is held, t_ms
+
+
+def test_x2_fails_when_every_allocation_that_ran_is_at_or_below_095():
+    r = result()
+    r["summary"]["24"]["transformer|gpu-quant-sr-fp16|fp16-native"] = {"call": "single allocation", "values": [0.80]}
+    assert X.outcomes(r)["X2"]["failed"] == ["24|transformer"]
+    r["summary"]["24"]["transformer|gpu-quant-sr-fp16|fp16-native"] = {"call": "allocation-dependent",
+                                                                       "values": [0.95, 0.96]}
+    assert X.outcomes(r)["X2"]["held"] is True
+    r["summary"]["24"]["transformer|gpu-quant-sr-fp16|fp16-native"] = {"call": "faster", "values": [0.95, 0.95]}
+    assert X.outcomes(r)["X2"]["held"] is False
+
+
+def test_x3_needs_every_24_rank_value_strictly_above_every_12_rank_value():
+    r = result()
+    r["summary"]["24"]["resnet50|ddp-int8-hook|ddp-overlap"]["values"] = [2.0, 2.5]      # 12 ranks: 2.0 and 2.0
+    assert X.outcomes(r)["X3"]["failed"] == ["resnet50: not larger at 24 ranks"]
+    r["summary"]["24"]["resnet50|ddp-int8-hook|ddp-overlap"]["values"] = [2.01, 2.5]
+    assert X.outcomes(r)["X3"]["held"] is True
+    r["summary"]["12"]["resnet50|ddp-int8-hook|ddp-overlap"]["values"] = [1.5, 2.2]      # one 12-rank value above
+    assert X.outcomes(r)["X3"]["failed"] == ["resnet50: not larger at 24 ranks"]
+
+
+def test_x4_is_read_from_the_values_and_holds_when_every_allocation_is_below_105():
+    r = result()
+    # faster in one allocation and within 5% in the other: the call is allocation-dependent, the expectation holds
+    r["summary"]["12"]["transformer|ddp-fp16-hook|ddp-overlap"] = {"call": "allocation-dependent",
+                                                                   "values": [0.94, 0.96]}
+    assert X.outcomes(r)["X4"]["held"] is True
+    r["summary"]["12"]["transformer|ddp-fp16-hook|ddp-overlap"] = {"call": "allocation-dependent",
+                                                                   "values": [1.049, 1.05]}
+    assert X.outcomes(r)["X4"]["failed"] == ["12|transformer"]
+    r["summary"]["12"]["transformer|ddp-fp16-hook|ddp-overlap"] = {"call": "within 5%", "values": [1.049, 1.049]}
+    assert X.outcomes(r)["X4"]["held"] is True
+
+
+def test_x5_needs_the_wider_quantizers_error_strictly_below():
+    r = result()
+    r["allocations"][0]["fidelity"]["transformer|gpu-quant-sr-fp16"]["relative_l2_error"] = 2.0     # equal to int8's
+    assert X.outcomes(r)["X5"]["failed"] == ["12|transformer"]
+
+
+def test_a_probe_cell_reads_held_only_if_every_allocation_held():
+    r = result()
+    r["allocations"][3]["probe_checks"]["gdr"]["P2"]["holds"] = False
+    out = X.outcomes(r)
+    assert X.probe_cell(out["P2"], "P2", "gdr", "24").startswith("not held")
+    assert X.probe_cell(out["P2"], "P2", "gdr", "12").startswith("held")
+
+
+def test_a_result_without_any_outcome_run_gives_no_held_expectation_and_no_error():
+    dead = {"run_dir": "x", "world": None, "table": {}, "fidelity": {}, "probe_checks": {"gdr": {}, "host_staged": {}}}
+    out = X.outcomes({"allocations": [dead], "summary": {}})
+    assert [out[k]["held"] for k in ("X1", "X2", "X3", "X4", "X5")] == [False] * 5
+    assert "| X1 |" in X.render(out, {"allocations": []})
+
+
+def test_a_probe_without_a_point_above_64_mib_is_said_to_have_none():
+    r = result()
+    for a in r["allocations"]:
+        a["probe_checks"]["gdr"]["P3"] = {"errors": {}, "holds": False}
+    text = X.render(X.outcomes(r), {"allocations": []})
+    assert "not held: no point above 64 MiB" in text
+
+
+def posthoc_ranges():
+    def reading(ratio, default, error):
+        return {"gather_over_ring": ratio, "default_over_ring": default, "prediction_errors": {"allreduce 1024 MiB": error}}
+    def transport(a, b, c):
+        return {"rule_1_to_64_mib": reading(30.0, 2.2, 0.24), "from_16_to_64_mib": reading(*a),
+                "from_16_to_256_mib": reading(*b), "from_64_to_256_mib": reading(*c),
+                "points_ms": {"ring_allreduce": {"1": 10.3, "16": 3.8}}, "tree_over_ring_time_at_1024_mib": 11.8}
+    return {"allocations": [
+        {"run_dir": "c", "world": 24, "gdr": transport((11.75, 0.977, 0.134), (10.63, 1.042, 0.211), (10.46, 1.052, 0.235))},
+        {"run_dir": "d", "world": 24, "gdr": transport((12.12, 1.058, 0.103), (11.07, 1.099, 0.216), (10.91, 1.106, 0.234))}]}
+
+
+def test_the_second_reading_is_printed_for_every_range_with_a_verdict_for_each_check():
+    text = X.render(X.outcomes(result()), posthoc_ranges())
+    rows = [line for line in text.split("\n") if line.startswith("| 16 to 64 MiB") or line.startswith("| 16 to 256 MiB")
+            or line.startswith("| 64 to 256 MiB")]
+    assert len(rows) == 3
+    assert "held: 11.75, 12.12" in rows[0] and "not held: 0.98, 1.06" in rows[0] and "held: 13.4%, 10.3%" in rows[0]
+    assert "held: 10.63, 11.07" in rows[1] and "not held: 1.04, 1.10" in rows[1] and "not held: 21.1%, 21.6%" in rows[1]
+    assert "not held: 1.05, 1.11" in rows[2]            # 1.052 is above the 5% bound although it prints as 1.05
+    assert "Readings of the expectations" in text and "after the records were read" in text
