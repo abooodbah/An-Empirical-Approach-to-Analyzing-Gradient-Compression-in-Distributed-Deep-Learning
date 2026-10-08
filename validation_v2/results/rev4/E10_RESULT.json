@@ -108,6 +108,67 @@
    },
    "ratios": {},
    "run_dir": "redctl-E10-4n-3579138"
+  },
+  {
+   "checks": {
+    "32|memory": {
+     "account_gb": 5.834131456,
+     "below_45_gb": true,
+     "extra_gb": 5.834148352000007,
+     "peak_gb": 39.375195648
+    }
+   },
+   "conditions": {
+    "32|gpu-quant-bucketed": {
+     "bucket_count": 63,
+     "exchange_buffer_gb": 0.603979776,
+     "exchange_ms": 45756.12248941907,
+     "gradient_elements": 1046030336,
+     "iterations": 20,
+     "peak_gb": 39.375195648,
+     "predicted_exchange_ms": 42574.29408992058,
+     "prediction_error": 0.06953885570688982,
+     "state": "complete",
+     "step_ms": 48114.13601889508
+    },
+    "32|gpu-quant-reducible-bucketed": {
+     "bucket_count": 63,
+     "exchange_buffer_gb": 0.0,
+     "exchange_ms": 1661.4557606162634,
+     "gradient_elements": 1046030336,
+     "iterations": 20,
+     "peak_gb": 34.587078655999996,
+     "predicted_exchange_ms": 1782.6215840074635,
+     "prediction_error": 0.07292750506113839,
+     "state": "complete",
+     "step_ms": 3336.7463509435765
+    },
+    "32|native-bucketed": {
+     "bucket_count": 63,
+     "exchange_buffer_gb": 0.0,
+     "exchange_ms": 6106.970760540025,
+     "gradient_elements": 1046030336,
+     "iterations": 20,
+     "peak_gb": 33.541047295999995,
+     "predicted_exchange_ms": 6560.3583627926255,
+     "prediction_error": 0.07424099771070594,
+     "state": "complete",
+     "step_ms": 7730.6911911058705
+    }
+   },
+   "ratios": {
+    "32|gather over gpu-quant-reducible-bucketed": {
+     "exchange": 27.539777810543274,
+     "step": 14.419476627370612,
+     "traffic_model": 16.0
+    },
+    "32|gather over native-bucketed": {
+     "exchange": 7.492441716778902,
+     "step": 6.2237819141256345,
+     "traffic_model": 4.0
+    }
+   },
+   "run_dir": "redctl-E10-4n-3579496"
   }
  ]
 }

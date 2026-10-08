@@ -50,6 +50,8 @@ lonestar6_jobs_utc.tsv (Slurm accounting), and git.
 | 2026-10-08 02:23:55 | Commits 0fc68d1..22a09e4 pushed to GitHub (78b077e..22a09e4; the time is the repository's `pushed_at`). The author approved the push |
 | 2026-10-08 02:26:39 | Recorded and pushed before the resubmission of E10 s2 (commit 516973c; the time is the push in provenance/github_activity_rev4.json. That commit's copy of this row carried 02:32 and "at 02:27", times written before the clock was read; they are corrected here). Job 3579138 completed no timed run, and section 4 of diagnostic/E10_PROTOCOL.md allows one resubmission if the Stampede3 ledger allows. At the protocol's 20 SU the ledger refuses a job long enough for the three 32-rank conditions (committed 13.84 SU; a 40-minute job on 4 nodes is bounded at 8.00 SU; `harness/launch/su_ledger.py` prints REFUSED at cap 20 and ALLOWED at cap 22). The author approved the full set on 2026-10-07 after being told the total (about 20.8 SU expected, 21.84 at most). This is a deviation from section 6, the budget, and from nothing else: the set (s2), its order and iteration counts, the staged files (their hashes compared with diagnostic/E10_FREEZE.sha256 before this record was pushed), and the scorer are unchanged. The time limit is 40 minutes where the first submission had 50, and node c552-003 is excluded |
 | 2026-10-08 02:26:47 | E10 s2 resubmitted on Stampede3: 3579496 (4 nodes, 40-minute limit, c552-003 excluded; provenance/rev4_jobs.tsv). The time is the cluster's clock at submission, eight seconds after the push above |
+| 2026-10-08 02:34:14 to 03:05:51 | E10 s2 resubmission 3579496 (32 ranks, nodes c551-002 and c552-[005-007]) ran 1897 s and completed its two check runs, the probe, and all three timed conditions. Checked by hand over every rank and row: 20 measured iterations on each of 32 ranks, `final_param_hashes_equal` True, the three timed runs start from the same model hash, and the equivalence run is True. The times are sacct's |
+| 2026-10-08 03:09:40 | Its run directory fetched (raw/rev4/redctl-E10-4n-3579496.tgz; the time is the archive's file time) and all three E10 run directories scored again into validation_v2/results/rev4/E10_RESULT.json. The files of diagnostic/E10_FREEZE.sha256 were verified unchanged before the records were read. The result keeps both 32-rank allocations; the first has state `missing`. Charges: provenance/rev4_su.tsv, 20.17 SU over the three Stampede3 jobs, 0.17 SU above the 20 SU of section 6 |
 
 ## Harness v4 used by E6
 Every round-4 job recorded harness v4 3aecaae1c1021269ae25a9e0468a7c7a6bcae7c27a7f64c8f275531e10207179,
@@ -64,6 +66,7 @@ which is git 35cf9be:harness/control_workload_benchmark_v4.py and the Lonestar6 
 ## File hashes
 - sha256 350b3555c94a5bc26924155cd9915a74d46c60be5db6a72fa4fa10e521033fcf `raw/rev4/redctl-E10-2n-3579139.tgz`
 - sha256 9a59840f76909c13b4d6849a936dde3d716fdf6d9db1ae81ce7b005c952c6f72 `raw/rev4/redctl-E10-4n-3579138.tgz`
+- sha256 fb5d9c7c467407687f6a9aa200a916898a6b42dced431f7d9a2ddf2b6980825d `raw/rev4/redctl-E10-4n-3579496.tgz`
 - sha256 71329c336cc3e9646dbb6e6dd4ce20e12305d666c663f2a3e4b35195b535a822 `diagnostic/rules.py`
 - sha256 95e240d86e79301e6740276f851a30bf6c9289c093cdc5147de92117bed1c7dd `diagnostic/features.py`
 - sha256 928550323d0a5f8e9f48edc66c0b71fbd17489b4ae827afc3cf5d55a5dc9fede `diagnostic/score_e6.py`

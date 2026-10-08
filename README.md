@@ -202,11 +202,13 @@ components listed in `diagnostic/E9_FREEZE.sha256` and `E10_FREEZE.sha256`. Jobs
 
 E10, a bucketed gather on the 1B workload (Stampede3): records in `raw/rev4/redctl-E10-*.tgz`,
 scored by `validation_v2/analysis/score_e10.py` into `validation_v2/results/rev4/E10_RESULT.json`.
-The 16- and 8-rank allocation completed every condition. The 32-rank allocation completed its two
+The 16- and 8-rank allocation completed every condition. The first 32-rank allocation (job 3579138) completed its two
 check runs and no timed run: one of its nodes was drained with "GPU missing" as the job ended.
-It is resubmitted once (job 3579496), as section 4 of the protocol allows. The resubmission takes this plan's
-Stampede3 charges above the 20 SU of section 6 (to 21.84 SU at most), which the author approved
-before submission; the record is in `provenance/PROVENANCE.md`.
+It was resubmitted once (job 3579496), as section 4 of the protocol allows, and the resubmission
+completed all three timed conditions with 20 measured iterations each. The scored result keeps both
+32-rank allocations; the first has state `missing`. The three jobs were charged 20.17 SU, 0.17 SU
+above the 20 SU of section 6; the author approved the resubmission before it was submitted, knowing
+it could reach 21.84 SU (`provenance/PROVENANCE.md`).
 The scorer's model check uses the allocation's probe, taken at 16 ranks, so its value for the
 8-rank condition compares against a 16-rank line and is not a test of the model.
 
