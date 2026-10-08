@@ -219,9 +219,24 @@ completed. Every outcome run that is present passed the validity gates, both equ
 True in every allocation, and the DDP bucket structure matched in every allocation. Five runs failed at
 start-up with a rendezvous or connection error: three conditions have one valid pass in one allocation,
 and the fidelity values of resnet50 gpu-quant at 12 ranks and resnet50 gpu-quant-reducible at 24 ranks
-are absent. Nothing was rerun. The forced-tree probe is fitted by a separate script written after the
-records were read, `validation_v2/analysis/e9_tree_posthoc.py`, into `E9_TREE_POSTHOC.json`; it is
-labeled post hoc. Charges: 26.467 SU on Lonestar6.
+are absent. Nothing was rerun. Charges: 26.467 SU on Lonestar6.
+
+The protocol's five expectations and three probe checks are set against the scored result in
+`validation_v2/results/rev4/E9_EXPECTATIONS.md`, written by `validation_v2/analysis/e9_expectations.py`.
+X1, X2, X3 and X5 held. X4 did not: the 16-bit hook is slower than dense DDP on ResNet-50 at 24 ranks
+(1.06 in both allocations). The three probe checks held at 12 ranks and over the host-staged transport.
+They did not hold at 24 ranks over GPUDirect, in either allocation (slope ratio 30.4 and 33.4 against p/2 = 12).
+
+A second reading of the probes, made after the records were read and labeled post hoc, is in
+`validation_v2/analysis/e9_probes_posthoc.py` and `E9_PROBES_POSTHOC.json`. The protocol's line passes
+through three points of the probe grid: 1, 16 and 64 MiB. At 24 ranks the forced-ring all-reduce of
+1 MiB took 10.26 and 10.64 ms, longer than the 16 MiB one (3.80 and 4.01 ms), and that point lowers the
+fitted ring slope. With the line through 16 and 64 MiB the slope ratio is 11.75 and 12.12 at 24 ranks and
+5.45 and 5.68 at 12. The same script reads the forced-tree probe, which the frozen scorer collects and
+does not read: at 1 GiB the tree all-reduce took 11.8 to 12.3 times the ring's time over GPUDirect.
+Under the protocol's own range the script repeats the frozen scorer's numbers, and a test compares
+them. It replaces `e9_tree_posthoc.py` of commit 5573a1d, whose 24-rank ratio of the tree to the ring
+carried the same 1 MiB point. The second reading replaces no scored number.
 
 The int8 hook in every harness version issues its two all-gathers synchronously on NCCL as well as on
 oneCCL: the harness tests for `"ccl"` in the backend name, and `nccl` contains it. Every int8-hook
@@ -243,13 +258,18 @@ Devised after the outcomes they analyze, and labeled so in each file:
   by a link-load counter in its tests.
 - `validation_v2/analysis/step_spread.py` writes `results/rev4/H100_STEP_SPREAD.json`: how far the three
   July jobs are apart on each bar of the phase-attribution figure.
+- `validation_v2/analysis/e9_probes_posthoc.py` writes `results/rev4/E9_PROBES_POSTHOC.json`: the E9
+  probes with the line through 16 and 64 MiB, the measured points, and the forced-tree probe.
+- `validation_v2/analysis/e9_expectations.py` writes `results/rev4/E9_EXPECTATIONS.*`: the protocol's
+  expectations and probe checks against the scored result. It reads the frozen scorer's output only,
+  apart from one section that repeats the post hoc reading and is labeled so.
 - `environment/platform_facts.py` writes `environment/PLATFORMS.md` from the archived provenance.
 - `diagnostic/INPUT_SCHEMA.md` lists the fields the scorers read.
 - `validation_v2/harness/build_v52.py` builds harness v5.2 from v5.1 by insertion only.
 
 `bash reproduce_diagnostic.sh` regenerates every table of the diagnostic evaluation and every file above
 that has an archived input, compares each with the committed copy, verifies the freeze lists of E9 and
-E10, and re-scores the three E10 archives with the frozen scorer. It needs no cluster and about ten
+E10, and re-scores the three E10 archives and the four E9 archives with the frozen scorers. It needs no cluster and about ten
 minutes; it prints `ALL REGENERATED` when everything matches.
 
 ## Boundary

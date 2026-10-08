@@ -62,17 +62,31 @@ for a in raw/control/redctl-V-v3-3517750-51-52-53.tgz raw/control/redctl-V-rerun
 keep diagnostic/v1_2/MEMORY_ACCOUNT.md
 python diagnostic/v1_2/memory_account.py "$PYW/mem" > /dev/null
 same diagnostic/v1_2/MEMORY_ACCOUNT.md
+# The frozen scorers write with the platform's line ending, so their output
+# is compared with the committed file as parsed JSON, not byte for byte.
+samejson() {
+  python - "$1" "$2" <<'PY'
+import io, json, sys
+new, committed = (json.load(io.open(p, encoding="utf-8")) for p in sys.argv[1:3])
+assert new == committed, "%s differs from the committed %s" % (sys.argv[1], sys.argv[2])
+PY
+  echo "$(basename "$2") identical in content"
+}
 echo "== E10: the frozen scorer on the three committed archives"
 for a in raw/rev4/redctl-E10-*.tgz; do tar xzf "$a" -C "$W/rev4"; done
 python validation_v2/analysis/score_e10.py "$PYW"/rev4/redctl-E10-*/ --json "$PYW/E10.json" > /dev/null
-cmp "$W/E10.json" validation_v2/results/rev4/E10_RESULT.json && echo "E10_RESULT.json identical"
-echo "== E9: the frozen scorer on the four committed archives, and the post hoc tree probe"
+samejson "$PYW/E10.json" validation_v2/results/rev4/E10_RESULT.json
+echo "== E9: the frozen scorer on the four committed archives"
 mkdir -p "$W/e9"
 for a in raw/rev4/e9-*.tgz; do tar xzf "$a" -C "$W/e9"; done
 python validation_v2/analysis/score_e9.py "$PYW"/e9/e9-*/ --json "$PYW/E9.json" > /dev/null
-cmp "$W/E9.json" validation_v2/results/rev4/E9_RESULT.json && echo "E9_RESULT.json identical"
-python validation_v2/analysis/e9_tree_posthoc.py "$PYW"/e9/e9-*/ --json "$PYW/E9_TREE.json" > /dev/null
-cmp "$W/E9_TREE.json" validation_v2/results/rev4/E9_TREE_POSTHOC.json && echo "E9_TREE_POSTHOC.json identical"
+samejson "$PYW/E9.json" validation_v2/results/rev4/E9_RESULT.json
+echo "== E9: the post hoc reading of the probes, and the expectations record"
+python validation_v2/analysis/e9_probes_posthoc.py "$PYW"/e9/e9-*/ --json "$PYW/E9_PROBES.json" > /dev/null
+cmp "$W/E9_PROBES.json" validation_v2/results/rev4/E9_PROBES_POSTHOC.json && echo "E9_PROBES_POSTHOC.json identical"
+for f in validation_v2/results/rev4/E9_EXPECTATIONS.json validation_v2/results/rev4/E9_EXPECTATIONS.md; do keep "$f"; done
+python validation_v2/analysis/e9_expectations.py > /dev/null
+for f in validation_v2/results/rev4/E9_EXPECTATIONS.json validation_v2/results/rev4/E9_EXPECTATIONS.md; do same "$f"; done
 echo "== job-to-job spread behind the H100 phase figure"
 for j in 3328658 3328659 3328660; do tar xzf "raw/july/h100-$j.tar.gz" -C "$W/july"; done
 keep validation_v2/results/rev4/H100_STEP_SPREAD.json
@@ -84,5 +98,5 @@ python provenance/make_rev4_su.py > /dev/null
 same provenance/rev4_su.tsv
 echo "== tests of the retrospective modules"
 (cd diagnostic/v1_2 && REV4_MEM_ROOT="$PYW/mem" python -m pytest -q -p no:cacheprovider | tail -1)
-(cd validation_v2/analysis && REV4_JULY_ROOT="$PYW/july" python -m pytest tests/test_step_spread.py tests/test_intervals.py tests/test_traffic_models.py -q -p no:cacheprovider | tail -1)
+(cd validation_v2/analysis && REV4_JULY_ROOT="$PYW/july" python -m pytest tests/test_step_spread.py tests/test_intervals.py tests/test_traffic_models.py tests/test_e9_probes_posthoc.py tests/test_e9_expectations.py -q -p no:cacheprovider | tail -1)
 echo "ALL REGENERATED"

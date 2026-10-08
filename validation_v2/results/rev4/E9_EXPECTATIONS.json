@@ -1,0 +1,260 @@
+{
+ "P1": {
+  "gdr": {
+   "12": [
+    true,
+    true
+   ],
+   "24": [
+    false,
+    false
+   ]
+  },
+  "host_staged": {
+   "12": [
+    true
+   ],
+   "24": [
+    true
+   ]
+  },
+  "statement": "With all-reduce forced to Ring, slope(all-gather) / slope(all-reduce) is within a factor 1.5 of p/2.",
+  "values": {
+   "gdr": {
+    "12": [
+     5.738144302013347,
+     5.768685531185833
+    ],
+    "24": [
+     30.41532013400941,
+     33.369555989539116
+    ]
+   },
+   "host_staged": {
+    "12": [
+     6.85209076630426
+    ],
+    "24": [
+     14.221746370606345
+    ]
+   }
+  }
+ },
+ "P2": {
+  "gdr": {
+   "12": [
+    true,
+    true
+   ],
+   "24": [
+    false,
+    false
+   ]
+  },
+  "host_staged": {
+   "12": [
+    true
+   ],
+   "24": [
+    true
+   ]
+  },
+  "statement": "The default all-reduce slope is not more than 5% above the Ring slope.",
+  "values": {
+   "gdr": {
+    "12": [
+     1.000980483465535,
+     1.0223414728057514
+    ],
+    "24": [
+     2.149303354709823,
+     2.478378782111685
+    ]
+   },
+   "host_staged": {
+    "12": [
+     0.993788188996978
+    ],
+    "24": [
+     0.9538754957351365
+    ]
+   }
+  }
+ },
+ "P3": {
+  "gdr": {
+   "12": [
+    true,
+    true
+   ],
+   "24": [
+    false,
+    false
+   ]
+  },
+  "host_staged": {
+   "12": [
+    true
+   ],
+   "24": [
+    true
+   ]
+  },
+  "statement": "The 1 MiB to 64 MiB line predicts the 256 MiB and 1 GiB times within 15%.",
+  "values": {
+   "gdr": {
+    "12": [
+     0.1142200137319044,
+     0.08810346862746057
+    ],
+    "24": [
+     0.2369068935008262,
+     0.21018965494574798
+    ]
+   },
+   "host_staged": {
+    "12": [
+     0.020085412615636632
+    ],
+    "24": [
+     0.07800598180000858
+    ]
+   }
+  }
+ },
+ "X1": {
+  "failed": [],
+  "held": true,
+  "statement": "gpu-quant-sr-int8 is within 10% of gpu-quant-reducible in step time.",
+  "values": {
+   "12|resnet50": [
+    1.0060864892283412,
+    1.014518941787335
+   ],
+   "12|transformer": [
+    1.0287992795650667,
+    1.0522232271513126
+   ],
+   "24|resnet50": [
+    0.9831903204413969,
+    0.9990267110697083
+   ],
+   "24|transformer": [
+    0.9991773174694696,
+    1.0043689467439902
+   ]
+  }
+ },
+ "X2": {
+  "calls": {
+   "12|resnet50": "within 5%",
+   "12|transformer": "within 5%",
+   "24|resnet50": "within 5%",
+   "24|transformer": "allocation-dependent"
+  },
+  "failed": [],
+  "held": true,
+  "statement": "gpu-quant-sr-fp16 is not faster than fp16-native.",
+  "values": {
+   "12|resnet50": [
+    1.0461817434510774,
+    1.0437113130917854
+   ],
+   "12|transformer": [
+    1.035998459194696,
+    1.0251077609793615
+   ],
+   "24|resnet50": [
+    1.0247017997520578,
+    1.0216513245523917
+   ],
+   "24|transformer": [
+    0.9925942093269448,
+    1.0507190171608178
+   ]
+  }
+ },
+ "X3": {
+  "calls": {
+   "12|resnet50": "slower",
+   "12|transformer": "slower",
+   "24|resnet50": "slower",
+   "24|transformer": "slower"
+  },
+  "failed": [],
+  "held": true,
+  "statement": "ddp-int8-hook is slower than ddp-overlap at both scales, by more at 24 ranks.",
+  "values": {
+   "12|resnet50": [
+    1.6975091278538796,
+    1.7251439253341065
+   ],
+   "12|transformer": [
+    1.8074912157558374,
+    1.7790991526097475
+   ],
+   "24|resnet50": [
+    2.4168685421916316,
+    2.3182124638983113
+   ],
+   "24|transformer": [
+    2.784954720957709,
+    2.7130242205618336
+   ]
+  }
+ },
+ "X4": {
+  "calls": {
+   "12|resnet50": "within 5%",
+   "12|transformer": "faster",
+   "24|resnet50": "slower",
+   "24|transformer": "faster"
+  },
+  "failed": [
+   "24|resnet50"
+  ],
+  "held": false,
+  "statement": "ddp-fp16-hook is within 5% of ddp-overlap or faster.",
+  "values": {
+   "12|resnet50": [
+    1.0228686874748099,
+    1.0080052230312895
+   ],
+   "12|transformer": [
+    0.8373815210112706,
+    0.8499302897429235
+   ],
+   "24|resnet50": [
+    1.061086518668407,
+    1.0558463905434983
+   ],
+   "24|transformer": [
+    0.8636552351073353,
+    0.8984139699892426
+   ]
+  }
+ },
+ "X5": {
+  "failed": [],
+  "held": true,
+  "statement": "The relative error of gpu-quant-sr-fp16 is below that of gpu-quant-sr-int8.",
+  "values": {
+   "12|resnet50": [
+    0.24585512586685843,
+    1.4175062177263977
+   ],
+   "12|transformer": [
+    0.4684306601306602,
+    2.7719880313503538
+   ],
+   "24|resnet50": [
+    0.4144594932725405,
+    2.087541739605535
+   ],
+   "24|transformer": [
+    0.8299568338113371,
+    4.14234287080083
+   ]
+  }
+ }
+}
