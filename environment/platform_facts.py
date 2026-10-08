@@ -55,7 +55,9 @@ def render(named_dirs):
             lines.append("| `%s` | %s |" % (key, "; ".join(values)))
         lines.append("")
     lines += ["## Not recorded before October 2026", ""] + ["- %s" % item for item in NOT_RECORDED]
-    lines += ["", "The Lonestar6 jobs of Revision 4 (E9) record these in `provenance/node_facts.*.txt`.",
+    lines += ["", "The Lonestar6 jobs of Revision 4 (E9) record these in `provenance/node_facts.*.txt`;",
+              "`environment/node_facts.py` counts each value over their node records in",
+              "`environment/E9_NODE_FACTS.json`.",
               "The Stampede3 jobs (E10) do not, so they stay unrecorded for the Intel system.", ""]
     return "\n".join(lines)
 

@@ -87,6 +87,10 @@ cmp "$W/E9_PROBES.json" validation_v2/results/rev4/E9_PROBES_POSTHOC.json && ech
 for f in validation_v2/results/rev4/E9_EXPECTATIONS.json validation_v2/results/rev4/E9_EXPECTATIONS.md; do keep "$f"; done
 python validation_v2/analysis/e9_expectations.py > /dev/null
 for f in validation_v2/results/rev4/E9_EXPECTATIONS.json validation_v2/results/rev4/E9_EXPECTATIONS.md; do same "$f"; done
+echo "== E9: the node facts of the four jobs"
+keep environment/E9_NODE_FACTS.json
+python environment/node_facts.py "$PYW"/e9/e9-*/ --json environment/E9_NODE_FACTS.json > /dev/null
+same environment/E9_NODE_FACTS.json
 echo "== job-to-job spread behind the H100 phase figure"
 for j in 3328658 3328659 3328660; do tar xzf "raw/july/h100-$j.tar.gz" -C "$W/july"; done
 keep validation_v2/results/rev4/H100_STEP_SPREAD.json

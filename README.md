@@ -264,6 +264,8 @@ Devised after the outcomes they analyze, and labeled so in each file:
   expectations and probe checks against the scored result. It reads the frozen scorer's output only,
   apart from one section that repeats the post hoc reading and is labeled so.
 - `environment/platform_facts.py` writes `environment/PLATFORMS.md` from the archived provenance.
+- `environment/node_facts.py` writes `environment/E9_NODE_FACTS.json` from the node records of the four
+  E9 jobs: GPU driver and VBIOS, processors, adapter and firmware, and the NUMA placement of each.
 - `diagnostic/INPUT_SCHEMA.md` lists the fields the scorers read.
 - `validation_v2/harness/build_v52.py` builds harness v5.2 from v5.1 by insertion only.
 

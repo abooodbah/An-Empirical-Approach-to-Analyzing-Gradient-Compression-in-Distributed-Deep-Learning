@@ -135,5 +135,7 @@ Read from the run directory `v2-L1-2n-3465529`.
 - PCIe and NUMA placement of GPUs and adapters
 - CPU model and core count where the platform block lacks them
 
-The Lonestar6 jobs of Revision 4 (E9) record these in `provenance/node_facts.*.txt`.
+The Lonestar6 jobs of Revision 4 (E9) record these in `provenance/node_facts.*.txt`;
+`environment/node_facts.py` counts each value over their node records in
+`environment/E9_NODE_FACTS.json`.
 The Stampede3 jobs (E10) do not, so they stay unrecorded for the Intel system.
