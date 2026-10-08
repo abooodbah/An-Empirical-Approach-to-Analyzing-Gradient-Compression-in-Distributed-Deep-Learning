@@ -66,6 +66,13 @@ echo "== E10: the frozen scorer on the three committed archives"
 for a in raw/rev4/redctl-E10-*.tgz; do tar xzf "$a" -C "$W/rev4"; done
 python validation_v2/analysis/score_e10.py "$PYW"/rev4/redctl-E10-*/ --json "$PYW/E10.json" > /dev/null
 cmp "$W/E10.json" validation_v2/results/rev4/E10_RESULT.json && echo "E10_RESULT.json identical"
+echo "== E9: the frozen scorer on the four committed archives, and the post hoc tree probe"
+mkdir -p "$W/e9"
+for a in raw/rev4/e9-*.tgz; do tar xzf "$a" -C "$W/e9"; done
+python validation_v2/analysis/score_e9.py "$PYW"/e9/e9-*/ --json "$PYW/E9.json" > /dev/null
+cmp "$W/E9.json" validation_v2/results/rev4/E9_RESULT.json && echo "E9_RESULT.json identical"
+python validation_v2/analysis/e9_tree_posthoc.py "$PYW"/e9/e9-*/ --json "$PYW/E9_TREE.json" > /dev/null
+cmp "$W/E9_TREE.json" validation_v2/results/rev4/E9_TREE_POSTHOC.json && echo "E9_TREE_POSTHOC.json identical"
 echo "== job-to-job spread behind the H100 phase figure"
 for j in 3328658 3328659 3328660; do tar xzf "raw/july/h100-$j.tar.gz" -C "$W/july"; done
 keep validation_v2/results/rev4/H100_STEP_SPREAD.json

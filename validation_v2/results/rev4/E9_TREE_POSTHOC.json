@@ -1,0 +1,63 @@
+{
+ "allocations": [
+  {
+   "gdr": {
+    "allgather_ns_per_byte": 0.9443575450715262,
+    "gather_over_tree": 0.5348471113995391,
+    "ring_allreduce_ns_per_byte": 0.16457542636914496,
+    "tree_allreduce_ns_per_byte": 1.7656588676349354,
+    "tree_over_ring": 10.728569304596775
+   },
+   "host_staged": {
+    "allgather_ns_per_byte": 2.7029545509924127,
+    "gather_over_tree": 2.400911496743337,
+    "ring_allreduce_ns_per_byte": 0.39447150412607235,
+    "tree_allreduce_ns_per_byte": 1.1258034936559618,
+    "tree_over_ring": 2.853953915252031
+   },
+   "run_dir": "e9-q12a-4n-3495229",
+   "world": 12
+  },
+  {
+   "gdr": {
+    "allgather_ns_per_byte": 0.9434321749664396,
+    "gather_over_tree": 0.5110227073004169,
+    "ring_allreduce_ns_per_byte": 0.16354369983702408,
+    "tree_allreduce_ns_per_byte": 1.8461648797375665,
+    "tree_over_ring": 11.288511153760872
+   },
+   "run_dir": "e9-q12b-4n-3495230",
+   "world": 12
+  },
+  {
+   "gdr": {
+    "allgather_ns_per_byte": 1.9853174581548647,
+    "gather_over_tree": 1.0256362004093964,
+    "ring_allreduce_ns_per_byte": 0.06527360058705901,
+    "tree_allreduce_ns_per_byte": 1.9356936283668602,
+    "tree_over_ring": 29.65507664595763
+   },
+   "host_staged": {
+    "allgather_ns_per_byte": 5.752719457084626,
+    "gather_over_tree": 4.861393042289085,
+    "ring_allreduce_ns_per_byte": 0.4045016207696129,
+    "tree_allreduce_ns_per_byte": 1.1833479430776168,
+    "tree_over_ring": 2.9254467283126218
+   },
+   "run_dir": "e9-q24a-8n-3495231",
+   "world": 24
+  },
+  {
+   "gdr": {
+    "allgather_ns_per_byte": 1.9922179413491874,
+    "gather_over_tree": 1.0361464799590685,
+    "ring_allreduce_ns_per_byte": 0.05970166165752158,
+    "tree_allreduce_ns_per_byte": 1.9227184378678648,
+    "tree_over_ring": 32.20544260388486
+   },
+   "run_dir": "e9-q24b-8n-3495232",
+   "world": 24
+  }
+ ],
+ "label": "POST HOC: the tree probe, read after the E9 records; not part of the frozen scorer"
+}

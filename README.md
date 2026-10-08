@@ -213,7 +213,15 @@ told it could reach 21.84 SU (`provenance/PROVENANCE.md`).
 The scorer's model check uses the allocation's probe, taken at 16 ranks, so its value for the
 8-rank condition compares against a 16-rank line and is not a test of the model.
 
-E9, reducible quantizers and a matched DDP baseline (Lonestar6): submitted, not yet run.
+E9, reducible quantizers and a matched DDP baseline (Lonestar6): records in `raw/rev4/e9-*.tgz`, scored by
+`validation_v2/analysis/score_e9.py` into `validation_v2/results/rev4/E9_RESULT.json`. All four jobs
+completed. Every outcome run that is present passed the validity gates, both equivalence runs recorded
+True in every allocation, and the DDP bucket structure matched in every allocation. Five runs failed at
+start-up with a rendezvous or connection error: three conditions have one valid pass in one allocation,
+and the fidelity values of resnet50 gpu-quant at 12 ranks and resnet50 gpu-quant-reducible at 24 ranks
+are absent. Nothing was rerun. The forced-tree probe is fitted by a separate script written after the
+records were read, `validation_v2/analysis/e9_tree_posthoc.py`, into `E9_TREE_POSTHOC.json`; it is
+labeled post hoc. Charges: 26.467 SU on Lonestar6.
 
 The int8 hook in every harness version issues its two all-gathers synchronously on NCCL as well as on
 oneCCL: the harness tests for `"ccl"` in the backend name, and `nccl` contains it. Every int8-hook

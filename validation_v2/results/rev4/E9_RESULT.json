@@ -1,0 +1,1498 @@
+{
+ "allocations": [
+  {
+   "ddp_buckets_match": true,
+   "dtype_check": {
+    "fp16_integer_sum_exact": true,
+    "int16_allreduce": "rejected: Input tensor data type is not supported for NCCL process group: Short"
+   },
+   "equivalence": {
+    "transformer|gpu-quant-sr-fp16": true,
+    "transformer|gpu-quant-sr-int8": true
+   },
+   "exchange_ms": {
+    "resnet50|fp16-native": 11.708200264547486,
+    "resnet50|gpu-quant": 29.32829100706537,
+    "resnet50|gpu-quant-reducible": 11.10440696211299,
+    "resnet50|gpu-quant-sr-fp16": 12.95138397157037,
+    "resnet50|gpu-quant-sr-int8": 10.15214592043776,
+    "resnet50|native": 19.656804158876184,
+    "transformer|fp16-native": 5.355170861002989,
+    "transformer|gpu-quant": 16.307871050472993,
+    "transformer|gpu-quant-reducible": 4.842260584215789,
+    "transformer|gpu-quant-sr-fp16": 6.9475434070530655,
+    "transformer|gpu-quant-sr-int8": 4.621331493156807,
+    "transformer|native": 8.10436460596975
+   },
+   "fidelity": {
+    "resnet50|fp16-native": {
+     "cosine": 0.9999996231932161,
+     "iterations": 8,
+     "levels_per_side": null,
+     "relative_l2_error": 0.0005885509545856292
+    },
+    "resnet50|gpu-quant-reducible": {
+     "cosine": 0.911041678986942,
+     "iterations": 8,
+     "levels_per_side": 10,
+     "relative_l2_error": 0.4143169261057741
+    },
+    "resnet50|gpu-quant-sr-fp16": {
+     "cosine": 0.9710687364935124,
+     "iterations": 8,
+     "levels_per_side": 170,
+     "relative_l2_error": 0.24585512586685843
+    },
+    "resnet50|gpu-quant-sr-int8": {
+     "cosine": 0.5769192216819233,
+     "iterations": 8,
+     "levels_per_side": 10,
+     "relative_l2_error": 1.4175062177263977
+    },
+    "transformer|fp16-native": {
+     "cosine": 0.9999998000902309,
+     "iterations": 8,
+     "levels_per_side": null,
+     "relative_l2_error": 0.0005797045817840262
+    },
+    "transformer|gpu-quant": {
+     "cosine": 0.9545168068923032,
+     "iterations": 8,
+     "levels_per_side": null,
+     "relative_l2_error": 0.3029020778153305
+    },
+    "transformer|gpu-quant-reducible": {
+     "cosine": 0.7812224267346745,
+     "iterations": 8,
+     "levels_per_side": 10,
+     "relative_l2_error": 0.6221372532881309
+    },
+    "transformer|gpu-quant-sr-fp16": {
+     "cosine": 0.9048343007802359,
+     "iterations": 8,
+     "levels_per_side": 170,
+     "relative_l2_error": 0.4684306601306602
+    },
+    "transformer|gpu-quant-sr-int8": {
+     "cosine": 0.34342579745728213,
+     "iterations": 8,
+     "levels_per_side": 10,
+     "relative_l2_error": 2.7719880313503538
+    }
+   },
+   "probe_checks": {
+    "gdr": {
+     "P1": {
+      "holds": true,
+      "model": 6.0,
+      "slope_ratio": 5.738144302013347
+     },
+     "P2": {
+      "default_over_ring": 1.000980483465535,
+      "holds": true
+     },
+     "P3": {
+      "errors": {
+       "allgather 256 MiB": 0.020778230670159045,
+       "allreduce 1024 MiB": 0.0787828701793572,
+       "allreduce 256 MiB": 0.1142200137319044
+      },
+      "holds": true
+     }
+    },
+    "host_staged": {
+     "P1": {
+      "holds": true,
+      "model": 6.0,
+      "slope_ratio": 6.85209076630426
+     },
+     "P2": {
+      "default_over_ring": 0.993788188996978,
+      "holds": true
+     },
+     "P3": {
+      "errors": {
+       "allgather 256 MiB": 0.006376840954724232,
+       "allreduce 1024 MiB": 0.020085412615636632,
+       "allreduce 256 MiB": 0.013649790322576271
+      },
+      "holds": true
+     }
+    }
+   },
+   "ratios": {
+    "resnet50|ddp-fp16-hook|ddp-overlap": 1.0228686874748099,
+    "resnet50|ddp-fp16-hook|fp16-native": 0.9849349830041683,
+    "resnet50|ddp-fp16-hook|native": 0.890333220997128,
+    "resnet50|ddp-int8-hook|ddp-overlap": 1.6975091278538796,
+    "resnet50|ddp-int8-hook|fp16-native": 1.6345559742568185,
+    "resnet50|ddp-int8-hook|native": 1.4775589359424888,
+    "resnet50|ddp-overlap|fp16-native": 0.962914394647968,
+    "resnet50|ddp-overlap|native": 0.8704276823598182,
+    "resnet50|fp16-native|ddp-overlap": 1.0385139172891793,
+    "resnet50|fp16-native|native": 0.9039512621244362,
+    "resnet50|gpu-quant-reducible|ddp-overlap": 0.9286987341214299,
+    "resnet50|gpu-quant-reducible|fp16-native": 0.8942573793768709,
+    "resnet50|gpu-quant-reducible|native": 0.8083650867518132,
+    "resnet50|gpu-quant-sr-fp16|ddp-overlap": 1.0864743005878015,
+    "resnet50|gpu-quant-sr-fp16|fp16-native": 1.0461817434510774,
+    "resnet50|gpu-quant-sr-fp16|native": 0.9456973074041446,
+    "resnet50|gpu-quant-sr-int8|ddp-overlap": 0.9343512489630341,
+    "resnet50|gpu-quant-sr-int8|fp16-native": 0.8997002672838128,
+    "resnet50|gpu-quant-sr-int8|native": 0.8132851921448953,
+    "resnet50|gpu-quant|ddp-overlap": 1.5178913579658497,
+    "resnet50|gpu-quant|fp16-native": 1.4615994380970683,
+    "resnet50|gpu-quant|native": 1.3212146567882117,
+    "resnet50|native|ddp-overlap": 1.1488605202547075,
+    "resnet50|native|fp16-native": 1.1062543323960112,
+    "transformer|ddp-fp16-hook|ddp-overlap": 0.8373815210112706,
+    "transformer|ddp-fp16-hook|fp16-native": 0.9722509288402407,
+    "transformer|ddp-fp16-hook|native": 0.7765775426520846,
+    "transformer|ddp-int8-hook|ddp-overlap": 1.8074912157558374,
+    "transformer|ddp-int8-hook|fp16-native": 2.0986073483767935,
+    "transformer|ddp-int8-hook|native": 1.6762455959163742,
+    "transformer|ddp-overlap|fp16-native": 1.1610608837726608,
+    "transformer|ddp-overlap|native": 0.9273879625552812,
+    "transformer|fp16-native|ddp-overlap": 0.8612812764397659,
+    "transformer|fp16-native|native": 0.7987418881444864,
+    "transformer|gpu-quant-reducible|ddp-overlap": 0.8074202656986044,
+    "transformer|gpu-quant-reducible|fp16-native": 0.9374640872679781,
+    "transformer|gpu-quant-reducible|native": 0.7487918351320725,
+    "transformer|gpu-quant-sr-fp16|ddp-overlap": 0.8922860753248385,
+    "transformer|gpu-quant-sr-fp16|fp16-native": 1.035998459194696,
+    "transformer|gpu-quant-sr-fp16|native": 0.8274953654119502,
+    "transformer|gpu-quant-sr-int8|ddp-overlap": 0.830673387656959,
+    "transformer|gpu-quant-sr-int8|fp16-native": 0.9644623775994188,
+    "transformer|gpu-quant-sr-int8|native": 0.7703565005280805,
+    "transformer|gpu-quant|ddp-overlap": 1.9130025009585947,
+    "transformer|gpu-quant|fp16-native": 2.221112374422296,
+    "transformer|gpu-quant|native": 1.7740954917271485,
+    "transformer|native|ddp-overlap": 1.078297368929231,
+    "transformer|native|fp16-native": 1.2519688961387079
+   },
+   "run_dir": "e9-q12a-4n-3495229",
+   "table": {
+    "resnet50|ddp-fp16-hook": {
+     "T_ms": 52.33381068566814,
+     "passes": 2
+    },
+    "resnet50|ddp-int8-hook": {
+     "T_ms": 86.85095401015133,
+     "passes": 2
+    },
+    "resnet50|ddp-overlap": {
+     "T_ms": 51.163762588985264,
+     "passes": 2
+    },
+    "resnet50|fp16-native": {
+     "T_ms": 53.13427950954065,
+     "passes": 2
+    },
+    "resnet50|gpu-quant": {
+     "T_ms": 77.66103307483718,
+     "passes": 2
+    },
+    "resnet50|gpu-quant-reducible": {
+     "T_ms": 47.51572154927999,
+     "passes": 1
+    },
+    "resnet50|gpu-quant-sr-fp16": {
+     "T_ms": 55.58811317430809,
+     "passes": 2
+    },
+    "resnet50|gpu-quant-sr-int8": {
+     "T_ms": 47.80492547666654,
+     "passes": 2
+    },
+    "resnet50|native": {
+     "T_ms": 58.78002690616995,
+     "passes": 2
+    },
+    "transformer|ddp-fp16-hook": {
+     "T_ms": 11.963720784988254,
+     "passes": 2
+    },
+    "transformer|ddp-int8-hook": {
+     "T_ms": 25.82373707089573,
+     "passes": 2
+    },
+    "transformer|ddp-overlap": {
+     "T_ms": 14.287060897331685,
+     "passes": 2
+    },
+    "transformer|fp16-native": {
+     "T_ms": 12.305178046226501,
+     "passes": 2
+    },
+    "transformer|gpu-quant": {
+     "T_ms": 27.331183227943256,
+     "passes": 2
+    },
+    "transformer|gpu-quant-reducible": {
+     "T_ms": 11.53566250577569,
+     "passes": 2
+    },
+    "transformer|gpu-quant-sr-fp16": {
+     "T_ms": 12.748145496007055,
+     "passes": 2
+    },
+    "transformer|gpu-quant-sr-int8": {
+     "T_ms": 11.867881275247782,
+     "passes": 2
+    },
+    "transformer|native": {
+     "T_ms": 15.405700175324455,
+     "passes": 2
+    }
+   },
+   "world": 12
+  },
+  {
+   "ddp_buckets_match": true,
+   "dtype_check": {
+    "fp16_integer_sum_exact": true,
+    "int16_allreduce": "rejected: Input tensor data type is not supported for NCCL process group: Short"
+   },
+   "equivalence": {
+    "transformer|gpu-quant-sr-fp16": true,
+    "transformer|gpu-quant-sr-int8": true
+   },
+   "exchange_ms": {},
+   "fidelity": {},
+   "probe_checks": {
+    "gdr": {
+     "P1": {
+      "holds": true,
+      "model": 6.0,
+      "slope_ratio": 5.768685531185833
+     },
+     "P2": {
+      "default_over_ring": 1.0223414728057514,
+      "holds": true
+     },
+     "P3": {
+      "errors": {
+       "allgather 256 MiB": 0.01878097959390851,
+       "allreduce 1024 MiB": 0.08810346862746057,
+       "allreduce 256 MiB": 0.05092211789555495
+      },
+      "holds": true
+     }
+    },
+    "host_staged": {}
+   },
+   "ratios": {
+    "resnet50|ddp-fp16-hook|ddp-overlap": 1.0080052230312895,
+    "resnet50|ddp-fp16-hook|fp16-native": 0.9645828513397443,
+    "resnet50|ddp-fp16-hook|native": 0.8718537250858798,
+    "resnet50|ddp-int8-hook|ddp-overlap": 1.7251439253341065,
+    "resnet50|ddp-int8-hook|fp16-native": 1.6508289922011226,
+    "resnet50|ddp-int8-hook|native": 1.492128337478991,
+    "resnet50|ddp-overlap|fp16-native": 0.9569224735155987,
+    "resnet50|ddp-overlap|native": 0.8649297693756262,
+    "resnet50|fp16-native|ddp-overlap": 1.0450167361271603,
+    "resnet50|fp16-native|native": 0.9038660845721344,
+    "resnet50|gpu-quant-reducible|ddp-overlap": 0.9355422241306127,
+    "resnet50|gpu-quant-reducible|fp16-native": 0.8952413791933507,
+    "resnet50|gpu-quant-reducible|native": 0.8091783201584513,
+    "resnet50|gpu-quant-sr-fp16|ddp-overlap": 1.0906957898661702,
+    "resnet50|gpu-quant-sr-fp16|fp16-native": 1.0437113130917854,
+    "resnet50|gpu-quant-sr-fp16|native": 0.943375257987913,
+    "resnet50|gpu-quant-sr-int8|ddp-overlap": 0.949125307222359,
+    "resnet50|gpu-quant-sr-int8|fp16-native": 0.9082393366634723,
+    "resnet50|gpu-quant-sr-int8|native": 0.8209267330844052,
+    "resnet50|gpu-quant|ddp-overlap": 1.5286807707622663,
+    "resnet50|gpu-quant|fp16-native": 1.4628289843735598,
+    "resnet50|gpu-quant|native": 1.3222015065043613,
+    "resnet50|native|ddp-overlap": 1.156163234758214,
+    "resnet50|native|fp16-native": 1.106358582392626,
+    "transformer|ddp-fp16-hook|ddp-overlap": 0.8499302897429235,
+    "transformer|ddp-fp16-hook|fp16-native": 0.9821148275982091,
+    "transformer|ddp-fp16-hook|native": 0.8219605900129406,
+    "transformer|ddp-int8-hook|ddp-overlap": 1.7790991526097475,
+    "transformer|ddp-int8-hook|fp16-native": 2.055791726253147,
+    "transformer|ddp-int8-hook|native": 1.7205521521217277,
+    "transformer|ddp-overlap|fp16-native": 1.155523975848969,
+    "transformer|ddp-overlap|native": 0.9670917720341008,
+    "transformer|fp16-native|ddp-overlap": 0.8654082657742305,
+    "transformer|fp16-native|native": 0.8369292132805586,
+    "transformer|gpu-quant-reducible|ddp-overlap": 0.7750162690013431,
+    "transformer|gpu-quant-reducible|fp16-native": 0.895549880504066,
+    "transformer|gpu-quant-reducible|native": 0.7495118569437663,
+    "transformer|gpu-quant-sr-fp16|ddp-overlap": 0.8871367296608536,
+    "transformer|gpu-quant-sr-fp16|fp16-native": 1.0251077609793615,
+    "transformer|gpu-quant-sr-fp16|native": 0.857942631924252,
+    "transformer|gpu-quant-sr-int8|ddp-overlap": 0.8154901196633629,
+    "transformer|gpu-quant-sr-int8|fp16-native": 0.9423183853389606,
+    "transformer|gpu-quant-sr-int8|native": 0.7886537849015426,
+    "transformer|gpu-quant|ddp-overlap": 1.895443365814072,
+    "transformer|gpu-quant|fp16-native": 2.190230254062028,
+    "transformer|gpu-quant|native": 1.8330676834354112,
+    "transformer|native|ddp-overlap": 1.034028030138942,
+    "transformer|native|fp16-native": 1.1948441805254277
+   },
+   "run_dir": "e9-q12b-4n-3495230",
+   "table": {
+    "resnet50|ddp-fp16-hook": {
+     "T_ms": 51.24988932046108,
+     "passes": 2
+    },
+    "resnet50|ddp-int8-hook": {
+     "T_ms": 87.71128682186827,
+     "passes": 2
+    },
+    "resnet50|ddp-overlap": {
+     "T_ms": 50.84288072073832,
+     "passes": 2
+    },
+    "resnet50|fp16-native": {
+     "T_ms": 53.131661266088486,
+     "passes": 1
+    },
+    "resnet50|gpu-quant": {
+     "T_ms": 77.72253408795223,
+     "passes": 2
+    },
+    "resnet50|gpu-quant-reducible": {
+     "T_ms": 47.56566171068698,
+     "passes": 2
+    },
+    "resnet50|gpu-quant-sr-fp16": {
+     "T_ms": 55.454115946777165,
+     "passes": 2
+    },
+    "resnet50|gpu-quant-sr-int8": {
+     "T_ms": 48.25626478414051,
+     "passes": 2
+    },
+    "resnet50|native": {
+     "T_ms": 58.78266943851486,
+     "passes": 2
+    },
+    "transformer|ddp-fp16-hook": {
+     "T_ms": 12.192771000554785,
+     "passes": 2
+    },
+    "transformer|ddp-int8-hook": {
+     "T_ms": 25.522267904598266,
+     "passes": 2
+    },
+    "transformer|ddp-overlap": {
+     "T_ms": 14.34561298461631,
+     "passes": 2
+    },
+    "transformer|fp16-native": {
+     "T_ms": 12.414812054485083,
+     "passes": 2
+    },
+    "transformer|gpu-quant": {
+     "T_ms": 27.19129696022719,
+     "passes": 2
+    },
+    "transformer|gpu-quant-reducible": {
+     "T_ms": 11.118083451874554,
+     "passes": 2
+    },
+    "transformer|gpu-quant-sr-fp16": {
+     "T_ms": 12.72652018815279,
+     "passes": 2
+    },
+    "transformer|gpu-quant-sr-int8": {
+     "T_ms": 11.698705649469048,
+     "passes": 2
+    },
+    "transformer|native": {
+     "T_ms": 14.83376593561843,
+     "passes": 2
+    }
+   },
+   "world": 12
+  },
+  {
+   "ddp_buckets_match": true,
+   "dtype_check": {
+    "fp16_integer_sum_exact": true,
+    "int16_allreduce": "rejected: Input tensor data type is not supported for NCCL process group: Short"
+   },
+   "equivalence": {
+    "transformer|gpu-quant-sr-fp16": true,
+    "transformer|gpu-quant-sr-int8": true
+   },
+   "exchange_ms": {
+    "resnet50|fp16-native": 12.082012370713832,
+    "resnet50|gpu-quant": 63.63290769974507,
+    "resnet50|gpu-quant-reducible": 12.706708870246075,
+    "resnet50|gpu-quant-sr-fp16": 13.39666614003363,
+    "resnet50|gpu-quant-sr-int8": 12.239234084942533,
+    "resnet50|native": 20.627861699419253,
+    "transformer|fp16-native": 7.410233243717812,
+    "transformer|gpu-quant": 34.59345335383356,
+    "transformer|gpu-quant-reducible": 5.436380340688629,
+    "transformer|gpu-quant-sr-fp16": 7.312061643703298,
+    "transformer|gpu-quant-sr-int8": 5.249762197248249,
+    "transformer|native": 9.720749723783229
+   },
+   "fidelity": {
+    "resnet50|fp16-native": {
+     "cosine": 0.9999995244295142,
+     "iterations": 8,
+     "levels_per_side": null,
+     "relative_l2_error": 0.0007822512758743827
+    },
+    "resnet50|gpu-quant": {
+     "cosine": 0.9890876094407814,
+     "iterations": 8,
+     "levels_per_side": null,
+     "relative_l2_error": 0.14796459862074138
+    },
+    "resnet50|gpu-quant-sr-fp16": {
+     "cosine": 0.9237138928708303,
+     "iterations": 8,
+     "levels_per_side": 85,
+     "relative_l2_error": 0.4144594932725405
+    },
+    "resnet50|gpu-quant-sr-int8": {
+     "cosine": 0.43231261520246483,
+     "iterations": 8,
+     "levels_per_side": 5,
+     "relative_l2_error": 2.087541739605535
+    },
+    "transformer|fp16-native": {
+     "cosine": 0.9999997030888852,
+     "iterations": 8,
+     "levels_per_side": null,
+     "relative_l2_error": 0.000768286587571257
+    },
+    "transformer|gpu-quant": {
+     "cosine": 0.9534963987423416,
+     "iterations": 8,
+     "levels_per_side": null,
+     "relative_l2_error": 0.3073932241974954
+    },
+    "transformer|gpu-quant-reducible": {
+     "cosine": 0.7761104094254376,
+     "iterations": 8,
+     "levels_per_side": 5,
+     "relative_l2_error": 0.6305969999454492
+    },
+    "transformer|gpu-quant-sr-fp16": {
+     "cosine": 0.7696407896145614,
+     "iterations": 8,
+     "levels_per_side": 85,
+     "relative_l2_error": 0.8299568338113371
+    },
+    "transformer|gpu-quant-sr-int8": {
+     "cosine": 0.23524415109092758,
+     "iterations": 8,
+     "levels_per_side": 5,
+     "relative_l2_error": 4.14234287080083
+    }
+   },
+   "probe_checks": {
+    "gdr": {
+     "P1": {
+      "holds": false,
+      "model": 12.0,
+      "slope_ratio": 30.41532013400941
+     },
+     "P2": {
+      "default_over_ring": 2.149303354709823,
+      "holds": false
+     },
+     "P3": {
+      "errors": {
+       "allgather 256 MiB": 0.004733119043309437,
+       "allreduce 1024 MiB": 0.11748924605175941,
+       "allreduce 256 MiB": 0.2369068935008262
+      },
+      "holds": false
+     }
+    },
+    "host_staged": {
+     "P1": {
+      "holds": true,
+      "model": 12.0,
+      "slope_ratio": 14.221746370606345
+     },
+     "P2": {
+      "default_over_ring": 0.9538754957351365,
+      "holds": true
+     },
+     "P3": {
+      "errors": {
+       "allgather 256 MiB": 0.002890477355385988,
+       "allreduce 1024 MiB": 0.07800598180000858,
+       "allreduce 256 MiB": 0.05491722412581661
+      },
+      "holds": true
+     }
+    }
+   },
+   "ratios": {
+    "resnet50|ddp-fp16-hook|ddp-overlap": 1.061086518668407,
+    "resnet50|ddp-fp16-hook|fp16-native": 0.9890276258504642,
+    "resnet50|ddp-fp16-hook|native": 0.9073150639555403,
+    "resnet50|ddp-int8-hook|ddp-overlap": 2.4168685421916316,
+    "resnet50|ddp-int8-hook|fp16-native": 2.252737843918884,
+    "resnet50|ddp-int8-hook|native": 2.0666186944704834,
+    "resnet50|ddp-overlap|fp16-native": 0.9320895218720036,
+    "resnet50|ddp-overlap|native": 0.85508113428315,
+    "resnet50|fp16-native|ddp-overlap": 1.0728583215822505,
+    "resnet50|fp16-native|native": 0.9173809105436672,
+    "resnet50|gpu-quant-reducible|ddp-overlap": 1.0016428393730257,
+    "resnet50|gpu-quant-reducible|fp16-native": 0.9336207952377196,
+    "resnet50|gpu-quant-reducible|native": 0.8564858952376819,
+    "resnet50|gpu-quant-sr-fp16|ddp-overlap": 1.099359853004304,
+    "resnet50|gpu-quant-sr-fp16|fp16-native": 1.0247017997520578,
+    "resnet50|gpu-quant-sr-fp16|native": 0.9400418700922774,
+    "resnet50|gpu-quant-sr-int8|ddp-overlap": 0.9848055442109958,
+    "resnet50|gpu-quant-sr-int8|fp16-native": 0.9179269288405253,
+    "resnet50|gpu-quant-sr-int8|native": 0.8420886417922732,
+    "resnet50|gpu-quant|ddp-overlap": 2.344207352875334,
+    "resnet50|gpu-quant|fp16-native": 2.1850111107104055,
+    "resnet50|gpu-quant|native": 2.0044874822915415,
+    "resnet50|native|ddp-overlap": 1.169479666790148,
+    "resnet50|native|fp16-native": 1.0900597434574588,
+    "transformer|ddp-fp16-hook|ddp-overlap": 0.8636552351073353,
+    "transformer|ddp-fp16-hook|fp16-native": 0.9313194296091221,
+    "transformer|ddp-fp16-hook|native": 0.8379974426548823,
+    "transformer|ddp-int8-hook|ddp-overlap": 2.784954720957709,
+    "transformer|ddp-int8-hook|fp16-native": 3.003145626607846,
+    "transformer|ddp-int8-hook|native": 2.7022182454346586,
+    "transformer|ddp-overlap|fp16-native": 1.0783463027273579,
+    "transformer|ddp-overlap|native": 0.9702916263232465,
+    "transformer|fp16-native|ddp-overlap": 0.9273458790286534,
+    "transformer|fp16-native|native": 0.8997959411268727,
+    "transformer|gpu-quant-reducible|ddp-overlap": 0.7914728885631566,
+    "transformer|gpu-quant-reducible|fp16-native": 0.853481863091022,
+    "transformer|gpu-quant-reducible|native": 0.7679595162347028,
+    "transformer|gpu-quant-sr-fp16|ddp-overlap": 0.9204781495670468,
+    "transformer|gpu-quant-sr-fp16|fp16-native": 0.9925942093269448,
+    "transformer|gpu-quant-sr-fp16|native": 0.8931322407384223,
+    "transformer|gpu-quant-sr-int8|ddp-overlap": 0.7908217576443471,
+    "transformer|gpu-quant-sr-int8|fp16-native": 0.8527797184721324,
+    "transformer|gpu-quant-sr-int8|native": 0.7673277293565419,
+    "transformer|gpu-quant|ddp-overlap": 3.01573149095925,
+    "transformer|gpu-quant|fp16-native": 3.252002903294369,
+    "transformer|gpu-quant|native": 2.9261390129170795,
+    "transformer|native|ddp-overlap": 1.0306179841923693,
+    "transformer|native|fp16-native": 1.111363092778164
+   },
+   "run_dir": "e9-q24a-8n-3495231",
+   "table": {
+    "resnet50|ddp-fp16-hook": {
+     "T_ms": 54.353567094076425,
+     "passes": 2
+    },
+    "resnet50|ddp-int8-hook": {
+     "T_ms": 123.80274761235341,
+     "passes": 2
+    },
+    "resnet50|ddp-overlap": {
+     "T_ms": 51.22444413136691,
+     "passes": 2
+    },
+    "resnet50|fp16-native": {
+     "T_ms": 54.95657115476206,
+     "passes": 2
+    },
+    "resnet50|gpu-quant": {
+     "T_ms": 120.08071857970208,
+     "passes": 2
+    },
+    "resnet50|gpu-quant-reducible": {
+     "T_ms": 51.30859766504727,
+     "passes": 2
+    },
+    "resnet50|gpu-quant-sr-fp16": {
+     "T_ms": 56.31409737048671,
+     "passes": 2
+    },
+    "resnet50|gpu-quant-sr-int8": {
+     "T_ms": 50.446116579696536,
+     "passes": 2
+    },
+    "resnet50|native": {
+     "T_ms": 59.90594585426152,
+     "passes": 2
+    },
+    "transformer|ddp-fp16-hook": {
+     "T_ms": 13.465569221880287,
+     "passes": 2
+    },
+    "transformer|ddp-int8-hook": {
+     "T_ms": 43.421262386254966,
+     "passes": 2
+    },
+    "transformer|ddp-overlap": {
+     "T_ms": 15.591371040791273,
+     "passes": 2
+    },
+    "transformer|fp16-native": {
+     "T_ms": 14.458593683084473,
+     "passes": 2
+    },
+    "transformer|gpu-quant": {
+     "T_ms": 47.019388634944335,
+     "passes": 2
+    },
+    "transformer|gpu-quant-reducible": {
+     "T_ms": 12.340147474315017,
+     "passes": 2
+    },
+    "transformer|gpu-quant-sr-fp16": {
+     "T_ms": 14.35151636484079,
+     "passes": 2
+    },
+    "transformer|gpu-quant-sr-int8": {
+     "T_ms": 12.329995450563729,
+     "passes": 2
+    },
+    "transformer|native": {
+     "T_ms": 16.068747392855585,
+     "passes": 2
+    }
+   },
+   "world": 24
+  },
+  {
+   "ddp_buckets_match": true,
+   "dtype_check": {
+    "fp16_integer_sum_exact": true,
+    "int16_allreduce": "rejected: Input tensor data type is not supported for NCCL process group: Short"
+   },
+   "equivalence": {
+    "transformer|gpu-quant-sr-fp16": true,
+    "transformer|gpu-quant-sr-int8": true
+   },
+   "exchange_ms": {},
+   "fidelity": {},
+   "probe_checks": {
+    "gdr": {
+     "P1": {
+      "holds": false,
+      "model": 12.0,
+      "slope_ratio": 33.369555989539116
+     },
+     "P2": {
+      "default_over_ring": 2.478378782111685,
+      "holds": false
+     },
+     "P3": {
+      "errors": {
+       "allgather 256 MiB": 0.0004074703610741489,
+       "allreduce 1024 MiB": 0.07885086542044958,
+       "allreduce 256 MiB": 0.21018965494574798
+      },
+      "holds": false
+     }
+    },
+    "host_staged": {}
+   },
+   "ratios": {
+    "resnet50|ddp-fp16-hook|ddp-overlap": 1.0558463905434983,
+    "resnet50|ddp-fp16-hook|fp16-native": 0.9956419802858052,
+    "resnet50|ddp-fp16-hook|native": 0.9129446025146795,
+    "resnet50|ddp-int8-hook|ddp-overlap": 2.3182124638983113,
+    "resnet50|ddp-int8-hook|fp16-native": 2.1860278814713263,
+    "resnet50|ddp-int8-hook|native": 2.004457822040572,
+    "resnet50|ddp-overlap|fp16-native": 0.9429799535264757,
+    "resnet50|ddp-overlap|native": 0.8646566495764029,
+    "resnet50|fp16-native|ddp-overlap": 1.0604679306917242,
+    "resnet50|fp16-native|native": 0.9169406479351273,
+    "resnet50|gpu-quant-reducible|ddp-overlap": 0.9916747944863695,
+    "resnet50|gpu-quant-reducible|fp16-native": 0.9351294516181341,
+    "resnet50|gpu-quant-reducible|native": 0.8574582052699521,
+    "resnet50|gpu-quant-sr-fp16|ddp-overlap": 1.0834284660365339,
+    "resnet50|gpu-quant-sr-fp16|fp16-native": 1.0216513245523917,
+    "resnet50|gpu-quant-sr-fp16|native": 0.936793627498851,
+    "resnet50|gpu-quant-sr-int8|ddp-overlap": 0.9907096083864466,
+    "resnet50|gpu-quant-sr-int8|fp16-native": 0.9342193004744844,
+    "resnet50|gpu-quant-sr-int8|native": 0.8566236506905751,
+    "resnet50|gpu-quant|ddp-overlap": 2.312067094683431,
+    "resnet50|gpu-quant|fp16-native": 2.180232921494676,
+    "resnet50|gpu-quant|native": 1.9991441876848235,
+    "resnet50|native|ddp-overlap": 1.1565284329796135,
+    "resnet50|native|fp16-native": 1.0905831279831637,
+    "transformer|ddp-fp16-hook|ddp-overlap": 0.8984139699892426,
+    "transformer|ddp-fp16-hook|fp16-native": 1.026835381278577,
+    "transformer|ddp-fp16-hook|native": 0.8430759364334026,
+    "transformer|ddp-int8-hook|ddp-overlap": 2.7130242205618336,
+    "transformer|ddp-int8-hook|fp16-native": 3.100830299836034,
+    "transformer|ddp-int8-hook|native": 2.545914814018372,
+    "transformer|ddp-overlap|fp16-native": 1.1429423579542872,
+    "transformer|ddp-overlap|native": 0.9384047494758986,
+    "transformer|fp16-native|ddp-overlap": 0.8749347620555994,
+    "transformer|fp16-native|native": 0.8210429361945397,
+    "transformer|gpu-quant-reducible|ddp-overlap": 0.7753892426939609,
+    "transformer|gpu-quant-reducible|fp16-native": 0.8862252093770246,
+    "transformer|gpu-quant-reducible|native": 0.7276289480365331,
+    "transformer|gpu-quant-sr-fp16|ddp-overlap": 0.9193105932668935,
+    "transformer|gpu-quant-sr-fp16|fp16-native": 1.0507190171608178,
+    "transformer|gpu-quant-sr-fp16|native": 0.8626854269651588,
+    "transformer|gpu-quant-sr-int8|ddp-overlap": 0.7787768770011538,
+    "transformer|gpu-quant-sr-int8|fp16-native": 0.8900970801199746,
+    "transformer|gpu-quant-sr-int8|native": 0.7308079201598904,
+    "transformer|gpu-quant|ddp-overlap": 3.019643166528684,
+    "transformer|gpu-quant|fp16-native": 3.4512780809328447,
+    "transformer|gpu-quant|native": 2.833647489192959,
+    "transformer|native|ddp-overlap": 1.0656382553034844,
+    "transformer|native|fp16-native": 1.2179631002428573
+   },
+   "run_dir": "e9-q24b-8n-3495232",
+   "table": {
+    "resnet50|ddp-fp16-hook": {
+     "T_ms": 54.69856395851821,
+     "passes": 2
+    },
+    "resnet50|ddp-int8-hook": {
+     "T_ms": 120.09596647927538,
+     "passes": 2
+    },
+    "resnet50|ddp-overlap": {
+     "T_ms": 51.80541833397001,
+     "passes": 2
+    },
+    "resnet50|fp16-native": {
+     "T_ms": 54.93798477924429,
+     "passes": 2
+    },
+    "resnet50|gpu-quant": {
+     "T_ms": 119.7776030562818,
+     "passes": 2
+    },
+    "resnet50|gpu-quant-reducible": {
+     "T_ms": 51.37412757962011,
+     "passes": 2
+    },
+    "resnet50|gpu-quant-sr-fp16": {
+     "T_ms": 56.12746491795406,
+     "passes": 2
+    },
+    "resnet50|gpu-quant-sr-int8": {
+     "T_ms": 51.32412570994347,
+     "passes": 2
+    },
+    "resnet50|native": {
+     "T_ms": 59.91443928563967,
+     "passes": 2
+    },
+    "transformer|ddp-fp16-hook": {
+     "T_ms": 13.906260409858078,
+     "passes": 2
+    },
+    "transformer|ddp-int8-hook": {
+     "T_ms": 41.9940278865397,
+     "passes": 1
+    },
+    "transformer|ddp-overlap": {
+     "T_ms": 15.478677841601893,
+     "passes": 2
+    },
+    "transformer|fp16-native": {
+     "T_ms": 13.542833314277232,
+     "passes": 2
+    },
+    "transformer|gpu-quant": {
+     "T_ms": 46.74008377129212,
+     "passes": 2
+    },
+    "transformer|gpu-quant-reducible": {
+     "T_ms": 12.002000289503485,
+     "passes": 2
+    },
+    "transformer|gpu-quant-sr-fp16": {
+     "T_ms": 14.229712509550154,
+     "passes": 2
+    },
+    "transformer|gpu-quant-sr-int8": {
+     "T_ms": 12.054436389589682,
+     "passes": 2
+    },
+    "transformer|native": {
+     "T_ms": 16.494671249529347,
+     "passes": 2
+    }
+   },
+   "world": 24
+  }
+ ],
+ "summary": {
+  "12": {
+   "resnet50|ddp-fp16-hook|ddp-overlap": {
+    "call": "within 5%",
+    "values": [
+     1.0228686874748099,
+     1.0080052230312895
+    ]
+   },
+   "resnet50|ddp-fp16-hook|fp16-native": {
+    "call": "within 5%",
+    "values": [
+     0.9849349830041683,
+     0.9645828513397443
+    ]
+   },
+   "resnet50|ddp-fp16-hook|native": {
+    "call": "faster",
+    "values": [
+     0.890333220997128,
+     0.8718537250858798
+    ]
+   },
+   "resnet50|ddp-int8-hook|ddp-overlap": {
+    "call": "slower",
+    "values": [
+     1.6975091278538796,
+     1.7251439253341065
+    ]
+   },
+   "resnet50|ddp-int8-hook|fp16-native": {
+    "call": "slower",
+    "values": [
+     1.6345559742568185,
+     1.6508289922011226
+    ]
+   },
+   "resnet50|ddp-int8-hook|native": {
+    "call": "slower",
+    "values": [
+     1.4775589359424888,
+     1.492128337478991
+    ]
+   },
+   "resnet50|ddp-overlap|fp16-native": {
+    "call": "within 5%",
+    "values": [
+     0.962914394647968,
+     0.9569224735155987
+    ]
+   },
+   "resnet50|ddp-overlap|native": {
+    "call": "faster",
+    "values": [
+     0.8704276823598182,
+     0.8649297693756262
+    ]
+   },
+   "resnet50|fp16-native|ddp-overlap": {
+    "call": "within 5%",
+    "values": [
+     1.0385139172891793,
+     1.0450167361271603
+    ]
+   },
+   "resnet50|fp16-native|native": {
+    "call": "faster",
+    "values": [
+     0.9039512621244362,
+     0.9038660845721344
+    ]
+   },
+   "resnet50|gpu-quant-reducible|ddp-overlap": {
+    "call": "faster",
+    "values": [
+     0.9286987341214299,
+     0.9355422241306127
+    ]
+   },
+   "resnet50|gpu-quant-reducible|fp16-native": {
+    "call": "faster",
+    "values": [
+     0.8942573793768709,
+     0.8952413791933507
+    ]
+   },
+   "resnet50|gpu-quant-reducible|native": {
+    "call": "faster",
+    "values": [
+     0.8083650867518132,
+     0.8091783201584513
+    ]
+   },
+   "resnet50|gpu-quant-sr-fp16|ddp-overlap": {
+    "call": "slower",
+    "values": [
+     1.0864743005878015,
+     1.0906957898661702
+    ]
+   },
+   "resnet50|gpu-quant-sr-fp16|fp16-native": {
+    "call": "within 5%",
+    "values": [
+     1.0461817434510774,
+     1.0437113130917854
+    ]
+   },
+   "resnet50|gpu-quant-sr-fp16|native": {
+    "call": "faster",
+    "values": [
+     0.9456973074041446,
+     0.943375257987913
+    ]
+   },
+   "resnet50|gpu-quant-sr-int8|ddp-overlap": {
+    "call": "faster",
+    "values": [
+     0.9343512489630341,
+     0.949125307222359
+    ]
+   },
+   "resnet50|gpu-quant-sr-int8|fp16-native": {
+    "call": "faster",
+    "values": [
+     0.8997002672838128,
+     0.9082393366634723
+    ]
+   },
+   "resnet50|gpu-quant-sr-int8|native": {
+    "call": "faster",
+    "values": [
+     0.8132851921448953,
+     0.8209267330844052
+    ]
+   },
+   "resnet50|gpu-quant|ddp-overlap": {
+    "call": "slower",
+    "values": [
+     1.5178913579658497,
+     1.5286807707622663
+    ]
+   },
+   "resnet50|gpu-quant|fp16-native": {
+    "call": "slower",
+    "values": [
+     1.4615994380970683,
+     1.4628289843735598
+    ]
+   },
+   "resnet50|gpu-quant|native": {
+    "call": "slower",
+    "values": [
+     1.3212146567882117,
+     1.3222015065043613
+    ]
+   },
+   "resnet50|native|ddp-overlap": {
+    "call": "slower",
+    "values": [
+     1.1488605202547075,
+     1.156163234758214
+    ]
+   },
+   "resnet50|native|fp16-native": {
+    "call": "slower",
+    "values": [
+     1.1062543323960112,
+     1.106358582392626
+    ]
+   },
+   "transformer|ddp-fp16-hook|ddp-overlap": {
+    "call": "faster",
+    "values": [
+     0.8373815210112706,
+     0.8499302897429235
+    ]
+   },
+   "transformer|ddp-fp16-hook|fp16-native": {
+    "call": "within 5%",
+    "values": [
+     0.9722509288402407,
+     0.9821148275982091
+    ]
+   },
+   "transformer|ddp-fp16-hook|native": {
+    "call": "faster",
+    "values": [
+     0.7765775426520846,
+     0.8219605900129406
+    ]
+   },
+   "transformer|ddp-int8-hook|ddp-overlap": {
+    "call": "slower",
+    "values": [
+     1.8074912157558374,
+     1.7790991526097475
+    ]
+   },
+   "transformer|ddp-int8-hook|fp16-native": {
+    "call": "slower",
+    "values": [
+     2.0986073483767935,
+     2.055791726253147
+    ]
+   },
+   "transformer|ddp-int8-hook|native": {
+    "call": "slower",
+    "values": [
+     1.6762455959163742,
+     1.7205521521217277
+    ]
+   },
+   "transformer|ddp-overlap|fp16-native": {
+    "call": "slower",
+    "values": [
+     1.1610608837726608,
+     1.155523975848969
+    ]
+   },
+   "transformer|ddp-overlap|native": {
+    "call": "allocation-dependent",
+    "values": [
+     0.9273879625552812,
+     0.9670917720341008
+    ]
+   },
+   "transformer|fp16-native|ddp-overlap": {
+    "call": "faster",
+    "values": [
+     0.8612812764397659,
+     0.8654082657742305
+    ]
+   },
+   "transformer|fp16-native|native": {
+    "call": "faster",
+    "values": [
+     0.7987418881444864,
+     0.8369292132805586
+    ]
+   },
+   "transformer|gpu-quant-reducible|ddp-overlap": {
+    "call": "faster",
+    "values": [
+     0.8074202656986044,
+     0.7750162690013431
+    ]
+   },
+   "transformer|gpu-quant-reducible|fp16-native": {
+    "call": "faster",
+    "values": [
+     0.9374640872679781,
+     0.895549880504066
+    ]
+   },
+   "transformer|gpu-quant-reducible|native": {
+    "call": "faster",
+    "values": [
+     0.7487918351320725,
+     0.7495118569437663
+    ]
+   },
+   "transformer|gpu-quant-sr-fp16|ddp-overlap": {
+    "call": "faster",
+    "values": [
+     0.8922860753248385,
+     0.8871367296608536
+    ]
+   },
+   "transformer|gpu-quant-sr-fp16|fp16-native": {
+    "call": "within 5%",
+    "values": [
+     1.035998459194696,
+     1.0251077609793615
+    ]
+   },
+   "transformer|gpu-quant-sr-fp16|native": {
+    "call": "faster",
+    "values": [
+     0.8274953654119502,
+     0.857942631924252
+    ]
+   },
+   "transformer|gpu-quant-sr-int8|ddp-overlap": {
+    "call": "faster",
+    "values": [
+     0.830673387656959,
+     0.8154901196633629
+    ]
+   },
+   "transformer|gpu-quant-sr-int8|fp16-native": {
+    "call": "allocation-dependent",
+    "values": [
+     0.9644623775994188,
+     0.9423183853389606
+    ]
+   },
+   "transformer|gpu-quant-sr-int8|native": {
+    "call": "faster",
+    "values": [
+     0.7703565005280805,
+     0.7886537849015426
+    ]
+   },
+   "transformer|gpu-quant|ddp-overlap": {
+    "call": "slower",
+    "values": [
+     1.9130025009585947,
+     1.895443365814072
+    ]
+   },
+   "transformer|gpu-quant|fp16-native": {
+    "call": "slower",
+    "values": [
+     2.221112374422296,
+     2.190230254062028
+    ]
+   },
+   "transformer|gpu-quant|native": {
+    "call": "slower",
+    "values": [
+     1.7740954917271485,
+     1.8330676834354112
+    ]
+   },
+   "transformer|native|ddp-overlap": {
+    "call": "allocation-dependent",
+    "values": [
+     1.078297368929231,
+     1.034028030138942
+    ]
+   },
+   "transformer|native|fp16-native": {
+    "call": "slower",
+    "values": [
+     1.2519688961387079,
+     1.1948441805254277
+    ]
+   }
+  },
+  "24": {
+   "resnet50|ddp-fp16-hook|ddp-overlap": {
+    "call": "slower",
+    "values": [
+     1.061086518668407,
+     1.0558463905434983
+    ]
+   },
+   "resnet50|ddp-fp16-hook|fp16-native": {
+    "call": "within 5%",
+    "values": [
+     0.9890276258504642,
+     0.9956419802858052
+    ]
+   },
+   "resnet50|ddp-fp16-hook|native": {
+    "call": "faster",
+    "values": [
+     0.9073150639555403,
+     0.9129446025146795
+    ]
+   },
+   "resnet50|ddp-int8-hook|ddp-overlap": {
+    "call": "slower",
+    "values": [
+     2.4168685421916316,
+     2.3182124638983113
+    ]
+   },
+   "resnet50|ddp-int8-hook|fp16-native": {
+    "call": "slower",
+    "values": [
+     2.252737843918884,
+     2.1860278814713263
+    ]
+   },
+   "resnet50|ddp-int8-hook|native": {
+    "call": "slower",
+    "values": [
+     2.0666186944704834,
+     2.004457822040572
+    ]
+   },
+   "resnet50|ddp-overlap|fp16-native": {
+    "call": "faster",
+    "values": [
+     0.9320895218720036,
+     0.9429799535264757
+    ]
+   },
+   "resnet50|ddp-overlap|native": {
+    "call": "faster",
+    "values": [
+     0.85508113428315,
+     0.8646566495764029
+    ]
+   },
+   "resnet50|fp16-native|ddp-overlap": {
+    "call": "slower",
+    "values": [
+     1.0728583215822505,
+     1.0604679306917242
+    ]
+   },
+   "resnet50|fp16-native|native": {
+    "call": "faster",
+    "values": [
+     0.9173809105436672,
+     0.9169406479351273
+    ]
+   },
+   "resnet50|gpu-quant-reducible|ddp-overlap": {
+    "call": "within 5%",
+    "values": [
+     1.0016428393730257,
+     0.9916747944863695
+    ]
+   },
+   "resnet50|gpu-quant-reducible|fp16-native": {
+    "call": "faster",
+    "values": [
+     0.9336207952377196,
+     0.9351294516181341
+    ]
+   },
+   "resnet50|gpu-quant-reducible|native": {
+    "call": "faster",
+    "values": [
+     0.8564858952376819,
+     0.8574582052699521
+    ]
+   },
+   "resnet50|gpu-quant-sr-fp16|ddp-overlap": {
+    "call": "slower",
+    "values": [
+     1.099359853004304,
+     1.0834284660365339
+    ]
+   },
+   "resnet50|gpu-quant-sr-fp16|fp16-native": {
+    "call": "within 5%",
+    "values": [
+     1.0247017997520578,
+     1.0216513245523917
+    ]
+   },
+   "resnet50|gpu-quant-sr-fp16|native": {
+    "call": "faster",
+    "values": [
+     0.9400418700922774,
+     0.936793627498851
+    ]
+   },
+   "resnet50|gpu-quant-sr-int8|ddp-overlap": {
+    "call": "within 5%",
+    "values": [
+     0.9848055442109958,
+     0.9907096083864466
+    ]
+   },
+   "resnet50|gpu-quant-sr-int8|fp16-native": {
+    "call": "faster",
+    "values": [
+     0.9179269288405253,
+     0.9342193004744844
+    ]
+   },
+   "resnet50|gpu-quant-sr-int8|native": {
+    "call": "faster",
+    "values": [
+     0.8420886417922732,
+     0.8566236506905751
+    ]
+   },
+   "resnet50|gpu-quant|ddp-overlap": {
+    "call": "slower",
+    "values": [
+     2.344207352875334,
+     2.312067094683431
+    ]
+   },
+   "resnet50|gpu-quant|fp16-native": {
+    "call": "slower",
+    "values": [
+     2.1850111107104055,
+     2.180232921494676
+    ]
+   },
+   "resnet50|gpu-quant|native": {
+    "call": "slower",
+    "values": [
+     2.0044874822915415,
+     1.9991441876848235
+    ]
+   },
+   "resnet50|native|ddp-overlap": {
+    "call": "slower",
+    "values": [
+     1.169479666790148,
+     1.1565284329796135
+    ]
+   },
+   "resnet50|native|fp16-native": {
+    "call": "slower",
+    "values": [
+     1.0900597434574588,
+     1.0905831279831637
+    ]
+   },
+   "transformer|ddp-fp16-hook|ddp-overlap": {
+    "call": "faster",
+    "values": [
+     0.8636552351073353,
+     0.8984139699892426
+    ]
+   },
+   "transformer|ddp-fp16-hook|fp16-native": {
+    "call": "allocation-dependent",
+    "values": [
+     0.9313194296091221,
+     1.026835381278577
+    ]
+   },
+   "transformer|ddp-fp16-hook|native": {
+    "call": "faster",
+    "values": [
+     0.8379974426548823,
+     0.8430759364334026
+    ]
+   },
+   "transformer|ddp-int8-hook|ddp-overlap": {
+    "call": "slower",
+    "values": [
+     2.784954720957709,
+     2.7130242205618336
+    ]
+   },
+   "transformer|ddp-int8-hook|fp16-native": {
+    "call": "slower",
+    "values": [
+     3.003145626607846,
+     3.100830299836034
+    ]
+   },
+   "transformer|ddp-int8-hook|native": {
+    "call": "slower",
+    "values": [
+     2.7022182454346586,
+     2.545914814018372
+    ]
+   },
+   "transformer|ddp-overlap|fp16-native": {
+    "call": "slower",
+    "values": [
+     1.0783463027273579,
+     1.1429423579542872
+    ]
+   },
+   "transformer|ddp-overlap|native": {
+    "call": "allocation-dependent",
+    "values": [
+     0.9702916263232465,
+     0.9384047494758986
+    ]
+   },
+   "transformer|fp16-native|ddp-overlap": {
+    "call": "faster",
+    "values": [
+     0.9273458790286534,
+     0.8749347620555994
+    ]
+   },
+   "transformer|fp16-native|native": {
+    "call": "faster",
+    "values": [
+     0.8997959411268727,
+     0.8210429361945397
+    ]
+   },
+   "transformer|gpu-quant-reducible|ddp-overlap": {
+    "call": "faster",
+    "values": [
+     0.7914728885631566,
+     0.7753892426939609
+    ]
+   },
+   "transformer|gpu-quant-reducible|fp16-native": {
+    "call": "faster",
+    "values": [
+     0.853481863091022,
+     0.8862252093770246
+    ]
+   },
+   "transformer|gpu-quant-reducible|native": {
+    "call": "faster",
+    "values": [
+     0.7679595162347028,
+     0.7276289480365331
+    ]
+   },
+   "transformer|gpu-quant-sr-fp16|ddp-overlap": {
+    "call": "faster",
+    "values": [
+     0.9204781495670468,
+     0.9193105932668935
+    ]
+   },
+   "transformer|gpu-quant-sr-fp16|fp16-native": {
+    "call": "allocation-dependent",
+    "values": [
+     0.9925942093269448,
+     1.0507190171608178
+    ]
+   },
+   "transformer|gpu-quant-sr-fp16|native": {
+    "call": "faster",
+    "values": [
+     0.8931322407384223,
+     0.8626854269651588
+    ]
+   },
+   "transformer|gpu-quant-sr-int8|ddp-overlap": {
+    "call": "faster",
+    "values": [
+     0.7908217576443471,
+     0.7787768770011538
+    ]
+   },
+   "transformer|gpu-quant-sr-int8|fp16-native": {
+    "call": "faster",
+    "values": [
+     0.8527797184721324,
+     0.8900970801199746
+    ]
+   },
+   "transformer|gpu-quant-sr-int8|native": {
+    "call": "faster",
+    "values": [
+     0.7673277293565419,
+     0.7308079201598904
+    ]
+   },
+   "transformer|gpu-quant|ddp-overlap": {
+    "call": "slower",
+    "values": [
+     3.01573149095925,
+     3.019643166528684
+    ]
+   },
+   "transformer|gpu-quant|fp16-native": {
+    "call": "slower",
+    "values": [
+     3.252002903294369,
+     3.4512780809328447
+    ]
+   },
+   "transformer|gpu-quant|native": {
+    "call": "slower",
+    "values": [
+     2.9261390129170795,
+     2.833647489192959
+    ]
+   },
+   "transformer|native|ddp-overlap": {
+    "call": "allocation-dependent",
+    "values": [
+     1.0306179841923693,
+     1.0656382553034844
+    ]
+   },
+   "transformer|native|fp16-native": {
+    "call": "slower",
+    "values": [
+     1.111363092778164,
+     1.2179631002428573
+    ]
+   }
+  }
+ }
+}
