@@ -44,6 +44,9 @@ lonestar6_jobs_utc.tsv (Slurm accounting), and git.
 | 2026-10-08 00:14:19 | E9 and E10 pre-registration pushed to GitHub (fce4c1b..78b077e: harness v5.2, diagnostic/E9_PROTOCOL.md and E10_PROTOCOL.md, both scorers, the launch scripts, and the freeze hashes diagnostic/E9_FREEZE.sha256 and E10_FREEZE.sha256). The time is the repository's `pushed_at`; the author approved the push at 00:13 |
 | 2026-10-08 00:15:54 | E10 submitted on Stampede3: s2 3579138 and s1 3579139 (provenance/rev4_jobs.tsv) |
 | 2026-10-08 00:16:07 | E9 submitted on Lonestar6 with `--nice=100`: q12a 3495229, q12b 3495230, q24a 3495231, q24b 3495232 |
+| 2026-10-08 00:15:57 to 01:06:06 | E10 s2 3579138 (32 ranks) ran 3009 s to its time limit. Both check runs and the probe returned 0; the timed gather stalled after initialization and no timed run completed. TACC drained node c552-003 with "GPU missing" at 01:06:50 |
+| 2026-10-08 01:08:32 to 01:46:41 | E10 s1 3579139 (16 and 8 ranks) ran 2289 s and completed all six timed conditions |
+| 2026-10-08 01:49 | both E10 run directories fetched and scored (validation_v2/results/rev4/E10_RESULT.json). Scored with the files of E9_FREEZE.sha256 and E10_FREEZE.sha256, unchanged. Charges: provenance/rev4_su.tsv (13.84 SU) |
 
 ## Harness v4 used by E6
 Every round-4 job recorded harness v4 3aecaae1c1021269ae25a9e0468a7c7a6bcae7c27a7f64c8f275531e10207179,
@@ -56,6 +59,8 @@ which is git 35cf9be:harness/control_workload_benchmark_v4.py and the Lonestar6 
 - validation_v2/analysis/identity.py (first committed 2026-09-30 06:00:45, a4be38d)
 
 ## File hashes
+- sha256 350b3555c94a5bc26924155cd9915a74d46c60be5db6a72fa4fa10e521033fcf `raw/rev4/redctl-E10-2n-3579139.tgz`
+- sha256 9a59840f76909c13b4d6849a936dde3d716fdf6d9db1ae81ce7b005c952c6f72 `raw/rev4/redctl-E10-4n-3579138.tgz`
 - sha256 71329c336cc3e9646dbb6e6dd4ce20e12305d666c663f2a3e4b35195b535a822 `diagnostic/rules.py`
 - sha256 95e240d86e79301e6740276f851a30bf6c9289c093cdc5147de92117bed1c7dd `diagnostic/features.py`
 - sha256 928550323d0a5f8e9f48edc66c0b71fbd17489b4ae827afc3cf5d55a5dc9fede `diagnostic/score_e6.py`

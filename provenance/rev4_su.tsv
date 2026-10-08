@@ -1,0 +1,4 @@
+job_id	name	nodes	elapsed_s	partition	state	start	end	rate_su_per_node_hour	su
+3579138	redctl-e10	4	3009	pvc	TIMEOUT	2026-10-07T19:15:57	2026-10-07T20:06:06	3.0	10.03
+3579139	redctl-e10	2	2289	pvc	COMPLETED	2026-10-07T20:08:32	2026-10-07T20:46:41	3.0	3.81
+total									13.84

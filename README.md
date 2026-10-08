@@ -194,6 +194,21 @@ the input-sensitivity study in `validation_v2/results/rev/`.
 `provenance/PROVENANCE.md` orders the pushes of each protocol, the E8 freeze,
 and the e7a check against the jobs' submit and fetch times.
 
+## Revision 4 jobs (E9 and E10)
+
+Pre-registered in `diagnostic/E9_PROTOCOL.md` and `diagnostic/E10_PROTOCOL.md`, with the frozen
+components listed in `diagnostic/E9_FREEZE.sha256` and `E10_FREEZE.sha256`. Jobs are in
+`provenance/rev4_jobs.tsv` and charges in `provenance/rev4_su.tsv`.
+
+E10, a bucketed gather on the 1B workload (Stampede3): records in `raw/rev4/redctl-E10-*.tgz`,
+scored by `validation_v2/analysis/score_e10.py` into `validation_v2/results/rev4/E10_RESULT.json`.
+The 16- and 8-rank allocation completed every condition. The 32-rank allocation completed its two
+check runs and no timed run: one of its nodes was drained with "GPU missing" as the job ended.
+The scorer's model check uses the allocation's probe, taken at 16 ranks, so its value for the
+8-rank condition compares against a 16-rank line and is not a test of the model.
+
+E9, reducible quantizers and a matched DDP baseline (Lonestar6): submitted, not yet run.
+
 ## Boundary
 
 These are execution-cost measurements on synthetic fixed-input

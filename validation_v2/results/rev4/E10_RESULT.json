@@ -1,0 +1,113 @@
+{
+ "allocations": [
+  {
+   "checks": {
+    "16|bucketing cost, dense": 0.992924630159627,
+    "16|memory": {
+     "account_gb": 5.565696,
+     "below_45_gb": true,
+     "extra_gb": 5.565704704000005,
+     "peak_gb": 39.106752
+    },
+    "8|bucketing cost, gather": 0.976328924104919
+   },
+   "conditions": {
+    "16|gpu-quant-bucketed": {
+     "bucket_count": 63,
+     "exchange_buffer_gb": 0.33554432,
+     "exchange_ms": 12971.243170702837,
+     "gradient_elements": 1046030336,
+     "iterations": 40,
+     "peak_gb": 39.106752,
+     "predicted_exchange_ms": 14006.844803022104,
+     "prediction_error": 0.0798382713738882,
+     "state": "complete",
+     "step_ms": 14991.154805480619
+    },
+    "16|gpu-quant-reducible-bucketed": {
+     "bucket_count": 63,
+     "exchange_buffer_gb": 0.0,
+     "exchange_ms": 1415.700032514178,
+     "gradient_elements": 1046030336,
+     "iterations": 40,
+     "peak_gb": 34.587078655999996,
+     "predicted_exchange_ms": 1381.2337071010647,
+     "prediction_error": 0.02434578273753632,
+     "state": "complete",
+     "step_ms": 3077.0424716960406
+    },
+    "16|native": {
+     "bucket_count": null,
+     "exchange_buffer_gb": null,
+     "exchange_ms": 5277.172225205322,
+     "gradient_elements": null,
+     "iterations": 40,
+     "peak_gb": 33.541047295999995,
+     "state": "complete",
+     "step_ms": 7177.622010803316
+    },
+    "16|native-bucketed": {
+     "bucket_count": 63,
+     "exchange_buffer_gb": 0.0,
+     "exchange_ms": 5239.83428000065,
+     "gradient_elements": 1046030336,
+     "iterations": 40,
+     "peak_gb": 33.541047295999995,
+     "predicted_exchange_ms": 5068.7464390542045,
+     "prediction_error": 0.032651383956827075,
+     "state": "complete",
+     "step_ms": 6850.007926532999
+    },
+    "8|gpu-quant": {
+     "bucket_count": null,
+     "exchange_buffer_gb": null,
+     "exchange_ms": 3109.6150773573754,
+     "gradient_elements": null,
+     "iterations": 40,
+     "peak_gb": 42.957567488,
+     "state": "complete",
+     "step_ms": 5265.429645605036
+    },
+    "8|gpu-quant-bucketed": {
+     "bucket_count": 63,
+     "exchange_buffer_gb": 0.201326592,
+     "exchange_ms": 3036.0071428567608,
+     "gradient_elements": 1046030336,
+     "iterations": 40,
+     "peak_gb": 38.972530176,
+     "predicted_exchange_ms": 14006.844803022104,
+     "prediction_error": 3.6135743902902107,
+     "state": "complete",
+     "step_ms": 4895.285466336645
+    }
+   },
+   "ratios": {
+    "16|gather over gpu-quant-reducible-bucketed": {
+     "exchange": 9.162423446206237,
+     "step": 4.871936264570835,
+     "traffic_model": 8.0
+    },
+    "16|gather over native-bucketed": {
+     "exchange": 2.4755063762629583,
+     "step": 2.18848722019919,
+     "traffic_model": 2.0
+    }
+   },
+   "run_dir": "redctl-E10-2n-3579139"
+  },
+  {
+   "checks": {},
+   "conditions": {
+    "32|gpu-quant-bucketed": {
+     "bucket_count": null,
+     "exchange_buffer_gb": null,
+     "first_error": "llama-ws32-gpu-quant-bucketed.0.err: [2026-10-07T19:52:06.002] error: *** STEP 3579138.5 ON c552-003 CANCELLED AT 2026-10-07T19:52:06 DUE TO TIME LIMIT ***",
+     "gradient_elements": null,
+     "state": "missing"
+    }
+   },
+   "ratios": {},
+   "run_dir": "redctl-E10-4n-3579138"
+  }
+ ]
+}
