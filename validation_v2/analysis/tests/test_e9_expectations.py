@@ -131,3 +131,39 @@ def test_the_committed_files_are_what_the_script_writes():
     text = io.open(os.path.join(RESULTS, "E9_EXPECTATIONS.md"), encoding="utf-8").read()
     assert text == X.render(out, load("E9_PROBES_POSTHOC.json"))
     assert "| X4 |" in text and "not held" in text and "POST HOC" in text
+
+
+def test_every_row_of_a_rendered_table_has_as_many_columns_as_its_header():
+    # a cell name such as 24|resnet50 must not reach a table cell: the bar is the column separator
+    r = result()
+    r["summary"]["24"]["resnet50|ddp-fp16-hook|ddp-overlap"] = {"call": "slower", "values": [1.06, 1.06]}
+    posthoc = {"allocations": []}
+    lines = X.render(X.outcomes(r), posthoc).split("\n")
+    width = None
+    for line in lines:
+        if not line.startswith("|"):
+            width = None
+            continue
+        width = width or line.count("|")
+        assert line.count("|") == width, line
+    assert "not held (resnet50 at 24 ranks)" in "\n".join(lines)
+
+
+def test_the_numbers_the_readme_states_about_e9_are_the_committed_records():
+    readme = io.open(os.path.join(ROOT, "README.md"), encoding="utf-8").read()
+    out, probes = load("E9_EXPECTATIONS.json"), load("E9_PROBES_POSTHOC.json")
+    gdr = {w: [a["gdr"] for a in probes["allocations"] if a["world"] == w] for w in (12, 24)}
+    stated = [
+        "X1, X2, X3 and X5 held",
+        "(%s in both allocations)" % " and ".join(sorted({"%.2f" % v for v in out["X4"]["values"]["24|resnet50"]})),
+        "slope ratio %s against p/2 = 12" % " and ".join("%.1f" % v for v in out["P1"]["values"]["gdr"]["24"]),
+        "took %s ms" % " and ".join("%.2f" % g["points_ms"]["ring_allreduce"]["1"] for g in gdr[24]),
+        "(%s ms)" % " and ".join("%.2f" % g["points_ms"]["ring_allreduce"]["16"] for g in gdr[24]),
+        "is %s at 24 ranks" % " and ".join("%.2f" % g["from_16_to_64_mib"]["gather_over_ring"] for g in gdr[24]),
+        "%s at 12" % " and ".join("%.2f" % g["from_16_to_64_mib"]["gather_over_ring"] for g in gdr[12]),
+    ]
+    for text in stated:
+        assert text in readme, text
+    times = [g["tree_over_ring_time_at_1024_mib"] for w in (12, 24) for g in gdr[w]]
+    assert "took %.1f to %.1f times the ring's time" % (min(times), max(times)) in readme
+    assert "e9_tree_posthoc.py` of commit 5573a1d" in readme and "E9_EXPECTATIONS.md" in readme
