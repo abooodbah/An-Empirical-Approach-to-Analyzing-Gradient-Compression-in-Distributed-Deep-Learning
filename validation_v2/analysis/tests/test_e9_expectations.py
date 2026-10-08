@@ -265,3 +265,42 @@ def test_the_second_reading_is_printed_for_every_range_with_a_verdict_for_each_c
     assert "held: 10.63, 11.07" in rows[1] and "not held: 1.04, 1.10" in rows[1] and "not held: 21.1%, 21.6%" in rows[1]
     assert "not held: 1.05, 1.11" in rows[2]            # 1.052 is above the 5% bound although it prints as 1.05
     assert "Readings of the expectations" in text and "after the records were read" in text
+
+
+def test_the_readme_states_what_the_second_review_added_from_the_records():
+    # the README is hard-wrapped: compare with its line breaks folded into spaces
+    readme = " ".join(io.open(os.path.join(ROOT, "README.md"), encoding="utf-8").read().split())
+    probes = load("E9_PROBES_POSTHOC.json")
+    spread = load("E9_PASS_SPREAD_POSTHOC.json")["summary"]
+    nodes = json.load(io.open(os.path.join(ROOT, "environment", "E9_NODE_FACTS.json"), encoding="utf-8"))
+    ranges = ("from_16_to_64_mib", "from_16_to_256_mib", "from_64_to_256_mib")
+    gdr = {w: [a["gdr"] for a in probes["allocations"] if a["world"] == w] for w in (12, 24)}
+    ratios = [g[r]["gather_over_ring"] for g in gdr[24] for r in ranges]
+    defaults = [g[r]["default_over_ring"] for g in gdr[24] for r in ranges]
+    longer = [max(g[r]["prediction_errors"].values()) for w in (12, 24) for g in gdr[w] for r in ranges[1:]]
+    both = [a for a in probes["allocations"] if "host_staged" in a]
+    faster = [a["host_staged"]["points_ms"][c][k] / a["gdr"]["points_ms"][c][k]
+              for a in both for c in ("ring_allreduce", "ring_allgather")
+              for k in a["gdr"]["points_ms"][c] if int(k) >= 16 and k in a["host_staged"]["points_ms"][c]]
+    stated = [
+        "it is %.2f to %.2f at 24 ranks" % (min(ratios), max(ratios)),
+        "(%s with the line through 16 and 64 MiB, up to %.2f with the others)"
+        % (" and ".join("%.2f" % g["from_16_to_64_mib"]["default_over_ring"] for g in gdr[24]), max(defaults)),
+        "(%s)" % " and ".join("%.1f%%" % (100 * max(g["from_16_to_64_mib"]["prediction_errors"].values()))
+                             for g in gdr[24]),
+        "(%.1f%% to %.1f%%)" % (100 * min(longer), 100 * max(longer)),
+        "%d node records describe %d nodes" % (nodes["records"], nodes["nodes"]),
+        "by a median of %.1f%% at 12 ranks and %.1f%% at 24" % (100 * spread["12"]["median"], 100 * spread["24"]["median"]),
+        "by more than 5%% in %d of %d conditions at 12 ranks and %d of %d at 24"
+        % (spread["12"]["above_5_percent"], spread["12"]["two_pass_conditions"],
+           spread["24"]["above_5_percent"], spread["24"]["two_pass_conditions"]),
+        "by %.1f%% at most" % (100 * max(spread[w]["largest"]["spread"] for w in ("12", "24"))),
+        "by %.1f to %.1f times" % (min(faster), max(faster)),
+    ]
+    for text in stated:
+        assert text in readme, text
+    odd = [h for h, f in nodes["by_node"].items() if "BlueField" in f["adapter"]]
+    assert len(odd) == 1 and all(odd[0] in hosts for run, hosts in nodes["runs"].items() if "q24" in run)
+    assert not any(odd[0] in hosts for run, hosts in nodes["runs"].items() if "q12" in run)
+    assert "present in both 24-rank jobs and in neither 12-rank job" in readme
+    assert "will record the same" not in readme
