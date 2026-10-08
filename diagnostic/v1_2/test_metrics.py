@@ -80,3 +80,27 @@ def test_aggregation_rules_bracket_the_half_count():
     loose = M.aggregate(rows, "any")["recommended"]
     assert strict <= 2.5 <= loose
     assert (strict, loose) == (2, 3)
+
+
+def test_a_rate_of_zero_or_one_gets_its_count_and_no_interval():
+    # A percentile bootstrap cannot return a value it has not drawn, so at 0
+    # or 1 it prints a zero-width "interval" that looks like certainty. Such
+    # a rate carries its numerator and denominator and no interval.
+    out = M.build(draws=300)
+    full = out["E7"]["full"]
+    assert full["rates"]["precision"] == pytest.approx(1.0)
+    assert full["intervals"]["precision"] is None
+    assert list(full["support"]["precision"]) == pytest.approx([2.0, 2.0])
+    assert full["intervals"]["false_positive_rate"] is None
+    assert list(full["support"]["false_positive_rate"]) == pytest.approx([0.0, 4.0])
+    lo, hi, dropped = out["E7"]["A2"]["intervals"]["precision"]
+    assert lo < 4 / 7.5 < hi
+    replay = out["E8"]["replay"]
+    assert replay["intervals"]["recall"] is None
+    assert list(replay["support"]["recall"]) == pytest.approx([7.5, 7.5])
+
+
+def test_the_text_table_prints_the_count_where_no_interval_is_defined():
+    text = M.render(M.build(draws=300))
+    assert "1.00 (2 of 2)" in text and "1.00 (7.5 of 7.5)" in text
+    assert "[1.00, 1.00]" not in text and "[0.00, 0.00]" not in text
