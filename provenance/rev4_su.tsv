@@ -1,5 +1,5 @@
-job_id	name	nodes	elapsed_s	partition	state	start	end	rate_su_per_node_hour	su
-3579138	redctl-e10	4	3009	pvc	TIMEOUT	2026-10-07T19:15:57	2026-10-07T20:06:06	3.0	10.03
-3579139	redctl-e10	2	2289	pvc	COMPLETED	2026-10-07T20:08:32	2026-10-07T20:46:41	3.0	3.81
-3579496	redctl-e10	4	1897	pvc	COMPLETED	2026-10-07T21:34:14	2026-10-07T22:05:51	3.0	6.32
-total									20.17
+job_id	name	nodes	elapsed_s	partition	state	start_utc	end_utc	rate_su_per_node_hour	su
+3579138	redctl-e10	4	3009	pvc	TIMEOUT	2026-10-08T00:15:57	2026-10-08T01:06:06	3.0	10.030
+3579139	redctl-e10	2	2289	pvc	COMPLETED	2026-10-08T01:08:32	2026-10-08T01:46:41	3.0	3.815
+3579496	redctl-e10	4	1897	pvc	COMPLETED	2026-10-08T02:34:14	2026-10-08T03:05:51	3.0	6.323
+total									20.168

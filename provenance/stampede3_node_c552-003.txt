@@ -1,0 +1,15 @@
+Node c552-003 of Stampede3 (partition pvc), as `scontrol show node c552-003` reported it.
+Times inside the output are the cluster's local time (CDT, UTC-5).
+Job 3579138 ran on this node and ended at 2026-10-08T01:06:06Z (20:06:06 CDT), 44 s before the
+time in the drain reason. Whether the missing GPU caused the stalled run is not established.
+
+Read at 2026-10-08T02:24:35Z (the two lines kept from that read):
+   State=IDLE+DRAIN ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Reason=TACC: GPU missing [root@2026-10-07T20:06:50]
+
+Read at 2026-10-08T14:15:25Z:
+NodeName=c552-003 Arch=x86_64 CoresPerSocket=48
+   State=IDLE+DRAIN ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   BootTime=2026-09-29T22:33:21 SlurmdStartTime=2026-09-29T23:27:40
+   LastBusyTime=2026-10-07T20:06:50 ResumeAfterTime=None SuspendTime=INFINITE
+   Reason=TACC: GPU missing [root@2026-10-07T20:06:50]

@@ -203,16 +203,46 @@ components listed in `diagnostic/E9_FREEZE.sha256` and `E10_FREEZE.sha256`. Jobs
 E10, a bucketed gather on the 1B workload (Stampede3): records in `raw/rev4/redctl-E10-*.tgz`,
 scored by `validation_v2/analysis/score_e10.py` into `validation_v2/results/rev4/E10_RESULT.json`.
 The 16- and 8-rank allocation completed every condition. The first 32-rank allocation (job 3579138) completed its two
-check runs and no timed run: one of its nodes was drained with "GPU missing" as the job ended.
+check runs and no timed run. One of its nodes was drained with "GPU missing" 44 s after the job ended
+(`provenance/stampede3_node_c552-003.txt`); no record establishes that this caused the stalled run.
 It was resubmitted once (job 3579496), as section 4 of the protocol allows, and the resubmission
 completed all three timed conditions with 20 measured iterations each. The scored result keeps both
 32-rank allocations; the first has state `missing`. The three jobs were charged 20.17 SU, 0.17 SU
-above the 20 SU of section 6; the author approved the resubmission before it was submitted, knowing
-it could reach 21.84 SU (`provenance/PROVENANCE.md`).
+above the 20 SU of section 6; the author approved the resubmission before it was submitted, after being
+told it could reach 21.84 SU (`provenance/PROVENANCE.md`).
 The scorer's model check uses the allocation's probe, taken at 16 ranks, so its value for the
 8-rank condition compares against a 16-rank line and is not a test of the model.
 
 E9, reducible quantizers and a matched DDP baseline (Lonestar6): submitted, not yet run.
+
+The int8 hook in every harness version issues its two all-gathers synchronously on NCCL as well as on
+oneCCL: the harness tests for `"ccl"` in the backend name, and `nccl` contains it. Every int8-hook
+provenance record in `raw/` carries `hook_state.mode` = `sync`. The 16-bit hook is PyTorch's own and is
+asynchronous. The E9 jobs use the frozen harness v5.2 and will record the same.
+
+## Revision 4: retrospective analyses and how to regenerate them
+
+Devised after the outcomes they analyze, and labeled so in each file:
+
+- `diagnostic/v1_2/metrics.py` writes `METRICS.json` and `METRICS.txt`: coverage, precision, recall and
+  false-positive rate of every rule set on the three held-out sets, with intervals from resampling cases.
+  A rate of exactly 0 or 1 carries its count and no interval.
+- `diagnostic/v1_2/replay_validation.py` writes `REPLAY_VALIDATION.csv`: every prediction of the replay
+  beside the measured gain.
+- `diagnostic/v1_2/memory_account.py` writes `MEMORY_ACCOUNT.md`: peak device memory of the 1B conditions.
+- `validation_v2/analysis/intervals.py` writes `results/rev4/INTERVALS.*`: allocation-level intervals.
+- `validation_v2/analysis/traffic_models.py`: ring, tree, reduce-scatter and shard-wise traffic, checked
+  by a link-load counter in its tests.
+- `validation_v2/analysis/step_spread.py` writes `results/rev4/H100_STEP_SPREAD.json`: how far the three
+  July jobs are apart on each bar of the phase-attribution figure.
+- `environment/platform_facts.py` writes `environment/PLATFORMS.md` from the archived provenance.
+- `diagnostic/INPUT_SCHEMA.md` lists the fields the scorers read.
+- `validation_v2/harness/build_v52.py` builds harness v5.2 from v5.1 by insertion only.
+
+`bash reproduce_diagnostic.sh` regenerates every table of the diagnostic evaluation and every file above
+that has an archived input, compares each with the committed copy, verifies the freeze lists of E9 and
+E10, and re-scores the three E10 archives with the frozen scorer. It needs no cluster and about ten
+minutes; it prints `ALL REGENERATED` when everything matches.
 
 ## Boundary
 

@@ -129,6 +129,24 @@ def rates(c):
             "harmful_rate": div(c["harmful"], c["recommended"])}
 
 
+def support(c):
+    """Numerator and denominator of every rate, in the weighted counts."""
+    return {"coverage": (c["recommended"], c["cases"]),
+            "precision": (c["cleared"], c["cleared"] + c["false_positive"]),
+            "recall": (c["cleared"], c["paying"]),
+            "false_positive_rate": (c["false_positive"], c["not_paying"]),
+            "harmful_rate": (c["harmful"], c["recommended"])}
+
+
+def intervals(estimates, resampled):
+    """The resampling interval of each rate, or None for a rate of exactly 0
+    or 1. A percentile bootstrap cannot return a value it has not drawn, so
+    at the boundary it gives a zero-width interval that reads as certainty.
+    Such a rate is reported with its count (see support) and no interval."""
+    return {name: (None if estimates.get(name) in (0.0, 1.0) else ci)
+            for name, ci in resampled.items()}
+
+
 def bootstrap(rows, draws=DRAWS, seed=SEED):
     """Percentile intervals from resampling cases with replacement. A drawn
     case keeps all its allocations. A draw whose denominator is zero is
@@ -174,7 +192,7 @@ def aggregate(rows, rule):
     return out
 
 
-def build():
+def build(draws=DRAWS):
     e7 = e7_rows(os.path.join(DIAG, "E7_RESULT.txt"))
     e8 = e8_rows(os.path.join(DIAG, "E8_RESULT.json"))
     sets = {"E6 as scored (post hoc)": e6_rows("as_scored"),
@@ -187,9 +205,10 @@ def build():
         for method in sorted({r["method"] for r in rows}):
             mine = [r for r in rows if r["method"] == method]
             counts = tally(mine)
+            estimates = rates(counts)
             result[name][method] = {
-                "counts": counts, "rates": rates(counts),
-                "intervals": bootstrap(mine),
+                "counts": counts, "rates": estimates, "support": support(counts),
+                "intervals": intervals(estimates, bootstrap(mine, draws=draws)),
                 "all_allocations": aggregate(mine, "all"),
                 "any_allocation": aggregate(mine, "any")}
     return result
@@ -198,11 +217,12 @@ def build():
 def render(result):
     lines = ["Selection metrics (RETROSPECTIVE, 2026-10-07). Half-counts: an allocation",
              "of a case with k allocations counts 1/k. Intervals: 95%% percentile, %d" % DRAWS,
-             "resamples of cases, seed %d. A dash is an undefined rate." % SEED, ""]
+             "resamples of cases, seed %d. A dash is an undefined rate. A rate of 0 or 1" % SEED,
+             "has no resampling interval; its count is printed in parentheses.", ""]
     for name, by_method in result.items():
         lines.append("== %s ==" % name)
         for method, block in by_method.items():
-            c, r, ci = block["counts"], block["rates"], block["intervals"]
+            c, r, ci, n = block["counts"], block["rates"], block["intervals"], block["support"]
             lines.append("%-6s cases %g | recommended %g, cleared %g, did not pay %g, not tested %g | "
                          "abstained right %g, missed %g"
                          % (method, c["cases"], c["recommended"], c["cleared"], c["false_positive"],
@@ -210,6 +230,8 @@ def render(result):
             for rate in ("coverage", "precision", "recall", "false_positive_rate"):
                 if r[rate] is None:
                     lines.append("         %-20s -" % rate)
+                elif ci[rate] is None:
+                    lines.append("         %-20s %.2f (%g of %g)" % (rate, r[rate], n[rate][0], n[rate][1]))
                 else:
                     lo, hi, dropped = ci[rate]
                     lines.append("         %-20s %.2f [%.2f, %.2f]%s"

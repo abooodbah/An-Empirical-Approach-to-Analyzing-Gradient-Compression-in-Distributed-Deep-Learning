@@ -27,8 +27,11 @@ Largest `peak_memory_mb` over ranks and iterations, in GB (1 GB = 1000 MB).
 | v2-L1-2n-3465529 | ddp-overlap | 6 | block | 12.7 |  |
 | v2-L1-2n-3465529 | ddp-overlap | 6 | wall | 12.7 |  |
 
-Whole-gradient gather, Section VIII arithmetic (32.8 GB footprint, 1.05 GB per copy):
-16 ranks 49.6 GB, 32 ranks 66.4 GB, on a 64 GB device.
+Whole-gradient int8 gather: the model's footprint, plus p received copies of the gradient
+and the rank's own encoded copy (1.046 GB each).
+Footprint 33.5 GB (dense exchange, 8 ranks, run redctl-V-1n-3517751).
+8 ranks: 43.0 GB by this arithmetic, 43.0 GB measured.
+16 ranks: 51.3 GB. 32 ranks: 68.1 GB.
 
 ## The two hook failures on record
 
@@ -37,4 +40,4 @@ Whole-gradient gather, Section VIII arithmetic (32.8 GB footprint, 1.05 GB per c
 
 ## Units
 
-`peak_memory_mb` is bytes divided by 10^6 (the harness's `peak_memory_mb()`), and the table above divides it by 1000. Section VIII of the 7 October manuscript prints 42.0 GB for the eight-rank whole-gradient gather and 32.8 GB for the model's footprint. Both come from `diagnostic/peak_mem_1b.py`, which divides the same records by 1024. In the unit of this table they are 43.0 GB and 33.5 GB. With those values the arithmetic of Section VIII (the footprint plus p int8 copies of 1.046 GB) gives 41.9 GB at 8 ranks, against 43.0 GB measured, 50.3 GB at 16 ranks, and 67.0 GB at 32 ranks. The two lines under the table repeat the manuscript's own numbers.
+`peak_memory_mb` is bytes divided by 10^6 (the harness's `peak_memory_mb()`), and the table above divides it by 1000. Section VIII of the 7 October manuscript printed 42.0 GB for the eight-rank whole-gradient gather and 32.8 GB for the model's footprint. Both came from `diagnostic/peak_mem_1b.py`, which divides the same records by 1024. In the unit of this table they are 43.0 GB and 33.5 GB. That manuscript's arithmetic also counted p int8 copies, which gives 41.9 GB at 8 ranks against 43.0 GB measured, 50.3 GB at 16, and 67.0 GB at 32. The measured peak is the footprint plus p + 1 copies (the p received and the rank's own encoded one), and the lines under the table use that count. No archived record holds the device's memory; 64 GB is the vendor's figure for one tile, and its unit is not recorded here.

@@ -31,21 +31,9 @@
      0.6666666666666666,
      0
     ],
-    "false_positive_rate": [
-     0.0,
-     0.0,
-     294
-    ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     19
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     19
-    ],
+    "false_positive_rate": null,
+    "harmful_rate": null,
+    "precision": null,
     "recall": [
      0.2222222222222222,
      0.8888888888888888,
@@ -58,6 +46,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 0.5555555555555556
+   },
+   "support": {
+    "coverage": [
+     5.0,
+     12.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     3.0
+    ],
+    "harmful_rate": [
+     0.0,
+     5.0
+    ],
+    "precision": [
+     5.0,
+     5.0
+    ],
+    "recall": [
+     5.0,
+     9.0
+    ]
    }
   },
   "A2": {
@@ -91,21 +101,9 @@
      0.9166666666666666,
      0
     ],
-    "false_positive_rate": [
-     0.0,
-     0.0,
-     294
-    ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     0
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     0
-    ],
+    "false_positive_rate": null,
+    "harmful_rate": null,
+    "precision": null,
     "recall": [
      0.5,
      1.0,
@@ -118,6 +116,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 0.7777777777777778
+   },
+   "support": {
+    "coverage": [
+     8.0,
+     12.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     3.0
+    ],
+    "harmful_rate": [
+     0.0,
+     8.0
+    ],
+    "precision": [
+     7.0,
+     7.0
+    ],
+    "recall": [
+     7.0,
+     9.0
+    ]
    }
   },
   "A3": {
@@ -156,11 +176,7 @@
      1.0,
      294
     ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     1
-    ],
+    "harmful_rate": null,
     "precision": [
      0.5,
      1.0,
@@ -178,6 +194,28 @@
     "harmful_rate": 0.0,
     "precision": 0.8333333333333334,
     "recall": 0.5555555555555556
+   },
+   "support": {
+    "coverage": [
+     6.0,
+     12.0
+    ],
+    "false_positive_rate": [
+     1.0,
+     3.0
+    ],
+    "harmful_rate": [
+     0.0,
+     6.0
+    ],
+    "precision": [
+     5.0,
+     6.0
+    ],
+    "recall": [
+     5.0,
+     9.0
+    ]
    }
   },
   "full": {
@@ -211,21 +249,9 @@
      0.6666666666666666,
      0
     ],
-    "false_positive_rate": [
-     0.0,
-     0.0,
-     294
-    ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     15
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     15
-    ],
+    "false_positive_rate": null,
+    "harmful_rate": null,
+    "precision": null,
     "recall": [
      0.2222222222222222,
      0.875,
@@ -238,6 +264,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 0.5555555555555556
+   },
+   "support": {
+    "coverage": [
+     5.0,
+     12.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     3.0
+    ],
+    "harmful_rate": [
+     0.0,
+     5.0
+    ],
+    "precision": [
+     5.0,
+     5.0
+    ],
+    "recall": [
+     5.0,
+     9.0
+    ]
    }
   }
  },
@@ -273,21 +321,9 @@
      0.75,
      0
     ],
-    "false_positive_rate": [
-     0.0,
-     0.0,
-     294
-    ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     2
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     2
-    ],
+    "false_positive_rate": null,
+    "harmful_rate": null,
+    "precision": null,
     "recall": [
      0.3333333333333333,
      1.0,
@@ -300,6 +336,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 0.6666666666666666
+   },
+   "support": {
+    "coverage": [
+     6.0,
+     12.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     3.0
+    ],
+    "harmful_rate": [
+     0.0,
+     6.0
+    ],
+    "precision": [
+     6.0,
+     6.0
+    ],
+    "recall": [
+     6.0,
+     9.0
+    ]
    }
   },
   "A2": {
@@ -338,11 +396,7 @@
      1.0,
      294
     ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     0
-    ],
+    "harmful_rate": null,
     "precision": [
      0.6,
      1.0,
@@ -360,6 +414,28 @@
     "harmful_rate": 0.0,
     "precision": 0.875,
     "recall": 0.7777777777777778
+   },
+   "support": {
+    "coverage": [
+     8.0,
+     12.0
+    ],
+    "false_positive_rate": [
+     1.0,
+     3.0
+    ],
+    "harmful_rate": [
+     0.0,
+     8.0
+    ],
+    "precision": [
+     7.0,
+     8.0
+    ],
+    "recall": [
+     7.0,
+     9.0
+    ]
    }
   },
   "A3": {
@@ -398,11 +474,7 @@
      1.0,
      294
     ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     1
-    ],
+    "harmful_rate": null,
     "precision": [
      0.5,
      1.0,
@@ -420,6 +492,28 @@
     "harmful_rate": 0.0,
     "precision": 0.8333333333333334,
     "recall": 0.5555555555555556
+   },
+   "support": {
+    "coverage": [
+     6.0,
+     12.0
+    ],
+    "false_positive_rate": [
+     1.0,
+     3.0
+    ],
+    "harmful_rate": [
+     0.0,
+     6.0
+    ],
+    "precision": [
+     5.0,
+     6.0
+    ],
+    "recall": [
+     5.0,
+     9.0
+    ]
    }
   },
   "full": {
@@ -453,21 +547,9 @@
      0.6666666666666666,
      0
     ],
-    "false_positive_rate": [
-     0.0,
-     0.0,
-     294
-    ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     15
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     15
-    ],
+    "false_positive_rate": null,
+    "harmful_rate": null,
+    "precision": null,
     "recall": [
      0.2222222222222222,
      0.875,
@@ -480,6 +562,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 0.5555555555555556
+   },
+   "support": {
+    "coverage": [
+     5.0,
+     12.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     3.0
+    ],
+    "harmful_rate": [
+     0.0,
+     5.0
+    ],
+    "precision": [
+     5.0,
+     5.0
+    ],
+    "recall": [
+     5.0,
+     9.0
+    ]
    }
   }
  },
@@ -515,21 +619,9 @@
      0.5,
      0
     ],
-    "false_positive_rate": [
-     0.0,
-     0.0,
-     294
-    ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     307
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     307
-    ],
+    "false_positive_rate": null,
+    "harmful_rate": null,
+    "precision": null,
     "recall": [
      0.0,
      0.6666666666666666,
@@ -542,6 +634,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 0.3333333333333333
+   },
+   "support": {
+    "coverage": [
+     3.0,
+     12.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     3.0
+    ],
+    "harmful_rate": [
+     0.0,
+     3.0
+    ],
+    "precision": [
+     3.0,
+     3.0
+    ],
+    "recall": [
+     3.0,
+     9.0
+    ]
    }
   },
   "A2": {
@@ -570,21 +684,9 @@
     "recommended": 0.0
    },
    "intervals": {
-    "coverage": [
-     0.0,
-     0.0,
-     0
-    ],
-    "false_positive_rate": [
-     0.0,
-     0.0,
-     294
-    ],
-    "recall": [
-     0.0,
-     0.0,
-     0
-    ]
+    "coverage": null,
+    "false_positive_rate": null,
+    "recall": null
    },
    "rates": {
     "coverage": 0.0,
@@ -592,6 +694,28 @@
     "harmful_rate": null,
     "precision": null,
     "recall": 0.0
+   },
+   "support": {
+    "coverage": [
+     0.0,
+     12.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     3.0
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0
+    ],
+    "precision": [
+     0.0,
+     0.0
+    ],
+    "recall": [
+     0.0,
+     9.0
+    ]
    }
   },
   "A3": {
@@ -630,11 +754,7 @@
      1.0,
      294
     ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     1
-    ],
+    "harmful_rate": null,
     "precision": [
      0.5,
      1.0,
@@ -652,6 +772,28 @@
     "harmful_rate": 0.0,
     "precision": 0.8333333333333334,
     "recall": 0.5555555555555556
+   },
+   "support": {
+    "coverage": [
+     6.0,
+     12.0
+    ],
+    "false_positive_rate": [
+     1.0,
+     3.0
+    ],
+    "harmful_rate": [
+     0.0,
+     6.0
+    ],
+    "precision": [
+     5.0,
+     6.0
+    ],
+    "recall": [
+     5.0,
+     9.0
+    ]
    }
   },
   "full": {
@@ -685,21 +827,9 @@
      0.5,
      0
     ],
-    "false_positive_rate": [
-     0.0,
-     0.0,
-     294
-    ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     333
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     333
-    ],
+    "false_positive_rate": null,
+    "harmful_rate": null,
+    "precision": null,
     "recall": [
      0.0,
      0.6666666666666666,
@@ -712,6 +842,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 0.3333333333333333
+   },
+   "support": {
+    "coverage": [
+     3.0,
+     12.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     3.0
+    ],
+    "harmful_rate": [
+     0.0,
+     3.0
+    ],
+    "precision": [
+     3.0,
+     3.0
+    ],
+    "recall": [
+     3.0,
+     9.0
+    ]
    }
   }
  },
@@ -742,21 +894,9 @@
     "recommended": 0.0
    },
    "intervals": {
-    "coverage": [
-     0.0,
-     0.0,
-     0
-    ],
-    "false_positive_rate": [
-     0.0,
-     0.0,
-     74
-    ],
-    "recall": [
-     0.0,
-     0.0,
-     0
-    ]
+    "coverage": null,
+    "false_positive_rate": null,
+    "recall": null
    },
    "rates": {
     "coverage": 0.0,
@@ -764,6 +904,28 @@
     "harmful_rate": null,
     "precision": null,
     "recall": 0.0
+   },
+   "support": {
+    "coverage": [
+     0.0,
+     12.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     4.0
+    ],
+    "harmful_rate": [
+     0.0,
+     0.0
+    ],
+    "precision": [
+     0.0,
+     0.0
+    ],
+    "recall": [
+     0.0,
+     8.0
+    ]
    }
   },
   "A2": {
@@ -802,11 +964,7 @@
      1.0,
      74
     ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     0
-    ],
+    "harmful_rate": null,
     "precision": [
      0.16666666666666666,
      0.875,
@@ -824,6 +982,28 @@
     "harmful_rate": 0.0,
     "precision": 0.5333333333333333,
     "recall": 0.5
+   },
+   "support": {
+    "coverage": [
+     9.5,
+     12.0
+    ],
+    "false_positive_rate": [
+     3.5,
+     4.0
+    ],
+    "harmful_rate": [
+     0.0,
+     9.5
+    ],
+    "precision": [
+     4.0,
+     7.5
+    ],
+    "recall": [
+     4.0,
+     8.0
+    ]
    }
   },
   "A3": {
@@ -857,21 +1037,9 @@
      0.4583333333333333,
      0
     ],
-    "false_positive_rate": [
-     0.0,
-     0.0,
-     74
-    ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     296
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     1107
-    ],
+    "false_positive_rate": null,
+    "harmful_rate": null,
+    "precision": null,
     "recall": [
      0.0,
      0.5714285714285714,
@@ -884,6 +1052,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 0.25
+   },
+   "support": {
+    "coverage": [
+     2.5,
+     12.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     4.0
+    ],
+    "harmful_rate": [
+     0.0,
+     2.5
+    ],
+    "precision": [
+     2.0,
+     2.0
+    ],
+    "recall": [
+     2.0,
+     8.0
+    ]
    }
   },
   "full": {
@@ -917,21 +1107,9 @@
      0.4583333333333333,
      0
     ],
-    "false_positive_rate": [
-     0.0,
-     0.0,
-     74
-    ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     296
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     1107
-    ],
+    "false_positive_rate": null,
+    "harmful_rate": null,
+    "precision": null,
     "recall": [
      0.0,
      0.5714285714285714,
@@ -944,6 +1122,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 0.25
+   },
+   "support": {
+    "coverage": [
+     2.5,
+     12.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     4.0
+    ],
+    "harmful_rate": [
+     0.0,
+     2.5
+    ],
+    "precision": [
+     2.0,
+     2.0
+    ],
+    "recall": [
+     2.0,
+     8.0
+    ]
    }
   }
  },
@@ -979,21 +1179,9 @@
      0.25,
      0
     ],
-    "false_positive_rate": [
-     0.0,
-     0.0,
-     107
-    ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     1243
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     1243
-    ],
+    "false_positive_rate": null,
+    "harmful_rate": null,
+    "precision": null,
     "recall": [
      0.0,
      0.3076923076923077,
@@ -1006,6 +1194,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 0.125
+   },
+   "support": {
+    "coverage": [
+     2.0,
+     20.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     4.0
+    ],
+    "harmful_rate": [
+     0.0,
+     2.0
+    ],
+    "precision": [
+     2.0,
+     2.0
+    ],
+    "recall": [
+     2.0,
+     16.0
+    ]
    }
   },
   "A2": {
@@ -1044,11 +1254,7 @@
      1.0,
      107
     ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     0
-    ],
+    "harmful_rate": null,
     "precision": [
      0.4166666666666667,
      0.9285714285714286,
@@ -1066,6 +1272,28 @@
     "harmful_rate": 0.0,
     "precision": 0.6956521739130435,
     "recall": 0.5
+   },
+   "support": {
+    "coverage": [
+     13.5,
+     20.0
+    ],
+    "false_positive_rate": [
+     3.5,
+     4.0
+    ],
+    "harmful_rate": [
+     0.0,
+     13.5
+    ],
+    "precision": [
+     8.0,
+     11.5
+    ],
+    "recall": [
+     8.0,
+     16.0
+    ]
    }
   },
   "A3": {
@@ -1099,21 +1327,9 @@
      0.375,
      0
     ],
-    "false_positive_rate": [
-     0.0,
-     0.0,
-     107
-    ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     30
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     118
-    ],
+    "false_positive_rate": null,
+    "harmful_rate": null,
+    "precision": null,
     "recall": [
      0.05263157894736842,
      0.42857142857142855,
@@ -1126,6 +1342,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 0.21875
+   },
+   "support": {
+    "coverage": [
+     4.0,
+     20.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     4.0
+    ],
+    "harmful_rate": [
+     0.0,
+     4.0
+    ],
+    "precision": [
+     3.5,
+     3.5
+    ],
+    "recall": [
+     3.5,
+     16.0
+    ]
    }
   },
   "full": {
@@ -1159,21 +1397,9 @@
      0.35,
      0
     ],
-    "false_positive_rate": [
-     0.0,
-     0.0,
-     107
-    ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     101
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     361
-    ],
+    "false_positive_rate": null,
+    "harmful_rate": null,
+    "precision": null,
     "recall": [
      0.0,
      0.4,
@@ -1186,6 +1412,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 0.1875
+   },
+   "support": {
+    "coverage": [
+     3.5,
+     20.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     4.0
+    ],
+    "harmful_rate": [
+     0.0,
+     3.5
+    ],
+    "precision": [
+     3.0,
+     3.0
+    ],
+    "recall": [
+     3.0,
+     16.0
+    ]
    }
   },
   "replay": {
@@ -1214,26 +1462,10 @@
     "recommended": 7.5
    },
    "intervals": {
-    "coverage": [
-     1.0,
-     1.0,
-     0
-    ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     0
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     0
-    ],
-    "recall": [
-     1.0,
-     1.0,
-     0
-    ]
+    "coverage": null,
+    "harmful_rate": null,
+    "precision": null,
+    "recall": null
    },
    "rates": {
     "coverage": 1.0,
@@ -1241,6 +1473,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 1.0
+   },
+   "support": {
+    "coverage": [
+     7.5,
+     7.5
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0
+    ],
+    "harmful_rate": [
+     0.0,
+     7.5
+    ],
+    "precision": [
+     7.5,
+     7.5
+    ],
+    "recall": [
+     7.5,
+     7.5
+    ]
    }
   }
  },
@@ -1276,16 +1530,8 @@
      0.625,
      0
     ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     999
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     999
-    ],
+    "harmful_rate": null,
+    "precision": null,
     "recall": [
      0.0,
      0.625,
@@ -1298,6 +1544,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 0.25
+   },
+   "support": {
+    "coverage": [
+     2.0,
+     8.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0
+    ],
+    "harmful_rate": [
+     0.0,
+     2.0
+    ],
+    "precision": [
+     2.0,
+     2.0
+    ],
+    "recall": [
+     2.0,
+     8.0
+    ]
    }
   },
   "A2": {
@@ -1331,16 +1599,8 @@
      0.875,
      0
     ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     46
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     46
-    ],
+    "harmful_rate": null,
+    "precision": null,
     "recall": [
      0.125,
      0.875,
@@ -1353,6 +1613,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 0.5
+   },
+   "support": {
+    "coverage": [
+     4.0,
+     8.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0
+    ],
+    "harmful_rate": [
+     0.0,
+     4.0
+    ],
+    "precision": [
+     4.0,
+     4.0
+    ],
+    "recall": [
+     4.0,
+     8.0
+    ]
    }
   },
   "A3": {
@@ -1386,16 +1668,8 @@
      0.4375,
      0
     ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     1036
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     1036
-    ],
+    "harmful_rate": null,
+    "precision": null,
     "recall": [
      0.0,
      0.4375,
@@ -1408,6 +1682,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 0.1875
+   },
+   "support": {
+    "coverage": [
+     1.5,
+     8.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0
+    ],
+    "harmful_rate": [
+     0.0,
+     1.5
+    ],
+    "precision": [
+     1.5,
+     1.5
+    ],
+    "recall": [
+     1.5,
+     8.0
+    ]
    }
   },
   "full": {
@@ -1441,16 +1737,8 @@
      0.375,
      0
     ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     3472
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     3472
-    ],
+    "harmful_rate": null,
+    "precision": null,
     "recall": [
      0.0,
      0.375,
@@ -1463,6 +1751,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 0.125
+   },
+   "support": {
+    "coverage": [
+     1.0,
+     8.0
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0
+    ],
+    "harmful_rate": [
+     0.0,
+     1.0
+    ],
+    "precision": [
+     1.0,
+     1.0
+    ],
+    "recall": [
+     1.0,
+     8.0
+    ]
    }
   },
   "replay": {
@@ -1491,26 +1801,10 @@
     "recommended": 7.5
    },
    "intervals": {
-    "coverage": [
-     1.0,
-     1.0,
-     0
-    ],
-    "harmful_rate": [
-     0.0,
-     0.0,
-     0
-    ],
-    "precision": [
-     1.0,
-     1.0,
-     0
-    ],
-    "recall": [
-     1.0,
-     1.0,
-     0
-    ]
+    "coverage": null,
+    "harmful_rate": null,
+    "precision": null,
+    "recall": null
    },
    "rates": {
     "coverage": 1.0,
@@ -1518,6 +1812,28 @@
     "harmful_rate": 0.0,
     "precision": 1.0,
     "recall": 1.0
+   },
+   "support": {
+    "coverage": [
+     7.5,
+     7.5
+    ],
+    "false_positive_rate": [
+     0.0,
+     0.0
+    ],
+    "harmful_rate": [
+     0.0,
+     7.5
+    ],
+    "precision": [
+     7.5,
+     7.5
+    ],
+    "recall": [
+     7.5,
+     7.5
+    ]
    }
   }
  }

@@ -46,14 +46,17 @@ def render(named_dirs):
     for name, directory in named_dirs:
         paths = glob.glob(os.path.join(directory, "**", "*rank0000.provenance.json"), recursive=True)
         facts = collect(paths)
-        lines += ["## %s (%d records)" % (name, len(paths)), "", "| key | values |", "|---|---|"]
+        lines += ["## %s (%d records)" % (name, len(paths)), "",
+                  "Read from the run directory `%s`." % os.path.basename(os.path.normpath(directory)), "",
+                  "| key | values |", "|---|---|"]
         for key, values in facts.items():
             if "hostname" in key.lower() or len(values) > 6:
                 continue
             lines.append("| `%s` | %s |" % (key, "; ".join(values)))
         lines.append("")
     lines += ["## Not recorded before October 2026", ""] + ["- %s" % item for item in NOT_RECORDED]
-    lines += ["", "The jobs of Revision 4 record these in `provenance/node_facts.*.txt`.", ""]
+    lines += ["", "The Lonestar6 jobs of Revision 4 (E9) record these in `provenance/node_facts.*.txt`.",
+              "The Stampede3 jobs (E10) do not, so they stay unrecorded for the Intel system.", ""]
     return "\n".join(lines)
 
 

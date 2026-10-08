@@ -5,6 +5,8 @@ between runs. Hostnames and per-rank identifiers are left out.
 
 ## H100 2x4 (20 records)
 
+Read from the run directory `h100-3328658`.
+
 | key | values |
 |---|---|
 | `accelerator.backend` | nccl |
@@ -35,6 +37,8 @@ between runs. Hostnames and per-rank identifiers are left out.
 
 ## Lonestar6 A100 (10 records)
 
+Read from the run directory `ls6-triad4-4n-3457305`.
+
 | key | values |
 |---|---|
 | `accelerator.backend` | nccl |
@@ -62,6 +66,8 @@ between runs. Hostnames and per-rank identifiers are left out.
 | `platform` | Linux-4.18.0-553.150.1.el8_10.x86_64-x86_64-with-glibc2.28 |
 
 ## Intel Max 1550 (25 records)
+
+Read from the run directory `redctl-A-1n-3514993`.
 
 | key | values |
 |---|---|
@@ -93,6 +99,8 @@ between runs. Hostnames and per-rank identifiers are left out.
 | `platform` | Linux-5.14.0-611.24.1.el9_7.x86_64-x86_64-with-glibc2.34 |
 
 ## Lonestar6 A100, validation (16 records)
+
+Read from the run directory `v2-L1-2n-3465529`.
 
 | key | values |
 |---|---|
@@ -127,4 +135,5 @@ between runs. Hostnames and per-rank identifiers are left out.
 - PCIe and NUMA placement of GPUs and adapters
 - CPU model and core count where the platform block lacks them
 
-The jobs of Revision 4 record these in `provenance/node_facts.*.txt`.
+The Lonestar6 jobs of Revision 4 (E9) record these in `provenance/node_facts.*.txt`.
+The Stampede3 jobs (E10) do not, so they stay unrecorded for the Intel system.

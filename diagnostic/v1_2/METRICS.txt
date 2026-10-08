@@ -1,19 +1,20 @@
 Selection metrics (RETROSPECTIVE, 2026-10-07). Half-counts: an allocation
 of a case with k allocations counts 1/k. Intervals: 95% percentile, 10000
-resamples of cases, seed 20261007. A dash is an undefined rate.
+resamples of cases, seed 20261007. A dash is an undefined rate. A rate of 0 or 1
+has no resampling interval; its count is printed in parentheses.
 
 == E6 as scored (post hoc) ==
 A1     cases 12 | recommended 5, cleared 5, did not pay 0, not tested 0 | abstained right 2, missed 4
          coverage             0.42 [0.17, 0.67]
-         precision            1.00 [1.00, 1.00] (19 draws undefined)
+         precision            1.00 (5 of 5)
          recall               0.56 [0.22, 0.89]
-         false_positive_rate  0.00 [0.00, 0.00] (294 draws undefined)
+         false_positive_rate  0.00 (0 of 3)
          all allocations agree: {'recommended': 5, 'cleared': 5, 'false_positive': 0}; any allocation: {'recommended': 5, 'cleared': 5, 'false_positive': 0}
 A2     cases 12 | recommended 8, cleared 7, did not pay 0, not tested 0 | abstained right 2, missed 2
          coverage             0.67 [0.42, 0.92]
-         precision            1.00 [1.00, 1.00]
+         precision            1.00 (7 of 7)
          recall               0.78 [0.50, 1.00]
-         false_positive_rate  0.00 [0.00, 0.00] (294 draws undefined)
+         false_positive_rate  0.00 (0 of 3)
          all allocations agree: {'recommended': 8, 'cleared': 7, 'false_positive': 0}; any allocation: {'recommended': 8, 'cleared': 7, 'false_positive': 0}
 A3     cases 12 | recommended 6, cleared 5, did not pay 1, not tested 0 | abstained right 1, missed 4
          coverage             0.50 [0.25, 0.75]
@@ -23,23 +24,23 @@ A3     cases 12 | recommended 6, cleared 5, did not pay 1, not tested 0 | abstai
          all allocations agree: {'recommended': 6, 'cleared': 5, 'false_positive': 1}; any allocation: {'recommended': 6, 'cleared': 5, 'false_positive': 1}
 full   cases 12 | recommended 5, cleared 5, did not pay 0, not tested 0 | abstained right 2, missed 4
          coverage             0.42 [0.17, 0.67]
-         precision            1.00 [1.00, 1.00] (15 draws undefined)
+         precision            1.00 (5 of 5)
          recall               0.56 [0.22, 0.88]
-         false_positive_rate  0.00 [0.00, 0.00] (294 draws undefined)
+         false_positive_rate  0.00 (0 of 3)
          all allocations agree: {'recommended': 5, 'cleared': 5, 'false_positive': 0}; any allocation: {'recommended': 5, 'cleared': 5, 'false_positive': 0}
 
 == E6 extractor as frozen ==
 A1     cases 12 | recommended 3, cleared 3, did not pay 0, not tested 0 | abstained right 2, missed 6
          coverage             0.25 [0.00, 0.50]
-         precision            1.00 [1.00, 1.00] (307 draws undefined)
+         precision            1.00 (3 of 3)
          recall               0.33 [0.00, 0.67]
-         false_positive_rate  0.00 [0.00, 0.00] (294 draws undefined)
+         false_positive_rate  0.00 (0 of 3)
          all allocations agree: {'recommended': 3, 'cleared': 3, 'false_positive': 0}; any allocation: {'recommended': 3, 'cleared': 3, 'false_positive': 0}
 A2     cases 12 | recommended 0, cleared 0, did not pay 0, not tested 0 | abstained right 2, missed 9
-         coverage             0.00 [0.00, 0.00]
+         coverage             0.00 (0 of 12)
          precision            -
-         recall               0.00 [0.00, 0.00]
-         false_positive_rate  0.00 [0.00, 0.00] (294 draws undefined)
+         recall               0.00 (0 of 9)
+         false_positive_rate  0.00 (0 of 3)
          all allocations agree: {'recommended': 0, 'cleared': 0, 'false_positive': 0}; any allocation: {'recommended': 0, 'cleared': 0, 'false_positive': 0}
 A3     cases 12 | recommended 6, cleared 5, did not pay 1, not tested 0 | abstained right 1, missed 4
          coverage             0.50 [0.25, 0.75]
@@ -49,17 +50,17 @@ A3     cases 12 | recommended 6, cleared 5, did not pay 1, not tested 0 | abstai
          all allocations agree: {'recommended': 6, 'cleared': 5, 'false_positive': 1}; any allocation: {'recommended': 6, 'cleared': 5, 'false_positive': 1}
 full   cases 12 | recommended 3, cleared 3, did not pay 0, not tested 0 | abstained right 2, missed 6
          coverage             0.25 [0.00, 0.50]
-         precision            1.00 [1.00, 1.00] (333 draws undefined)
+         precision            1.00 (3 of 3)
          recall               0.33 [0.00, 0.67]
-         false_positive_rate  0.00 [0.00, 0.00] (294 draws undefined)
+         false_positive_rate  0.00 (0 of 3)
          all allocations agree: {'recommended': 3, 'cleared': 3, 'false_positive': 0}; any allocation: {'recommended': 3, 'cleared': 3, 'false_positive': 0}
 
 == E6 corrected (post hoc) ==
 A1     cases 12 | recommended 6, cleared 6, did not pay 0, not tested 0 | abstained right 2, missed 3
          coverage             0.50 [0.25, 0.75]
-         precision            1.00 [1.00, 1.00] (2 draws undefined)
+         precision            1.00 (6 of 6)
          recall               0.67 [0.33, 1.00]
-         false_positive_rate  0.00 [0.00, 0.00] (294 draws undefined)
+         false_positive_rate  0.00 (0 of 3)
          all allocations agree: {'recommended': 6, 'cleared': 6, 'false_positive': 0}; any allocation: {'recommended': 6, 'cleared': 6, 'false_positive': 0}
 A2     cases 12 | recommended 8, cleared 7, did not pay 1, not tested 0 | abstained right 2, missed 2
          coverage             0.67 [0.42, 0.92]
@@ -75,17 +76,17 @@ A3     cases 12 | recommended 6, cleared 5, did not pay 1, not tested 0 | abstai
          all allocations agree: {'recommended': 6, 'cleared': 5, 'false_positive': 1}; any allocation: {'recommended': 6, 'cleared': 5, 'false_positive': 1}
 full   cases 12 | recommended 5, cleared 5, did not pay 0, not tested 0 | abstained right 2, missed 4
          coverage             0.42 [0.17, 0.67]
-         precision            1.00 [1.00, 1.00] (15 draws undefined)
+         precision            1.00 (5 of 5)
          recall               0.56 [0.22, 0.88]
-         false_positive_rate  0.00 [0.00, 0.00] (294 draws undefined)
+         false_positive_rate  0.00 (0 of 3)
          all allocations agree: {'recommended': 5, 'cleared': 5, 'false_positive': 0}; any allocation: {'recommended': 5, 'cleared': 5, 'false_positive': 0}
 
 == E7 ==
 A1     cases 12 | recommended 0, cleared 0, did not pay 0, not tested 0 | abstained right 2, missed 8
-         coverage             0.00 [0.00, 0.00]
+         coverage             0.00 (0 of 12)
          precision            -
-         recall               0.00 [0.00, 0.00]
-         false_positive_rate  0.00 [0.00, 0.00] (74 draws undefined)
+         recall               0.00 (0 of 8)
+         false_positive_rate  0.00 (0 of 4)
          all allocations agree: {'recommended': 0, 'cleared': 0, 'false_positive': 0}; any allocation: {'recommended': 0, 'cleared': 0, 'false_positive': 0}
 A2     cases 12 | recommended 9.5, cleared 4, did not pay 3.5, not tested 2 | abstained right 0, missed 2
          coverage             0.79 [0.54, 1.00]
@@ -95,55 +96,55 @@ A2     cases 12 | recommended 9.5, cleared 4, did not pay 3.5, not tested 2 | ab
          all allocations agree: {'recommended': 9, 'cleared': 4, 'false_positive': 3}; any allocation: {'recommended': 10, 'cleared': 4, 'false_positive': 4}
 A3     cases 12 | recommended 2.5, cleared 2, did not pay 0, not tested 0.5 | abstained right 2, missed 5.5
          coverage             0.21 [0.00, 0.46]
-         precision            1.00 [1.00, 1.00] (1107 draws undefined)
+         precision            1.00 (2 of 2)
          recall               0.25 [0.00, 0.57]
-         false_positive_rate  0.00 [0.00, 0.00] (74 draws undefined)
+         false_positive_rate  0.00 (0 of 4)
          all allocations agree: {'recommended': 2, 'cleared': 2, 'false_positive': 0}; any allocation: {'recommended': 3, 'cleared': 2, 'false_positive': 0}
 full   cases 12 | recommended 2.5, cleared 2, did not pay 0, not tested 0.5 | abstained right 2, missed 5.5
          coverage             0.21 [0.00, 0.46]
-         precision            1.00 [1.00, 1.00] (1107 draws undefined)
+         precision            1.00 (2 of 2)
          recall               0.25 [0.00, 0.57]
-         false_positive_rate  0.00 [0.00, 0.00] (74 draws undefined)
+         false_positive_rate  0.00 (0 of 4)
          all allocations agree: {'recommended': 2, 'cleared': 2, 'false_positive': 0}; any allocation: {'recommended': 3, 'cleared': 2, 'false_positive': 0}
 
 == E8 ==
 A1     cases 8 | recommended 2, cleared 2, did not pay 0, not tested 0 | abstained right 0, missed 6
          coverage             0.25 [0.00, 0.62]
-         precision            1.00 [1.00, 1.00] (999 draws undefined)
+         precision            1.00 (2 of 2)
          recall               0.25 [0.00, 0.62]
          false_positive_rate  -
          all allocations agree: {'recommended': 2, 'cleared': 2, 'false_positive': 0}; any allocation: {'recommended': 2, 'cleared': 2, 'false_positive': 0}
 A2     cases 8 | recommended 4, cleared 4, did not pay 0, not tested 0 | abstained right 0, missed 4
          coverage             0.50 [0.12, 0.88]
-         precision            1.00 [1.00, 1.00] (46 draws undefined)
+         precision            1.00 (4 of 4)
          recall               0.50 [0.12, 0.88]
          false_positive_rate  -
          all allocations agree: {'recommended': 4, 'cleared': 4, 'false_positive': 0}; any allocation: {'recommended': 4, 'cleared': 4, 'false_positive': 0}
 A3     cases 8 | recommended 1.5, cleared 1.5, did not pay 0, not tested 0 | abstained right 0, missed 6.5
          coverage             0.19 [0.00, 0.44]
-         precision            1.00 [1.00, 1.00] (1036 draws undefined)
+         precision            1.00 (1.5 of 1.5)
          recall               0.19 [0.00, 0.44]
          false_positive_rate  -
          all allocations agree: {'recommended': 1, 'cleared': 1, 'false_positive': 0}; any allocation: {'recommended': 2, 'cleared': 2, 'false_positive': 0}
 full   cases 8 | recommended 1, cleared 1, did not pay 0, not tested 0 | abstained right 0, missed 7
          coverage             0.12 [0.00, 0.38]
-         precision            1.00 [1.00, 1.00] (3472 draws undefined)
+         precision            1.00 (1 of 1)
          recall               0.12 [0.00, 0.38]
          false_positive_rate  -
          all allocations agree: {'recommended': 1, 'cleared': 1, 'false_positive': 0}; any allocation: {'recommended': 1, 'cleared': 1, 'false_positive': 0}
 replay cases 7.5 | recommended 7.5, cleared 7.5, did not pay 0, not tested 0 | abstained right 0, missed 0
-         coverage             1.00 [1.00, 1.00]
-         precision            1.00 [1.00, 1.00]
-         recall               1.00 [1.00, 1.00]
+         coverage             1.00 (7.5 of 7.5)
+         precision            1.00 (7.5 of 7.5)
+         recall               1.00 (7.5 of 7.5)
          false_positive_rate  -
          all allocations agree: {'recommended': 8, 'cleared': 8, 'false_positive': 0}; any allocation: {'recommended': 8, 'cleared': 8, 'false_positive': 0}
 
 == E7 and E8 ==
 A1     cases 20 | recommended 2, cleared 2, did not pay 0, not tested 0 | abstained right 2, missed 14
          coverage             0.10 [0.00, 0.25]
-         precision            1.00 [1.00, 1.00] (1243 draws undefined)
+         precision            1.00 (2 of 2)
          recall               0.12 [0.00, 0.31]
-         false_positive_rate  0.00 [0.00, 0.00] (107 draws undefined)
+         false_positive_rate  0.00 (0 of 4)
          all allocations agree: {'recommended': 2, 'cleared': 2, 'false_positive': 0}; any allocation: {'recommended': 2, 'cleared': 2, 'false_positive': 0}
 A2     cases 20 | recommended 13.5, cleared 8, did not pay 3.5, not tested 2 | abstained right 0, missed 6
          coverage             0.68 [0.47, 0.88]
@@ -153,19 +154,19 @@ A2     cases 20 | recommended 13.5, cleared 8, did not pay 3.5, not tested 2 | a
          all allocations agree: {'recommended': 13, 'cleared': 8, 'false_positive': 3}; any allocation: {'recommended': 14, 'cleared': 8, 'false_positive': 4}
 A3     cases 20 | recommended 4, cleared 3.5, did not pay 0, not tested 0.5 | abstained right 2, missed 12
          coverage             0.20 [0.05, 0.38]
-         precision            1.00 [1.00, 1.00] (118 draws undefined)
+         precision            1.00 (3.5 of 3.5)
          recall               0.22 [0.05, 0.43]
-         false_positive_rate  0.00 [0.00, 0.00] (107 draws undefined)
+         false_positive_rate  0.00 (0 of 4)
          all allocations agree: {'recommended': 3, 'cleared': 3, 'false_positive': 0}; any allocation: {'recommended': 5, 'cleared': 4, 'false_positive': 0}
 full   cases 20 | recommended 3.5, cleared 3, did not pay 0, not tested 0.5 | abstained right 2, missed 12.5
          coverage             0.17 [0.05, 0.35]
-         precision            1.00 [1.00, 1.00] (361 draws undefined)
+         precision            1.00 (3 of 3)
          recall               0.19 [0.00, 0.40]
-         false_positive_rate  0.00 [0.00, 0.00] (107 draws undefined)
+         false_positive_rate  0.00 (0 of 4)
          all allocations agree: {'recommended': 3, 'cleared': 3, 'false_positive': 0}; any allocation: {'recommended': 4, 'cleared': 3, 'false_positive': 0}
 replay cases 7.5 | recommended 7.5, cleared 7.5, did not pay 0, not tested 0 | abstained right 0, missed 0
-         coverage             1.00 [1.00, 1.00]
-         precision            1.00 [1.00, 1.00]
-         recall               1.00 [1.00, 1.00]
+         coverage             1.00 (7.5 of 7.5)
+         precision            1.00 (7.5 of 7.5)
+         recall               1.00 (7.5 of 7.5)
          false_positive_rate  -
          all allocations agree: {'recommended': 8, 'cleared': 8, 'false_positive': 0}; any allocation: {'recommended': 8, 'cleared': 8, 'false_positive': 0}
