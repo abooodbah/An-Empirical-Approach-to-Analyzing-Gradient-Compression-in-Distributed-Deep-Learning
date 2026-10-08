@@ -147,8 +147,11 @@ def curved(tmp_path, run="e9-q24a-8n-9"):
                   ("allgather", 256): 0.640}
     tree_ar = {("allreduce", 1): 0.003, ("allreduce", 16): 0.011, ("allreduce", 64): 0.124,
                ("allreduce", 256): 0.522, ("allreduce", 1024): 2.100}
-    probe(tmp_path, run, "ring", allreduce=1e-10, allgather=1e-10, world=24, slow=dict(ring_ar, **ring_ag))
-    probe(tmp_path, run, "default", allreduce=1e-10, allgather=1e-10, world=24, slow=dict(default_ar, **default_ag))
+    ring, default = dict(ring_ar), dict(default_ar)
+    ring.update(ring_ag)
+    default.update(default_ag)
+    probe(tmp_path, run, "ring", allreduce=1e-10, allgather=1e-10, world=24, slow=ring)
+    probe(tmp_path, run, "default", allreduce=1e-10, allgather=1e-10, world=24, slow=default)
     return probe(tmp_path, run, "tree", allreduce=1e-10, world=24, slow=tree_ar)
 
 
