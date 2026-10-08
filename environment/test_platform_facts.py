@@ -31,5 +31,7 @@ def test_render_names_each_source_and_says_which_jobs_record_node_facts(tmp_path
     io.open(str(d / "x__rank0000.provenance.json"), "w", encoding="utf-8").write(json.dumps({"libraries": {"torch": "2"}}))
     text = P.render([("System A", str(d))])
     assert "Read from the run directory `run-123`." in text
-    assert "The Lonestar6 jobs of Revision 4 (E9) record these in `provenance/node_facts.*.txt`." in text
+    assert "The Lonestar6 jobs of Revision 4 (E9) record these in `provenance/node_facts.*.txt`;" in text
+    assert "`environment/node_facts.py` counts each value over their node records in" in text
+    assert "`environment/E9_NODE_FACTS.json`." in text
     assert "The Stampede3 jobs (E10) do not" in text
