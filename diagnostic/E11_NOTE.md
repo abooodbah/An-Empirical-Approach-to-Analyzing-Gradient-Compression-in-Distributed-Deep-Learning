@@ -57,3 +57,15 @@ The rerun (`harness/launch/ls6_e11b.slurm`, run directory
 HOOK_STATE. Its purpose is a complete provenance record, including the hook
 mode of every int8 run. It will be read the same way, and both jobs will be
 reported.
+
+## Rerun result (added 2026-10-14, after job 3509336)
+
+Job 3509336 ran from 03:18:58 to 03:26:42 Lonestar6 time. All 18
+conditions returned 0 and wrote valid records, and every int8 run records
+its mode (`async` or `sync`). Result: `validation_v2/results/rev4/E11B_DEV_RESULT.json`.
+It reproduces the first job. Over both jobs and both passes, the
+asynchronous int8 hook's step is 1.10 to 1.14 times the synchronous form's
+on the Transformer and 1.01 to 1.03 on ResNet-50; it is 1.29 to 1.38 times
+dense DDP's on the Transformer and 1.26 to 1.28 on ResNet-50. The 16-bit
+hook is at 0.83 to 0.86 of dense DDP on the Transformer and 1.01 on
+ResNet-50.

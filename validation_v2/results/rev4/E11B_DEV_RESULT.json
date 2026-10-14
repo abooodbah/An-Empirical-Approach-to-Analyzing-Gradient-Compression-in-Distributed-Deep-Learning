@@ -1,0 +1,155 @@
+{
+ "conditions": {
+  "resnet50": {
+   "ddp-fp16-hook": {
+    "1": {
+     "hook_modes": null,
+     "step_ms": 49.95382101275027,
+     "valid": true
+    },
+    "2": {
+     "hook_modes": null,
+     "step_ms": 50.25806707330048,
+     "valid": true
+    }
+   },
+   "ddp-int8-hook-async": {
+    "1": {
+     "hook_modes": [
+      "async"
+     ],
+     "step_ms": 62.66078148037195,
+     "valid": true
+    },
+    "2": {
+     "hook_modes": [
+      "async"
+     ],
+     "step_ms": 62.80017632059754,
+     "valid": true
+    }
+   },
+   "ddp-int8-hook-sync": {
+    "1": {
+     "hook_modes": [
+      "sync"
+     ],
+     "step_ms": 62.10628445725888,
+     "valid": true
+    },
+    "2": {
+     "hook_modes": [
+      "sync"
+     ],
+     "step_ms": 62.11997711099684,
+     "valid": true
+    }
+   },
+   "ddp-overlap": {
+    "1": {
+     "hook_modes": null,
+     "step_ms": 49.70237636938691,
+     "valid": true
+    },
+    "2": {
+     "hook_modes": null,
+     "step_ms": 49.935604757629335,
+     "valid": true
+    }
+   }
+  },
+  "transformer": {
+   "ddp-fp16-hook": {
+    "1": {
+     "hook_modes": null,
+     "step_ms": 11.215629316866398,
+     "valid": true
+    },
+    "2": {
+     "hook_modes": null,
+     "step_ms": 11.256080400198698,
+     "valid": true
+    }
+   },
+   "ddp-int8-hook-async": {
+    "1": {
+     "hook_modes": [
+      "async"
+     ],
+     "step_ms": 17.75775586720556,
+     "valid": true
+    },
+    "2": {
+     "hook_modes": [
+      "async"
+     ],
+     "step_ms": 17.998312446288764,
+     "valid": true
+    }
+   },
+   "ddp-int8-hook-sync": {
+    "1": {
+     "hook_modes": [
+      "sync"
+     ],
+     "step_ms": 15.79877165146172,
+     "valid": true
+    },
+    "2": {
+     "hook_modes": [
+      "sync"
+     ],
+     "step_ms": 15.740410909056664,
+     "valid": true
+    }
+   },
+   "ddp-overlap": {
+    "1": {
+     "hook_modes": null,
+     "step_ms": 13.308980567380786,
+     "valid": true
+    },
+    "2": {
+     "hook_modes": null,
+     "step_ms": 13.05172679014504,
+     "valid": true
+    }
+   }
+  }
+ },
+ "ratios": {
+  "resnet50": {
+   "pass1": {
+    "ddp-fp16-hook/ddp": 1.005,
+    "ddp-int8-hook-async/ddp": 1.261,
+    "ddp-int8-hook-sync/ddp": 1.25,
+    "int8-async/fp16-hook": 1.254,
+    "int8-async/int8-sync": 1.009
+   },
+   "pass2": {
+    "ddp-fp16-hook/ddp": 1.006,
+    "ddp-int8-hook-async/ddp": 1.258,
+    "ddp-int8-hook-sync/ddp": 1.244,
+    "int8-async/fp16-hook": 1.25,
+    "int8-async/int8-sync": 1.011
+   }
+  },
+  "transformer": {
+   "pass1": {
+    "ddp-fp16-hook/ddp": 0.843,
+    "ddp-int8-hook-async/ddp": 1.334,
+    "ddp-int8-hook-sync/ddp": 1.187,
+    "int8-async/fp16-hook": 1.583,
+    "int8-async/int8-sync": 1.124
+   },
+   "pass2": {
+    "ddp-fp16-hook/ddp": 0.862,
+    "ddp-int8-hook-async/ddp": 1.379,
+    "ddp-int8-hook-sync/ddp": 1.206,
+    "int8-async/fp16-hook": 1.599,
+    "int8-async/int8-sync": 1.143
+   }
+  }
+ },
+ "run_dir": "e11-dev6b-2n-3509336"
+}
