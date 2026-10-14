@@ -34,3 +34,18 @@ for old, new in subs:
     src = src.replace(old, new)
 io.open(os.path.join(HERE, "ls6_e11.slurm"), "w", encoding="utf-8", newline="\n").write(src)
 print("wrote ls6_e11.slurm")
+
+# The rerun of 2026-10-14 (job E11b): the same job with harness v5.4, whose
+# asynchronous int8 hook no longer breaks the provenance record.
+rerun = [
+    ('BENCH="$RED_ROOT/control_workload_benchmark_v5_3.py"', 'BENCH="$RED_ROOT/control_workload_benchmark_v5_4.py"'),
+    ('want="$(cut -d\' \' -f1 "$RED_ROOT/CODE_v53.sha256")"', 'want="$(cut -d\' \' -f1 "$RED_ROOT/CODE_v54.sha256")"'),
+    ('echo "FATAL: harness v5.3 differs from CODE_v53.sha256"', 'echo "FATAL: harness v5.4 differs from CODE_v54.sha256"'),
+    ('RED_SET="${RED_SET:-dev6}"', 'RED_SET="${RED_SET:-dev6b}"'),
+    ("#SBATCH --job-name=redctl-e11", "#SBATCH --job-name=redctl-e11b"),
+]
+for old, new in rerun:
+    assert src.count(old) == 1, old
+    src = src.replace(old, new)
+io.open(os.path.join(HERE, "ls6_e11b.slurm"), "w", encoding="utf-8", newline="\n").write(src)
+print("wrote ls6_e11b.slurm")

@@ -38,3 +38,22 @@ Budget: 2 nodes for at most 45 minutes, 4.5 SU at 3 SU per node-hour.
 - Six ranks is one scale on the development queue's two nodes. It does not
   replace a 12- and 24-rank run; it tells whether that run is worth doing
   and whether the asynchronous form completes on NCCL at all.
+
+## First run and rerun (added 2026-10-14, before the rerun was submitted)
+
+Job 3508877 ran on 2026-10-13 from 22:47 to 22:56 Lonestar6 time. All 18
+conditions wrote valid timing records. The four asynchronous int8 runs then
+failed while writing their provenance record: the asynchronous path stored
+its gathered scales, which are tensors, in HOOK_STATE, and the record copies
+HOOK_STATE as JSON. So those runs carry no recorded hook mode. Result of
+that job: `validation_v2/results/rev4/E11_DEV_RESULT.json`. The expectation
+above failed in one part: the asynchronous int8 hook was slower than the
+synchronous one (1.10 and 1.12 on the Transformer, 1.02 and 1.03 on
+ResNet-50), and still slower than dense DDP and the 16-bit hook.
+
+The rerun (`harness/launch/ls6_e11b.slurm`, run directory
+`e11-dev6b-2n-<job>`) is the same job with harness v5.4
+(`validation_v2/harness/build_v54.py`), which keeps those tensors outside
+HOOK_STATE. Its purpose is a complete provenance record, including the hook
+mode of every int8 run. It will be read the same way, and both jobs will be
+reported.
