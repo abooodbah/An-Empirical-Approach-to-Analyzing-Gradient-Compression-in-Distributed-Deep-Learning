@@ -135,7 +135,8 @@ def allocation_dir(tmp_path, name):
                  serialize_s=0.15 * step["gpu-quant"], deserialize_s=0.1 * step["gpu-quant"], coll_bytes=N[model] + 4)
         write_m1(d, model, "cpu-quant", step["cpu-quant"], network_s=0.1 * step["cpu-quant"],
                  serialize_s=0.5 * step["cpu-quant"], deserialize_s=0.2 * step["cpu-quant"], coll_bytes=N[model] + 4)
-        for tag in ("ddp-int8-hook", "ddp-overlap", "ddp-overlap-bf16", "ddp-int8-hook-bf16"):
+        for tag in ("ddp-int8-hook", "ddp-overlap", "ddp-overlap-bf16", "ddp-int8-hook-bf16", "ddp-fp16-hook",
+                    "ddp-fp16-hook-bf16"):
             write_m1(d, model, tag, step[tag] * 1.05)
         for tag in ("gpu-quant-gathersum", "gpu-quant-reducible"):
             write_equiv(d, model, tag)
@@ -151,19 +152,47 @@ def qual_dir(tmp_path):
 
 
 def fake_replay(paths, family, alpha, beta):
+    """The frozen forward replay: families G and H only, all-reduce calibration."""
+    assert family in ("G", "H")
     assert len(paths) == 2 and alpha == CAL["alpha_allreduce_s"] and beta == CAL["beta_allreduce_s_per_byte"]
     return {"G": 0.20, "H": 0.30}[family], {"paths": [os.path.basename(p) for p in paths]}
 
 
+def fake_reverse(paths, family, cal):
+    """The reverse substitutions: the mirror families, the full calibration."""
+    assert family in ("G-rev", "H-rev") and len(paths) == 2 and cal == pytest.approx(CAL)
+    return {"G-rev": -0.15, "H-rev": -0.25}[family], {"paths": [os.path.basename(p) for p in paths]}
+
+
+def score(d, err, **kw):
+    return S.allocation(d, err, predictor=fake_replay, rev_predictor=fake_reverse, **kw)
+
+
 # ------------------------------------------------------------------ the case table
 def test_case_table_is_the_protocols():
-    assert [c[0] for c in S.CASES] == ["%02d" % i for i in range(1, 13)]
+    ids = [c[0] for c in S.CASES]
+    assert ids == ["%02d" % i for i in range(1, 13)] + ["M01", "M04", "M12"]
     assert all(c[1] in S.TAGS and c[2] in S.TAGS and c[1] != c[2] for c in S.CASES)
-    assert {c[0]: c[4] for c in S.CASES if c[4]} == {"01": "G", "04": "H", "12": "H"}
-    assert [c[0] for c in S.CASES if c[5] == "production"] == ["10", "11", "12"]
+    assert {c[0]: c[4] for c in S.CASES if c[4]} == {"01": "G", "04": "H", "12": "H",
+                                                     "M01": "G-rev", "M04": "H-rev", "M12": "H-rev"}
+    assert [c[0] for c in S.CASES if c[5] == "production"] == ["10", "11", "12", "M12"]
     expect = [e for c in S.CASES for e in c[6]]
-    assert (expect.count("help"), expect.count("harm"), expect.count("neutral")) == (12, 8, 4)
-    assert len({(c[1], c[2]) for c in S.CASES}) == 12
+    assert (expect.count("help"), expect.count("harm"), expect.count("neutral")) == (12, 14, 4)
+    assert len({(c[1], c[2]) for c in S.CASES}) == 15
+
+
+def test_each_mirror_reverses_its_forward_case():
+    case = {c[0]: c for c in S.CASES}
+    for m in ("M01", "M04", "M12"):
+        fwd, mir = case[m[1:]], case[m]
+        assert (mir[1], mir[2]) == (fwd[2], fwd[1]) and mir[4] == fwd[4] + "-rev"
+        assert mir[3] == set() and mir[6] == ("harm", "harm") and mir[5] == fwd[5]
+
+
+def test_every_original_has_an_m1_run_in_the_jobs():
+    sets = open(os.path.join(ART, "harness", "launch", "e12_sets.sh"), encoding="utf-8").read()
+    phase = sets.split("E12_PHASE=(", 1)[1].split(")", 1)[0].split()
+    assert set(S.ORIGINALS) <= set(phase) and len(phase) == 10
 
 
 def test_thresholds_are_the_protocols():
@@ -219,7 +248,7 @@ def test_no_valid_pass_leaves_the_case_missing(tmp_path, monkeypatch):
     d = allocation_dir(tmp_path, "e12-e12a-2n-1")
     write_block(d, "transformer", "cpu-quant", 1, 0.17, status="FAIL")
     write_block(d, "transformer", "cpu-quant", 2, 0.17, status="FAIL")
-    rows = S.allocation(d, S.fidelity_errors(None), predictor=fake_replay)
+    rows = score(d, S.fidelity_errors(None))
     r = [x for x in rows if x["case"] == "E12-T03" and x["method"] == "always"][0]
     assert r["g"] is None and r["pays"] is None
     m = S.metrics([x for x in rows if x["case"] == "E12-T03"], "always")
@@ -362,8 +391,8 @@ def test_bootstrap_is_deterministic_and_brackets_the_median():
 # ------------------------------------------------------------------ end to end
 def test_allocation_rows_and_methods(tmp_path):
     d = allocation_dir(tmp_path, "e12-e12a-2n-11")
-    rows = S.allocation(d, S.fidelity_errors(qual_dir(tmp_path)), predictor=fake_replay)
-    assert len(rows) == 24 * len(S.METHODS) and {r["alloc"] for r in rows} == {"11"}
+    rows = score(d, S.fidelity_errors(qual_dir(tmp_path)))
+    assert len(rows) == 30 * len(S.METHODS) and {r["alloc"] for r in rows} == {"11"}
     get = lambda case, m: [r for r in rows if r["case"] == case and r["method"] == m][0]  # noqa: E731
     # measured gains
     assert get("E12-T01", "always")["g"] == pytest.approx(1 - 0.018 / 0.023)
@@ -385,21 +414,51 @@ def test_allocation_rows_and_methods(tmp_path):
     assert get("E12-T05", "cm")["recommends"] is True                 # fewer bytes, a harmful change
     # quality
     assert get("E12-T04", "always")["pays_q"] is True and get("E12-T08", "always")["pays_q"] is False
+    # mirror cases: the reverse substitutions, never the frozen forward ones
+    assert get("E12-TM01", "always")["g"] == pytest.approx(1 - 0.023 / 0.018) and get("E12-TM01", "always")["pays"] is False
+    assert get("E12-TM01", "replay")["e"] == pytest.approx(-0.15) and get("E12-TM01", "replay")["recommends"] is False
+    assert get("E12-RM04", "replay")["e"] == pytest.approx(-0.25) and get("E12-RM12", "replay")["verdict"] == "none"
+    assert get("E12-TM04", "replay")["family"] == "H-rev" and get("E12-T04", "replay")["family"] == "H"
+    # the rules have no verdict that recommends a mirror's intervention
+    assert not any(get("E12-%sM%s" % (m, c), k)["recommends"] for m in "TR" for c in ("01", "04", "12")
+                   for k in ("full", "A1", "A2", "A3"))
+    # M1 of the 16-bit hooks feeds the cost model: the int8 hook's gathers send fewer bytes
+    assert get("E12-TM04", "cm")["e"] is not None and get("E12-RM12", "cm")["e"] is not None
+    # quality: the matched control's arms have the same error; the int8 hook's is larger
+    assert get("E12-TM01", "always")["quality_ok"] is True and get("E12-TM04", "always")["quality_ok"] is False
+
+
+def test_a_mirror_whose_reverse_replay_fails_is_missing(tmp_path):
+    d = allocation_dir(tmp_path, "e12-e12a-2n-11")
+
+    def broken(paths, family, cal):
+        raise ValueError("fp16 hook pattern (cast, div_, all-reduce) not found")
+    rows = S.allocation(d, S.fidelity_errors(None), predictor=fake_replay, rev_predictor=broken)
+    r = [x for x in rows if x["case"] == "E12-RM04" and x["method"] == "replay"][0]
+    assert r["recommends"] is None and r["label"] == "missing (replay failed)"
+    assert [x for x in rows if x["case"] == "E12-R04" and x["method"] == "replay"][0]["recommends"] is True
 
 
 def test_summary_over_two_allocations(tmp_path):
     q = S.fidelity_errors(qual_dir(tmp_path))
-    rows = (S.allocation(allocation_dir(tmp_path, "e12-e12a-2n-11"), q, predictor=fake_replay)
-            + S.allocation(allocation_dir(tmp_path, "e12-e12b-2n-12"), q, predictor=fake_replay))
+    rows = (score(allocation_dir(tmp_path, "e12-e12a-2n-11"), q)
+            + score(allocation_dir(tmp_path, "e12-e12b-2n-12"), q))
     s = S.summary(rows)
     always = s["pays"]["always"]
     paying = sum(1 for r in rows if r["method"] == "always" and r["pays"]) * 0.5
-    assert always["recommended"] == pytest.approx(24.0) and always["cases_weight"] == pytest.approx(24.0)
-    assert always["precision"] == pytest.approx(paying / 24.0) and always["recall"] == pytest.approx(1.0)
+    assert always["recommended"] == pytest.approx(30.0) and always["cases_weight"] == pytest.approx(30.0)
+    assert always["precision"] == pytest.approx(paying / 30.0) and always["recall"] == pytest.approx(1.0)
     assert always["fpr"] == pytest.approx(1.0) and always["abstention"] == pytest.approx(0.0)
     replay = s["pays"]["replay"]
-    assert replay["recommended"] == pytest.approx(6.0) and replay["abstained"] == pytest.approx(18.0)
+    # 18 rows with no model and 6 mirror rows predicted to lose
+    assert replay["recommended"] == pytest.approx(6.0) and replay["abstained"] == pytest.approx(24.0)
     assert s["pays_q"]["always"]["paying"] < always["paying"]
+    # the replay on the case types it covers: 6 help (forward) and 6 harm (mirror) rows per allocation pair
+    cov = s["replay_covered"]["pays"]
+    assert cov["cases_weight"] == pytest.approx(12.0) and cov["recommended"] == pytest.approx(6.0)
+    assert cov["false_pos"] == pytest.approx(sum(0.5 for r in rows if r["method"] == "replay" and r["family"]
+                                                 and r["recommends"] and not r["pays"]))
+    assert cov["fpr"] == pytest.approx(0.0)
 
 
 def test_rho_and_equivalence(tmp_path):
@@ -417,9 +476,9 @@ def test_main_writes_the_json(tmp_path):
     q = qual_dir(tmp_path)
     a = allocation_dir(tmp_path, "e12-e12a-2n-11")
     out = str(tmp_path / "E12_RESULT.json")
-    rows, s = S.main(["--qual", q, a, "--json", out], predictor=fake_replay)
+    rows, s = S.main(["--qual", q, a, "--json", out], predictor=fake_replay, rev_predictor=fake_reverse)
     data = json.load(io.open(out, encoding="utf-8"))
-    assert set(data["summary"]) == {"pays", "pays_q"} and len(data["rows"]) == len(rows)
+    assert set(data["summary"]) == {"pays", "pays_q", "replay_covered"} and len(data["rows"]) == len(rows)
     assert "transformer" in data["allocations"]["e12-e12a-2n-11"]["rho"]
-    assert data["expectations"]["rows"] == 24
+    assert data["expectations"]["rows"] == 30
     assert not math.isnan(data["summary"]["pays"]["cm"]["recommended"])

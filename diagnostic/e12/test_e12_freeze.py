@@ -33,3 +33,10 @@ def test_reused_components_are_the_e7_e8_frozen_files():
 def test_basenames_are_unique():
     names = [rel.rsplit("/", 1)[-1] for rel in M.FILES]
     assert len(names) == len(set(names))
+
+
+def test_the_reverse_substitutions_are_frozen():
+    for rel in ("diagnostic/e12/replay_reverse.py", "diagnostic/e12/test_replay_reverse.py",
+                "diagnostic/e12/dev_reverse_e7a.py", "diagnostic/e12/DEV_REPORT_REVERSE.md"):
+        assert rel in M.FILES, rel
+    assert len(M.FILES) == 24

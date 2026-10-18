@@ -103,8 +103,8 @@ def test_scored_allocation_runs_every_input_before_every_outcome(red_set):
     runs = classify(commands(red_set))
     kinds = [r[0] for r in runs]
     assert kinds[:2] == ["preflight-transformer", "paper-resnet50-native"]
-    assert kinds.count("equiv") == 4 and kinds.count("phase") == 16 and kinds.count("trace") == 20
-    assert kinds.count("block") == 40 and "fid" not in kinds and len(runs) == 82
+    assert kinds.count("equiv") == 4 and kinds.count("phase") == 20 and kinds.count("trace") == 20
+    assert kinds.count("block") == 40 and "fid" not in kinds and len(runs) == 86
     first_block = kinds.index("block")
     assert all(k != "block" for k in kinds[:first_block]) and set(kinds[first_block:]) == {"block"}
     phases = {(m, t) for k, m, t, *_ in runs if k == "phase"}
@@ -148,9 +148,12 @@ def test_qualification_job_measures_the_error_of_every_compressed_tag():
     fid = {(m, t) for k, m, t, *_ in runs if k == "fid"}
     assert fid == {(m, t) for m in S.MODELS for t in S.TAGS if t not in S.DENSE_TAGS}
     assert all(a.verify_fidelity and a.iters == S.FIDELITY_ITERS for k, m, t, p, a, e in runs if k == "fid")
-    assert [(m, t) for k, m, t, *_ in runs if k == "trace"] == [(m, "ddp-int8-hook-bf16") for m in S.MODELS]
+    # parse checks: the frozen replay on the BF16 int8 hook (case 12), the
+    # reverse substitution on the BF16 16-bit hook (mirror M12)
+    assert [(m, t) for k, m, t, *_ in runs if k == "trace"] == [
+        (m, t) for m in S.MODELS for t in ("ddp-int8-hook-bf16", "ddp-fp16-hook-bf16")]
     assert [(m, t) for k, m, t, *_ in runs if k == "block"] == [("resnet50", "cpu-quant"), ("transformer", "ddp-overlap-bf16")]
-    assert len(runs) == 22
+    assert len(runs) == 24
 
 
 def sbatch(name):
