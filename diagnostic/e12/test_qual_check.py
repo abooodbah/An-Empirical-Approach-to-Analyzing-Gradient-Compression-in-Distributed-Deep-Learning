@@ -41,11 +41,11 @@ def qual(tmp_path, span_s=480, cpu_block_s=60, fail=None, drop_fid=None, traces=
 def test_go_40_on_plan(tmp_path):
     out = Q.check(qual(tmp_path), parse=lambda p: 16)
     assert out["decision"] == "go-40" and out["problems"] == []
-    assert out["projection_min"] == pytest.approx((90 + 1926 * (480 / 495.0)) / 60)
+    assert out["projection_min"] == pytest.approx((90 + 1926) / 60)
 
 
 def test_slow_qualification_moves_to_45_then_stops(tmp_path):
-    assert Q.check(qual(tmp_path, span_s=560), parse=lambda p: 16)["decision"] == "go-45"   # 37.8 min
+    assert Q.check(qual(tmp_path, span_s=560), parse=lambda p: 16)["decision"] == "go-45"   # 38.9 min
     assert Q.check(qual(tmp_path, span_s=480, cpu_block_s=90), parse=lambda p: 16)["decision"] == "stop"  # 46.6
 
 

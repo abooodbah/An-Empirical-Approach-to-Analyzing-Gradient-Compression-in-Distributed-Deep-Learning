@@ -23,7 +23,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import score_e12 as S  # noqa: E402
 
-PLAN_QUAL_CONDITIONS_S = 495.0    # section 8: the qualification job's 22 conditions
+PLAN_QUAL_CONDITIONS_S = 480.0    # section 8: the qualification job's 22 conditions
 PLAN_MAIN_CONDITIONS_S = 1926.0   # section 8: a scored job's 82 conditions
 PLAN_OVERHEAD_S = 90.0            # environment selection, node facts, srun start-up
 PLAN_CPU_QUANT_BLOCK_S = 64.0     # section 8: the ResNet-50 cpu-quant block run
