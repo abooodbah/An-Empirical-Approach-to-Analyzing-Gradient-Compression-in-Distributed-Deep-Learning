@@ -13,7 +13,9 @@ Methods, each scored per case and allocation (an allocation counts 1/2):
                  record through the frozen extractor (features.py 95e240d8)
   A2             the benchmark check (rules.ablation_calibration_only)
   replay         the frozen E8 reference (diagnostic/e8/replay_reference.py)
-                 on the original's traces, families G and H only
+                 on the original's traces, families G and H (cases 01, 04,
+                 12), and its reverse substitutions G-rev and H-rev
+                 (replay_reverse.py) for the mirror cases M01, M04, M12
   always         recommends every intervention
   cm             a calibration-only cost model: the alpha-beta time of each
                  mode's collectives over the original's M1 step
@@ -39,13 +41,14 @@ from collections import defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DIAG = os.path.dirname(HERE)
-for _p in (DIAG, os.path.join(DIAG, "e8")):
+for _p in (DIAG, os.path.join(DIAG, "e8"), HERE):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 import features as F  # noqa: E402  frozen extractor
 import rules  # noqa: E402  frozen rules
 from score_e6 import outcome  # noqa: E402  frozen outcome rule (continuity labels only)
 import replay_reference as REF  # noqa: E402  frozen E8 reference
+import replay_reverse as REV  # noqa: E402  reverse substitutions for the mirror cases
 
 P = 6
 BATCH = 64
@@ -83,7 +86,13 @@ CASES = [
     ("10", "ddp-overlap-bf16", "ddp-fp16-hook-bf16", set(), None, "production", ("help", "neutral")),
     ("11", "ddp-overlap-bf16", "ddp-int8-hook-bf16", set(), None, "production", ("harm", "harm")),
     ("12", "ddp-int8-hook-bf16", "ddp-fp16-hook-bf16", {"shape"}, "H", "production", ("help", "help")),
+    # mirror cases: 01, 04 and 12 reversed, so that the replay is also scored on
+    # changes expected to hurt; the reverse substitutions are replay_reverse.py
+    ("M01", "gpu-quant-reducible", "gpu-quant-gathersum", set(), "G-rev", "held-out", ("harm", "harm")),
+    ("M04", "ddp-fp16-hook", "ddp-int8-hook", set(), "H-rev", "held-out", ("harm", "harm")),
+    ("M12", "ddp-fp16-hook-bf16", "ddp-int8-hook-bf16", set(), "H-rev", "production", ("harm", "harm")),
 ]
+REVERSE_FAMILIES = ("G-rev", "H-rev")
 ORIGINALS = sorted({c[1] for c in CASES})
 
 _TAG = "(?P<tag>[a-z0-9-]+?)"
@@ -321,8 +330,10 @@ def rule_label(verdict, e, g, kind, tested):
     return outcome(verdict, e, g, None)
 
 
-def allocation(run_dir, err, reading="frozen", predictor=REF.predict):
-    """One row per case, model and method for one scored allocation."""
+def allocation(run_dir, err, reading="frozen", predictor=REF.predict, rev_predictor=REV.predict):
+    """One row per case, model and method for one scored allocation. The
+    frozen forward replay (predictor) serves families G and H, the reverse
+    substitutions (rev_predictor) the mirror families G-rev and H-rev."""
     alloc = os.path.basename(os.path.normpath(run_dir)).rsplit("-", 1)[-1]
     blocks = block_values(run_dir)
     cal = calibration(run_dir)
@@ -333,6 +344,7 @@ def allocation(run_dir, err, reading="frozen", predictor=REF.predict):
             g = measured_gain(blocks.get((model, orig)), blocks.get((model, cand)))
             common = {"case": "E12-%s%s" % (model[0].upper(), cid), "model": model, "original": orig,
                       "intervention": cand, "group": group, "expectation": expect[mi], "alloc": alloc,
+                      "family": family,
                       "g": g, "pays": pays(g), "quality_ok": quality_ok(err, model, orig, cand),
                       "T_orig": (blocks.get((model, orig)) or {}).get("T_ms"),
                       "T_cand": (blocks.get((model, cand)) or {}).get("T_ms"),
@@ -360,8 +372,12 @@ def allocation(run_dir, err, reading="frozen", predictor=REF.predict):
                     row.update(verdict="missing", e=None, recommends=None, label="missing (trace or calibration)")
                 else:
                     try:
-                        gp, detail = predictor(paths, family, cal["alpha_allreduce_s"], cal["beta_allreduce_s_per_byte"])
-                    except Exception as exc:  # the frozen replay could not find the substitution
+                        if family in REVERSE_FAMILIES:
+                            gp, detail = rev_predictor(paths, family, cal)
+                        else:
+                            gp, detail = predictor(paths, family, cal["alpha_allreduce_s"],
+                                                   cal["beta_allreduce_s_per_byte"])
+                    except Exception as exc:  # the replay could not find the substitution
                         row.update(verdict="missing", e=None, recommends=None, label="missing (replay failed)",
                                    detail=repr(exc)[:200])
                     else:
@@ -446,7 +462,12 @@ def metrics(rows, method, truth="pays"):
 
 
 def summary(rows):
-    return {truth: {m: metrics(rows, m, truth) for m in METHODS} for truth in ("pays", "pays_q")}
+    """Every method over all rows, and the replay over the case types it
+    covers (families G and H forward, and their mirrors)."""
+    out = {truth: {m: metrics(rows, m, truth) for m in METHODS} for truth in ("pays", "pays_q")}
+    covered = [r for r in rows if r.get("family")]
+    out["replay_covered"] = {truth: metrics(covered, "replay", truth) for truth in ("pays", "pays_q")}
+    return out
 
 
 def rho(run_dir, blocks=None, reading="frozen"):
@@ -511,7 +532,7 @@ def expectation_check(rows):
     return {"rows": seen, "as_expected": hits}
 
 
-def main(argv, predictor=REF.predict):
+def main(argv, predictor=REF.predict, rev_predictor=REV.predict):
     reading, out_json, qual, dirs = "frozen", None, None, []
     i = 0
     while i < len(argv):
@@ -526,7 +547,7 @@ def main(argv, predictor=REF.predict):
     err = fidelity_errors(qual)
     rows, extra = [], {}
     for d in dirs:
-        rows.extend(allocation(d, err, reading, predictor))
+        rows.extend(allocation(d, err, reading, predictor, rev_predictor))
         blocks = block_values(d)
         extra[os.path.basename(os.path.normpath(d))] = {"rho": rho(d, blocks, reading),
                                                         "replay_fidelity": replay_fidelity(d, blocks)}
@@ -544,6 +565,9 @@ def main(argv, predictor=REF.predict):
             print("%-7s rec %4.1f tp %4.1f fp %4.1f  precision %s recall %s fpr %s abstention %s" % (
                 m, t["recommended"], t["true_pos"], t["false_pos"], fmt(t["precision"]), fmt(t["recall"]),
                 fmt(t["fpr"]), fmt(t["abstention"])))
+        t = s["replay_covered"][truth]
+        print("replay on its covered case types: rec %4.1f tp %4.1f fp %4.1f of %4.1f" % (
+            t["recommended"], t["true_pos"], t["false_pos"], t["cases_weight"]))
     print("\nexpectations:", expectation_check(rows))
     if out_json:
         with io.open(out_json, "w", encoding="utf-8") as fh:

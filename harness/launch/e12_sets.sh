@@ -17,10 +17,11 @@ unset RED_HOOK16_DTYPE RED_HOOK_SYNC
 E12_MODELS=(transformer resnet50)
 E12_TAGS=(ddp-overlap ddp-fp16-hook ddp-int8-hook gpu-quant cpu-quant gpu-quant-gathersum gpu-quant-reducible
           ddp-overlap-bf16 ddp-fp16-hook-bf16 ddp-int8-hook-bf16)
-# M1 (phase-timed) runs: the seven originals of section 2, plus the reducible
-# arm of the matched control, whose phase-timed step gives rho.
+# M1 (phase-timed) runs: the ten originals of section 2 (cases 01 to 12 and
+# the mirrors M01, M04, M12). gpu-quant-reducible is also the reducible arm
+# of the matched control, whose phase-timed step gives rho.
 E12_PHASE=(gpu-quant-gathersum gpu-quant cpu-quant ddp-int8-hook ddp-overlap ddp-overlap-bf16 ddp-int8-hook-bf16
-           gpu-quant-reducible)
+           gpu-quant-reducible ddp-fp16-hook ddp-fp16-hook-bf16)
 # Per-exchange error (qualification job only). Dense DDP sends the dense
 # average itself; its error is zero by definition and it is not run.
 E12_FIDELITY=(gpu-quant cpu-quant gpu-quant-gathersum gpu-quant-reducible ddp-fp16-hook ddp-int8-hook
@@ -34,9 +35,13 @@ case "$RED_SET" in
     for model in "${E12_MODELS[@]}"; do
       for tag in "${E12_FIDELITY[@]}"; do e12_fid "$model" "$tag"; done
     done
-    # parse check of the frozen replay on a BF16 int8-hook trace, and the
-    # longest outcome condition, timed once (neither is scored)
-    for model in "${E12_MODELS[@]}"; do e12_trace "$model" ddp-int8-hook-bf16; done
+    # parse checks of the frozen replay on a BF16 int8-hook trace (case 12)
+    # and of the reverse substitution on a BF16 16-bit-hook trace (mirror
+    # M12), and the longest outcome condition, timed once (none is scored)
+    for model in "${E12_MODELS[@]}"; do
+      e12_trace "$model" ddp-int8-hook-bf16
+      e12_trace "$model" ddp-fp16-hook-bf16
+    done
     e12_block resnet50 cpu-quant 1
     e12_block transformer ddp-overlap-bf16 1
     ;;

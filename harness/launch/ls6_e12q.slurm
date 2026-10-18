@@ -9,8 +9,9 @@
 #SBATCH --export=ALL
 
 # E12 (diagnostic/E12_PROTOCOL.md), set q, qualification: per-exchange error of the eight compressed tags, a
-# parse check of the frozen replay on BF16 int8-hook traces, and the longest
-# outcome condition timed once. Nothing here is a scored outcome.
+# parse check of the frozen replay on BF16 int8-hook traces and of the reverse
+# substitution on BF16 16-bit-hook traces, and the longest outcome condition
+# timed once. Nothing here is a scored outcome.
 # Development queue, 2 nodes, 6 ranks. Written by make_ls6_e12.py from
 # ls6_e11b.slurm; do not edit by hand. Environment selection is as in ls6_e8.slurm.
 # Rate 3 SU/node-hour.

@@ -83,10 +83,12 @@ e12_fid() {  # e12_fid <model> <tag>: per-exchange error against the dense avera
 
 JOBS = {
     "q": ("ls6_e12q.slurm", "00:15:00", "qualification: per-exchange error of the eight compressed tags, a\n"
-          "# parse check of the frozen replay on BF16 int8-hook traces, and the longest\n"
-          "# outcome condition timed once. Nothing here is a scored outcome."),
-    "e12a": ("ls6_e12a.slurm", "00:40:00", "scored allocation a: 24 held-out cases on two workloads, all traced,\n"
-             "# with the BF16 production baseline and the matched-encoding control."),
+          "# parse check of the frozen replay on BF16 int8-hook traces and of the reverse\n"
+          "# substitution on BF16 16-bit-hook traces, and the longest outcome condition\n"
+          "# timed once. Nothing here is a scored outcome."),
+    "e12a": ("ls6_e12a.slurm", "00:40:00", "scored allocation a: 15 case types (12, and the mirrors M01,\n"
+             "# M04, M12) on two workloads, all traced, with the BF16 production baseline and the\n"
+             "# matched-encoding control."),
     "e12b": ("ls6_e12b.slurm", "00:40:00", "scored allocation b: the same list as e12a in a second allocation."),
 }
 

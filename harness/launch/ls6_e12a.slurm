@@ -8,8 +8,9 @@
 #SBATCH --time=00:40:00
 #SBATCH --export=ALL
 
-# E12 (diagnostic/E12_PROTOCOL.md), set e12a, scored allocation a: 24 held-out cases on two workloads, all traced,
-# with the BF16 production baseline and the matched-encoding control.
+# E12 (diagnostic/E12_PROTOCOL.md), set e12a, scored allocation a: 15 case types (12, and the mirrors M01,
+# M04, M12) on two workloads, all traced, with the BF16 production baseline and the
+# matched-encoding control.
 # Development queue, 2 nodes, 6 ranks. Written by make_ls6_e12.py from
 # ls6_e11b.slurm; do not edit by hand. Environment selection is as in ls6_e8.slurm.
 # Rate 3 SU/node-hour.
