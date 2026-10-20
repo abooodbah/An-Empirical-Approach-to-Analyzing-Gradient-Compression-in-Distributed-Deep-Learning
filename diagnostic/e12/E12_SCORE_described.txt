@@ -1,0 +1,443 @@
+E12 scoring, reading described, allocations e12-e12a-2n-3518534, e12-e12b-2n-3518535
+E12-T01   3518534  full    none                   e=   -   g=+0.249 abstain-miss
+E12-T01   3518534  A1      none                   e=   -   g=+0.249 abstain-miss
+E12-T01   3518534  A2      shape                  e=+0.000 g=+0.249 correct
+E12-T01   3518534  A3      none                   e=   -   g=+0.249 abstain-miss
+E12-T01   3518534  replay  recommend              e=+0.316 g=+0.249 recommend
+E12-T01   3518534  always  recommend              e=   -   g=+0.249 recommend
+E12-T01   3518534  cm      recommend              e=+0.156 g=+0.249 recommend
+E12-T02   3518534  full    placement              e=   -   g=+0.283 not tested
+E12-T02   3518534  A1      none                   e=   -   g=+0.283 abstain-miss
+E12-T02   3518534  A2      shape                  e=+0.000 g=+0.283 correct
+E12-T02   3518534  A3      placement              e=   -   g=+0.283 not tested
+E12-T02   3518534  replay  no substitution model  e=   -   g=+0.283 abstain (no model)
+E12-T02   3518534  always  recommend              e=   -   g=+0.283 recommend
+E12-T02   3518534  cm      recommend              e=+0.145 g=+0.283 recommend
+E12-T03   3518534  full    placement              e=+0.642 g=+0.859 correct
+E12-T03   3518534  A1      none                   e=   -   g=+0.859 abstain-miss
+E12-T03   3518534  A2      shape                  e=   -   g=+0.859 not tested
+E12-T03   3518534  A3      placement              e=+0.642 g=+0.859 correct
+E12-T03   3518534  replay  no substitution model  e=   -   g=+0.859 abstain (no model)
+E12-T03   3518534  always  recommend              e=   -   g=+0.859 recommend
+E12-T03   3518534  cm      none                   e=+0.000 g=+0.859 abstain
+E12-T04   3518534  full    insufficient           e=   -   g=+0.212 abstain-miss
+E12-T04   3518534  A1      none                   e=   -   g=+0.212 abstain-miss
+E12-T04   3518534  A2      insufficient           e=   -   g=+0.212 abstain-miss
+E12-T04   3518534  A3      insufficient           e=   -   g=+0.212 abstain-miss
+E12-T04   3518534  replay  recommend              e=+0.286 g=+0.212 recommend
+E12-T04   3518534  always  recommend              e=   -   g=+0.212 recommend
+E12-T04   3518534  cm      recommend              e=+0.112 g=+0.212 recommend
+E12-T05   3518534  full    none                   e=   -   g=-0.102 abstain-correct
+E12-T05   3518534  A1      none                   e=   -   g=-0.102 abstain-correct
+E12-T05   3518534  A2      insufficient           e=   -   g=-0.102 abstain-correct
+E12-T05   3518534  A3      none                   e=   -   g=-0.102 abstain-correct
+E12-T05   3518534  replay  no substitution model  e=   -   g=-0.102 abstain (no model)
+E12-T05   3518534  always  recommend              e=   -   g=-0.102 recommend
+E12-T05   3518534  cm      none                   e=+0.044 g=-0.102 abstain
+E12-T06   3518534  full    none                   e=   -   g=-0.171 abstain-correct
+E12-T06   3518534  A1      none                   e=   -   g=-0.171 abstain-correct
+E12-T06   3518534  A2      insufficient           e=   -   g=-0.171 abstain-correct
+E12-T06   3518534  A3      none                   e=   -   g=-0.171 abstain-correct
+E12-T06   3518534  replay  no substitution model  e=   -   g=-0.171 abstain (no model)
+E12-T06   3518534  always  recommend              e=   -   g=-0.171 recommend
+E12-T06   3518534  cm      none                   e=+0.044 g=-0.171 abstain
+E12-T07   3518534  full    none                   e=   -   g=-7.319 abstain-correct
+E12-T07   3518534  A1      none                   e=   -   g=-7.319 abstain-correct
+E12-T07   3518534  A2      insufficient           e=   -   g=-7.319 abstain-correct
+E12-T07   3518534  A3      none                   e=   -   g=-7.319 abstain-correct
+E12-T07   3518534  replay  no substitution model  e=   -   g=-7.319 abstain (no model)
+E12-T07   3518534  always  recommend              e=   -   g=-7.319 recommend
+E12-T07   3518534  cm      none                   e=+0.044 g=-7.319 abstain
+E12-T08   3518534  full    none                   e=   -   g=+0.132 abstain-miss
+E12-T08   3518534  A1      none                   e=   -   g=+0.132 abstain-miss
+E12-T08   3518534  A2      insufficient           e=   -   g=+0.132 abstain-miss
+E12-T08   3518534  A3      none                   e=   -   g=+0.132 abstain-miss
+E12-T08   3518534  replay  no substitution model  e=   -   g=+0.132 abstain (no model)
+E12-T08   3518534  always  recommend              e=   -   g=+0.132 recommend
+E12-T08   3518534  cm      recommend              e=+0.171 g=+0.132 recommend
+E12-T09   3518534  full    placement              e=   -   g=+0.044 not tested
+E12-T09   3518534  A1      none                   e=   -   g=+0.044 abstain-correct
+E12-T09   3518534  A2      shape                  e=   -   g=+0.044 not tested
+E12-T09   3518534  A3      placement              e=   -   g=+0.044 not tested
+E12-T09   3518534  replay  no substitution model  e=   -   g=+0.044 abstain (no model)
+E12-T09   3518534  always  recommend              e=   -   g=+0.044 recommend
+E12-T09   3518534  cm      none                   e=+0.002 g=+0.044 abstain
+E12-T10   3518534  full    none                   e=   -   g=+0.150 abstain-miss
+E12-T10   3518534  A1      none                   e=   -   g=+0.150 abstain-miss
+E12-T10   3518534  A2      insufficient           e=   -   g=+0.150 abstain-miss
+E12-T10   3518534  A3      none                   e=   -   g=+0.150 abstain-miss
+E12-T10   3518534  replay  no substitution model  e=   -   g=+0.150 abstain (no model)
+E12-T10   3518534  always  recommend              e=   -   g=+0.150 recommend
+E12-T10   3518534  cm      recommend              e=+0.290 g=+0.150 recommend
+E12-T11   3518534  full    none                   e=   -   g=-0.300 abstain-correct
+E12-T11   3518534  A1      none                   e=   -   g=-0.300 abstain-correct
+E12-T11   3518534  A2      insufficient           e=   -   g=-0.300 abstain-correct
+E12-T11   3518534  A3      none                   e=   -   g=-0.300 abstain-correct
+E12-T11   3518534  replay  no substitution model  e=   -   g=-0.300 abstain (no model)
+E12-T11   3518534  always  recommend              e=   -   g=-0.300 recommend
+E12-T11   3518534  cm      recommend              e=+0.075 g=-0.300 recommend
+E12-T12   3518534  full    insufficient           e=   -   g=+0.346 abstain-miss
+E12-T12   3518534  A1      none                   e=   -   g=+0.346 abstain-miss
+E12-T12   3518534  A2      insufficient           e=   -   g=+0.346 abstain-miss
+E12-T12   3518534  A3      insufficient           e=   -   g=+0.346 abstain-miss
+E12-T12   3518534  replay  recommend              e=+0.392 g=+0.346 recommend
+E12-T12   3518534  always  recommend              e=   -   g=+0.346 recommend
+E12-T12   3518534  cm      recommend              e=+0.174 g=+0.346 recommend
+E12-TM01  3518534  full    none                   e=   -   g=-0.332 abstain-correct
+E12-TM01  3518534  A1      none                   e=   -   g=-0.332 abstain-correct
+E12-TM01  3518534  A2      shape                  e=   -   g=-0.332 inapplicable
+E12-TM01  3518534  A3      none                   e=   -   g=-0.332 abstain-correct
+E12-TM01  3518534  replay  none                   e=-0.291 g=-0.332 abstain
+E12-TM01  3518534  always  recommend              e=   -   g=-0.332 recommend
+E12-TM01  3518534  cm      none                   e=-0.203 g=-0.332 abstain
+E12-TM04  3518534  full    insufficient           e=   -   g=-0.269 abstain-correct
+E12-TM04  3518534  A1      none                   e=   -   g=-0.269 abstain-correct
+E12-TM04  3518534  A2      insufficient           e=   -   g=-0.269 abstain-correct
+E12-TM04  3518534  A3      insufficient           e=   -   g=-0.269 abstain-correct
+E12-TM04  3518534  replay  none                   e=-0.399 g=-0.269 abstain
+E12-TM04  3518534  always  recommend              e=   -   g=-0.269 recommend
+E12-TM04  3518534  cm      none                   e=-0.141 g=-0.269 abstain
+E12-TM12  3518534  full    insufficient           e=   -   g=-0.529 abstain-correct
+E12-TM12  3518534  A1      none                   e=   -   g=-0.529 abstain-correct
+E12-TM12  3518534  A2      insufficient           e=   -   g=-0.529 abstain-correct
+E12-TM12  3518534  A3      insufficient           e=   -   g=-0.529 abstain-correct
+E12-TM12  3518534  replay  none                   e=-0.470 g=-0.529 abstain
+E12-TM12  3518534  always  recommend              e=   -   g=-0.529 recommend
+E12-TM12  3518534  cm      none                   e=-0.270 g=-0.529 abstain
+E12-R01   3518534  full    none                   e=   -   g=+0.098 abstain-miss
+E12-R01   3518534  A1      none                   e=   -   g=+0.098 abstain-miss
+E12-R01   3518534  A2      shape                  e=+0.000 g=+0.098 correct
+E12-R01   3518534  A3      none                   e=   -   g=+0.098 abstain-miss
+E12-R01   3518534  replay  recommend              e=+0.140 g=+0.098 recommend
+E12-R01   3518534  always  recommend              e=   -   g=+0.098 recommend
+E12-R01   3518534  cm      recommend              e=+0.093 g=+0.098 recommend
+E12-R02   3518534  full    none                   e=   -   g=+0.121 abstain-miss
+E12-R02   3518534  A1      none                   e=   -   g=+0.121 abstain-miss
+E12-R02   3518534  A2      shape                  e=+0.000 g=+0.121 correct
+E12-R02   3518534  A3      none                   e=   -   g=+0.121 abstain-miss
+E12-R02   3518534  replay  no substitution model  e=   -   g=+0.121 abstain (no model)
+E12-R02   3518534  always  recommend              e=   -   g=+0.121 recommend
+E12-R02   3518534  cm      recommend              e=+0.091 g=+0.121 recommend
+E12-R03   3518534  full    placement              e=+0.673 g=+0.762 correct
+E12-R03   3518534  A1      none                   e=   -   g=+0.762 abstain-miss
+E12-R03   3518534  A2      shape                  e=   -   g=+0.762 not tested
+E12-R03   3518534  A3      placement              e=+0.673 g=+0.762 correct
+E12-R03   3518534  replay  no substitution model  e=   -   g=+0.762 abstain (no model)
+E12-R03   3518534  always  recommend              e=   -   g=+0.762 recommend
+E12-R03   3518534  cm      none                   e=+0.000 g=+0.762 abstain
+E12-R04   3518534  full    insufficient           e=   -   g=+0.157 abstain-miss
+E12-R04   3518534  A1      none                   e=   -   g=+0.157 abstain-miss
+E12-R04   3518534  A2      insufficient           e=   -   g=+0.157 abstain-miss
+E12-R04   3518534  A3      insufficient           e=   -   g=+0.157 abstain-miss
+E12-R04   3518534  replay  recommend              e=+0.224 g=+0.157 recommend
+E12-R04   3518534  always  recommend              e=   -   g=+0.157 recommend
+E12-R04   3518534  cm      recommend              e=+0.052 g=+0.157 recommend
+E12-R05   3518534  full    none                   e=   -   g=-0.181 abstain-correct
+E12-R05   3518534  A1      none                   e=   -   g=-0.181 abstain-correct
+E12-R05   3518534  A2      insufficient           e=   -   g=-0.181 abstain-correct
+E12-R05   3518534  A3      none                   e=   -   g=-0.181 abstain-correct
+E12-R05   3518534  replay  no substitution model  e=   -   g=-0.181 abstain (no model)
+E12-R05   3518534  always  recommend              e=   -   g=-0.181 recommend
+E12-R05   3518534  cm      none                   e=+0.029 g=-0.181 abstain
+E12-R06   3518534  full    none                   e=   -   g=-0.108 abstain-correct
+E12-R06   3518534  A1      none                   e=   -   g=-0.108 abstain-correct
+E12-R06   3518534  A2      insufficient           e=   -   g=-0.108 abstain-correct
+E12-R06   3518534  A3      none                   e=   -   g=-0.108 abstain-correct
+E12-R06   3518534  replay  no substitution model  e=   -   g=-0.108 abstain (no model)
+E12-R06   3518534  always  recommend              e=   -   g=-0.108 recommend
+E12-R06   3518534  cm      none                   e=+0.029 g=-0.108 abstain
+E12-R07   3518534  full    none                   e=   -   g=-3.649 abstain-correct
+E12-R07   3518534  A1      none                   e=   -   g=-3.649 abstain-correct
+E12-R07   3518534  A2      insufficient           e=   -   g=-3.649 abstain-correct
+E12-R07   3518534  A3      none                   e=   -   g=-3.649 abstain-correct
+E12-R07   3518534  replay  no substitution model  e=   -   g=-3.649 abstain (no model)
+E12-R07   3518534  always  recommend              e=   -   g=-3.649 recommend
+E12-R07   3518534  cm      none                   e=+0.029 g=-3.649 abstain
+E12-R08   3518534  full    none                   e=   -   g=+0.004 abstain-correct
+E12-R08   3518534  A1      none                   e=   -   g=+0.004 abstain-correct
+E12-R08   3518534  A2      insufficient           e=   -   g=+0.004 abstain-correct
+E12-R08   3518534  A3      none                   e=   -   g=+0.004 abstain-correct
+E12-R08   3518534  replay  no substitution model  e=   -   g=+0.004 abstain (no model)
+E12-R08   3518534  always  recommend              e=   -   g=+0.004 recommend
+E12-R08   3518534  cm      recommend              e=+0.088 g=+0.004 recommend
+E12-R09   3518534  full    none                   e=   -   g=+0.024 abstain-correct
+E12-R09   3518534  A1      none                   e=   -   g=+0.024 abstain-correct
+E12-R09   3518534  A2      shape                  e=   -   g=+0.024 not tested
+E12-R09   3518534  A3      none                   e=   -   g=+0.024 abstain-correct
+E12-R09   3518534  replay  no substitution model  e=   -   g=+0.024 abstain (no model)
+E12-R09   3518534  always  recommend              e=   -   g=+0.024 recommend
+E12-R09   3518534  cm      none                   e=+0.001 g=+0.024 abstain
+E12-R10   3518534  full    none                   e=   -   g=+0.009 abstain-correct
+E12-R10   3518534  A1      none                   e=   -   g=+0.009 abstain-correct
+E12-R10   3518534  A2      insufficient           e=   -   g=+0.009 abstain-correct
+E12-R10   3518534  A3      none                   e=   -   g=+0.009 abstain-correct
+E12-R10   3518534  replay  no substitution model  e=   -   g=+0.009 abstain (no model)
+E12-R10   3518534  always  recommend              e=   -   g=+0.009 recommend
+E12-R10   3518534  cm      recommend              e=+0.111 g=+0.009 recommend
+E12-R11   3518534  full    none                   e=   -   g=-0.152 abstain-correct
+E12-R11   3518534  A1      none                   e=   -   g=-0.152 abstain-correct
+E12-R11   3518534  A2      insufficient           e=   -   g=-0.152 abstain-correct
+E12-R11   3518534  A3      none                   e=   -   g=-0.152 abstain-correct
+E12-R11   3518534  replay  no substitution model  e=   -   g=-0.152 abstain (no model)
+E12-R11   3518534  always  recommend              e=   -   g=-0.152 recommend
+E12-R11   3518534  cm      none                   e=+0.037 g=-0.152 abstain
+E12-R12   3518534  full    insufficient           e=   -   g=+0.139 abstain-miss
+E12-R12   3518534  A1      none                   e=   -   g=+0.139 abstain-miss
+E12-R12   3518534  A2      insufficient           e=   -   g=+0.139 abstain-miss
+E12-R12   3518534  A3      insufficient           e=   -   g=+0.139 abstain-miss
+E12-R12   3518534  replay  recommend              e=+0.268 g=+0.139 recommend
+E12-R12   3518534  always  recommend              e=   -   g=+0.139 recommend
+E12-R12   3518534  cm      recommend              e=+0.065 g=+0.139 recommend
+E12-RM01  3518534  full    none                   e=   -   g=-0.109 abstain-correct
+E12-RM01  3518534  A1      none                   e=   -   g=-0.109 abstain-correct
+E12-RM01  3518534  A2      shape                  e=   -   g=-0.109 inapplicable
+E12-RM01  3518534  A3      none                   e=   -   g=-0.109 abstain-correct
+E12-RM01  3518534  replay  none                   e=-0.142 g=-0.109 abstain
+E12-RM01  3518534  always  recommend              e=   -   g=-0.109 recommend
+E12-RM01  3518534  cm      none                   e=-0.101 g=-0.109 abstain
+E12-RM04  3518534  full    insufficient           e=   -   g=-0.186 abstain-correct
+E12-RM04  3518534  A1      none                   e=   -   g=-0.186 abstain-correct
+E12-RM04  3518534  A2      insufficient           e=   -   g=-0.186 abstain-correct
+E12-RM04  3518534  A3      insufficient           e=   -   g=-0.186 abstain-correct
+E12-RM04  3518534  replay  none                   e=-0.220 g=-0.186 abstain
+E12-RM04  3518534  always  recommend              e=   -   g=-0.186 recommend
+E12-RM04  3518534  cm      none                   e=-0.059 g=-0.186 abstain
+E12-RM12  3518534  full    insufficient           e=   -   g=-0.162 abstain-correct
+E12-RM12  3518534  A1      none                   e=   -   g=-0.162 abstain-correct
+E12-RM12  3518534  A2      insufficient           e=   -   g=-0.162 abstain-correct
+E12-RM12  3518534  A3      insufficient           e=   -   g=-0.162 abstain-correct
+E12-RM12  3518534  replay  none                   e=-0.247 g=-0.162 abstain
+E12-RM12  3518534  always  recommend              e=   -   g=-0.162 recommend
+E12-RM12  3518534  cm      none                   e=-0.075 g=-0.162 abstain
+E12-T01   3518535  full    none                   e=   -   g=+0.249 abstain-miss
+E12-T01   3518535  A1      none                   e=   -   g=+0.249 abstain-miss
+E12-T01   3518535  A2      shape                  e=+0.000 g=+0.249 correct
+E12-T01   3518535  A3      none                   e=   -   g=+0.249 abstain-miss
+E12-T01   3518535  replay  recommend              e=+0.309 g=+0.249 recommend
+E12-T01   3518535  always  recommend              e=   -   g=+0.249 recommend
+E12-T01   3518535  cm      recommend              e=+0.167 g=+0.249 recommend
+E12-T02   3518535  full    none                   e=   -   g=+0.281 abstain-miss
+E12-T02   3518535  A1      none                   e=   -   g=+0.281 abstain-miss
+E12-T02   3518535  A2      shape                  e=+0.000 g=+0.281 correct
+E12-T02   3518535  A3      none                   e=   -   g=+0.281 abstain-miss
+E12-T02   3518535  replay  no substitution model  e=   -   g=+0.281 abstain (no model)
+E12-T02   3518535  always  recommend              e=   -   g=+0.281 recommend
+E12-T02   3518535  cm      recommend              e=+0.166 g=+0.281 recommend
+E12-T03   3518535  full    placement              e=+0.637 g=+0.872 correct
+E12-T03   3518535  A1      none                   e=   -   g=+0.872 abstain-miss
+E12-T03   3518535  A2      shape                  e=   -   g=+0.872 not tested
+E12-T03   3518535  A3      placement              e=+0.637 g=+0.872 correct
+E12-T03   3518535  replay  no substitution model  e=   -   g=+0.872 abstain (no model)
+E12-T03   3518535  always  recommend              e=   -   g=+0.872 recommend
+E12-T03   3518535  cm      none                   e=+0.000 g=+0.872 abstain
+E12-T04   3518535  full    insufficient           e=   -   g=+0.212 abstain-miss
+E12-T04   3518535  A1      none                   e=   -   g=+0.212 abstain-miss
+E12-T04   3518535  A2      insufficient           e=   -   g=+0.212 abstain-miss
+E12-T04   3518535  A3      insufficient           e=   -   g=+0.212 abstain-miss
+E12-T04   3518535  replay  recommend              e=+0.287 g=+0.212 recommend
+E12-T04   3518535  always  recommend              e=   -   g=+0.212 recommend
+E12-T04   3518535  cm      recommend              e=+0.103 g=+0.212 recommend
+E12-T05   3518535  full    none                   e=   -   g=-0.128 abstain-correct
+E12-T05   3518535  A1      none                   e=   -   g=-0.128 abstain-correct
+E12-T05   3518535  A2      insufficient           e=   -   g=-0.128 abstain-correct
+E12-T05   3518535  A3      none                   e=   -   g=-0.128 abstain-correct
+E12-T05   3518535  replay  no substitution model  e=   -   g=-0.128 abstain (no model)
+E12-T05   3518535  always  recommend              e=   -   g=-0.128 recommend
+E12-T05   3518535  cm      recommend              e=+0.083 g=-0.128 recommend
+E12-T06   3518535  full    none                   e=   -   g=-0.200 abstain-correct
+E12-T06   3518535  A1      none                   e=   -   g=-0.200 abstain-correct
+E12-T06   3518535  A2      insufficient           e=   -   g=-0.200 abstain-correct
+E12-T06   3518535  A3      none                   e=   -   g=-0.200 abstain-correct
+E12-T06   3518535  replay  no substitution model  e=   -   g=-0.200 abstain (no model)
+E12-T06   3518535  always  recommend              e=   -   g=-0.200 recommend
+E12-T06   3518535  cm      recommend              e=+0.083 g=-0.200 recommend
+E12-T07   3518535  full    none                   e=   -   g=-8.405 abstain-correct
+E12-T07   3518535  A1      none                   e=   -   g=-8.405 abstain-correct
+E12-T07   3518535  A2      insufficient           e=   -   g=-8.405 abstain-correct
+E12-T07   3518535  A3      none                   e=   -   g=-8.405 abstain-correct
+E12-T07   3518535  replay  no substitution model  e=   -   g=-8.405 abstain (no model)
+E12-T07   3518535  always  recommend              e=   -   g=-8.405 recommend
+E12-T07   3518535  cm      recommend              e=+0.083 g=-8.405 recommend
+E12-T08   3518535  full    none                   e=   -   g=+0.112 abstain-miss
+E12-T08   3518535  A1      none                   e=   -   g=+0.112 abstain-miss
+E12-T08   3518535  A2      insufficient           e=   -   g=+0.112 abstain-miss
+E12-T08   3518535  A3      none                   e=   -   g=+0.112 abstain-miss
+E12-T08   3518535  replay  no substitution model  e=   -   g=+0.112 abstain (no model)
+E12-T08   3518535  always  recommend              e=   -   g=+0.112 recommend
+E12-T08   3518535  cm      recommend              e=+0.199 g=+0.112 recommend
+E12-T09   3518535  full    none                   e=   -   g=+0.042 abstain-correct
+E12-T09   3518535  A1      none                   e=   -   g=+0.042 abstain-correct
+E12-T09   3518535  A2      shape                  e=   -   g=+0.042 not tested
+E12-T09   3518535  A3      none                   e=   -   g=+0.042 abstain-correct
+E12-T09   3518535  replay  no substitution model  e=   -   g=+0.042 abstain (no model)
+E12-T09   3518535  always  recommend              e=   -   g=+0.042 recommend
+E12-T09   3518535  cm      none                   e=+0.003 g=+0.042 abstain
+E12-T10   3518535  full    none                   e=   -   g=+0.152 abstain-miss
+E12-T10   3518535  A1      none                   e=   -   g=+0.152 abstain-miss
+E12-T10   3518535  A2      insufficient           e=   -   g=+0.152 abstain-miss
+E12-T10   3518535  A3      none                   e=   -   g=+0.152 abstain-miss
+E12-T10   3518535  replay  no substitution model  e=   -   g=+0.152 abstain (no model)
+E12-T10   3518535  always  recommend              e=   -   g=+0.152 recommend
+E12-T10   3518535  cm      recommend              e=+0.341 g=+0.152 recommend
+E12-T11   3518535  full    none                   e=   -   g=-0.297 abstain-correct
+E12-T11   3518535  A1      none                   e=   -   g=-0.297 abstain-correct
+E12-T11   3518535  A2      insufficient           e=   -   g=-0.297 abstain-correct
+E12-T11   3518535  A3      none                   e=   -   g=-0.297 abstain-correct
+E12-T11   3518535  replay  no substitution model  e=   -   g=-0.297 abstain (no model)
+E12-T11   3518535  always  recommend              e=   -   g=-0.297 recommend
+E12-T11   3518535  cm      recommend              e=+0.143 g=-0.297 recommend
+E12-T12   3518535  full    insufficient           e=   -   g=+0.346 abstain-miss
+E12-T12   3518535  A1      none                   e=   -   g=+0.346 abstain-miss
+E12-T12   3518535  A2      insufficient           e=   -   g=+0.346 abstain-miss
+E12-T12   3518535  A3      insufficient           e=   -   g=+0.346 abstain-miss
+E12-T12   3518535  replay  recommend              e=+0.379 g=+0.346 recommend
+E12-T12   3518535  always  recommend              e=   -   g=+0.346 recommend
+E12-T12   3518535  cm      recommend              e=+0.159 g=+0.346 recommend
+E12-TM01  3518535  full    none                   e=   -   g=-0.332 abstain-correct
+E12-TM01  3518535  A1      none                   e=   -   g=-0.332 abstain-correct
+E12-TM01  3518535  A2      shape                  e=   -   g=-0.332 inapplicable
+E12-TM01  3518535  A3      none                   e=   -   g=-0.332 abstain-correct
+E12-TM01  3518535  replay  none                   e=-0.314 g=-0.332 abstain
+E12-TM01  3518535  always  recommend              e=   -   g=-0.332 recommend
+E12-TM01  3518535  cm      none                   e=-0.215 g=-0.332 abstain
+E12-TM04  3518535  full    insufficient           e=   -   g=-0.270 abstain-correct
+E12-TM04  3518535  A1      none                   e=   -   g=-0.270 abstain-correct
+E12-TM04  3518535  A2      insufficient           e=   -   g=-0.270 abstain-correct
+E12-TM04  3518535  A3      insufficient           e=   -   g=-0.270 abstain-correct
+E12-TM04  3518535  replay  none                   e=-0.401 g=-0.270 abstain
+E12-TM04  3518535  always  recommend              e=   -   g=-0.270 recommend
+E12-TM04  3518535  cm      none                   e=-0.129 g=-0.270 abstain
+E12-TM12  3518535  full    insufficient           e=   -   g=-0.530 abstain-correct
+E12-TM12  3518535  A1      none                   e=   -   g=-0.530 abstain-correct
+E12-TM12  3518535  A2      insufficient           e=   -   g=-0.530 abstain-correct
+E12-TM12  3518535  A3      insufficient           e=   -   g=-0.530 abstain-correct
+E12-TM12  3518535  replay  none                   e=-0.512 g=-0.530 abstain
+E12-TM12  3518535  always  recommend              e=   -   g=-0.530 recommend
+E12-TM12  3518535  cm      none                   e=-0.229 g=-0.530 abstain
+E12-R01   3518535  full    none                   e=   -   g=+0.098 abstain-miss
+E12-R01   3518535  A1      none                   e=   -   g=+0.098 abstain-miss
+E12-R01   3518535  A2      shape                  e=+0.000 g=+0.098 correct
+E12-R01   3518535  A3      none                   e=   -   g=+0.098 abstain-miss
+E12-R01   3518535  replay  recommend              e=+0.162 g=+0.098 recommend
+E12-R01   3518535  always  recommend              e=   -   g=+0.098 recommend
+E12-R01   3518535  cm      recommend              e=+0.093 g=+0.098 recommend
+E12-R02   3518535  full    none                   e=   -   g=+0.119 abstain-miss
+E12-R02   3518535  A1      none                   e=   -   g=+0.119 abstain-miss
+E12-R02   3518535  A2      shape                  e=+0.000 g=+0.119 correct
+E12-R02   3518535  A3      none                   e=   -   g=+0.119 abstain-miss
+E12-R02   3518535  replay  no substitution model  e=   -   g=+0.119 abstain (no model)
+E12-R02   3518535  always  recommend              e=   -   g=+0.119 recommend
+E12-R02   3518535  cm      recommend              e=+0.093 g=+0.119 recommend
+E12-R03   3518535  full    placement              e=+0.669 g=+0.760 correct
+E12-R03   3518535  A1      none                   e=   -   g=+0.760 abstain-miss
+E12-R03   3518535  A2      shape                  e=   -   g=+0.760 not tested
+E12-R03   3518535  A3      placement              e=+0.669 g=+0.760 correct
+E12-R03   3518535  replay  no substitution model  e=   -   g=+0.760 abstain (no model)
+E12-R03   3518535  always  recommend              e=   -   g=+0.760 recommend
+E12-R03   3518535  cm      none                   e=+0.000 g=+0.760 abstain
+E12-R04   3518535  full    insufficient           e=   -   g=+0.160 abstain-miss
+E12-R04   3518535  A1      none                   e=   -   g=+0.160 abstain-miss
+E12-R04   3518535  A2      insufficient           e=   -   g=+0.160 abstain-miss
+E12-R04   3518535  A3      insufficient           e=   -   g=+0.160 abstain-miss
+E12-R04   3518535  replay  recommend              e=+0.221 g=+0.160 recommend
+E12-R04   3518535  always  recommend              e=   -   g=+0.160 recommend
+E12-R04   3518535  cm      none                   e=+0.046 g=+0.160 abstain
+E12-R05   3518535  full    none                   e=   -   g=-0.183 abstain-correct
+E12-R05   3518535  A1      none                   e=   -   g=-0.183 abstain-correct
+E12-R05   3518535  A2      insufficient           e=   -   g=-0.183 abstain-correct
+E12-R05   3518535  A3      none                   e=   -   g=-0.183 abstain-correct
+E12-R05   3518535  replay  no substitution model  e=   -   g=-0.183 abstain (no model)
+E12-R05   3518535  always  recommend              e=   -   g=-0.183 recommend
+E12-R05   3518535  cm      none                   e=+0.049 g=-0.183 abstain
+E12-R06   3518535  full    none                   e=   -   g=-0.107 abstain-correct
+E12-R06   3518535  A1      none                   e=   -   g=-0.107 abstain-correct
+E12-R06   3518535  A2      insufficient           e=   -   g=-0.107 abstain-correct
+E12-R06   3518535  A3      none                   e=   -   g=-0.107 abstain-correct
+E12-R06   3518535  replay  no substitution model  e=   -   g=-0.107 abstain (no model)
+E12-R06   3518535  always  recommend              e=   -   g=-0.107 recommend
+E12-R06   3518535  cm      none                   e=+0.049 g=-0.107 abstain
+E12-R07   3518535  full    none                   e=   -   g=-3.608 abstain-correct
+E12-R07   3518535  A1      none                   e=   -   g=-3.608 abstain-correct
+E12-R07   3518535  A2      insufficient           e=   -   g=-3.608 abstain-correct
+E12-R07   3518535  A3      none                   e=   -   g=-3.608 abstain-correct
+E12-R07   3518535  replay  no substitution model  e=   -   g=-3.608 abstain (no model)
+E12-R07   3518535  always  recommend              e=   -   g=-3.608 recommend
+E12-R07   3518535  cm      none                   e=+0.049 g=-3.608 abstain
+E12-R08   3518535  full    none                   e=   -   g=+0.007 abstain-correct
+E12-R08   3518535  A1      none                   e=   -   g=+0.007 abstain-correct
+E12-R08   3518535  A2      insufficient           e=   -   g=+0.007 abstain-correct
+E12-R08   3518535  A3      none                   e=   -   g=+0.007 abstain-correct
+E12-R08   3518535  replay  no substitution model  e=   -   g=+0.007 abstain (no model)
+E12-R08   3518535  always  recommend              e=   -   g=+0.007 recommend
+E12-R08   3518535  cm      recommend              e=+0.102 g=+0.007 recommend
+E12-R09   3518535  full    none                   e=   -   g=+0.023 abstain-correct
+E12-R09   3518535  A1      none                   e=   -   g=+0.023 abstain-correct
+E12-R09   3518535  A2      shape                  e=   -   g=+0.023 not tested
+E12-R09   3518535  A3      none                   e=   -   g=+0.023 abstain-correct
+E12-R09   3518535  replay  no substitution model  e=   -   g=+0.023 abstain (no model)
+E12-R09   3518535  always  recommend              e=   -   g=+0.023 recommend
+E12-R09   3518535  cm      none                   e=+0.001 g=+0.023 abstain
+E12-R10   3518535  full    none                   e=   -   g=+0.003 abstain-correct
+E12-R10   3518535  A1      none                   e=   -   g=+0.003 abstain-correct
+E12-R10   3518535  A2      insufficient           e=   -   g=+0.003 abstain-correct
+E12-R10   3518535  A3      none                   e=   -   g=+0.003 abstain-correct
+E12-R10   3518535  replay  no substitution model  e=   -   g=+0.003 abstain (no model)
+E12-R10   3518535  always  recommend              e=   -   g=+0.003 recommend
+E12-R10   3518535  cm      recommend              e=+0.129 g=+0.003 recommend
+E12-R11   3518535  full    none                   e=   -   g=-0.158 abstain-correct
+E12-R11   3518535  A1      none                   e=   -   g=-0.158 abstain-correct
+E12-R11   3518535  A2      insufficient           e=   -   g=-0.158 abstain-correct
+E12-R11   3518535  A3      none                   e=   -   g=-0.158 abstain-correct
+E12-R11   3518535  replay  no substitution model  e=   -   g=-0.158 abstain (no model)
+E12-R11   3518535  always  recommend              e=   -   g=-0.158 recommend
+E12-R11   3518535  cm      recommend              e=+0.062 g=-0.158 recommend
+E12-R12   3518535  full    insufficient           e=   -   g=+0.139 abstain-miss
+E12-R12   3518535  A1      none                   e=   -   g=+0.139 abstain-miss
+E12-R12   3518535  A2      insufficient           e=   -   g=+0.139 abstain-miss
+E12-R12   3518535  A3      insufficient           e=   -   g=+0.139 abstain-miss
+E12-R12   3518535  replay  recommend              e=+0.267 g=+0.139 recommend
+E12-R12   3518535  always  recommend              e=   -   g=+0.139 recommend
+E12-R12   3518535  cm      recommend              e=+0.058 g=+0.139 recommend
+E12-RM01  3518535  full    none                   e=   -   g=-0.109 abstain-correct
+E12-RM01  3518535  A1      none                   e=   -   g=-0.109 abstain-correct
+E12-RM01  3518535  A2      shape                  e=   -   g=-0.109 inapplicable
+E12-RM01  3518535  A3      none                   e=   -   g=-0.109 abstain-correct
+E12-RM01  3518535  replay  none                   e=-0.144 g=-0.109 abstain
+E12-RM01  3518535  always  recommend              e=   -   g=-0.109 recommend
+E12-RM01  3518535  cm      none                   e=-0.102 g=-0.109 abstain
+E12-RM04  3518535  full    insufficient           e=   -   g=-0.191 abstain-correct
+E12-RM04  3518535  A1      none                   e=   -   g=-0.191 abstain-correct
+E12-RM04  3518535  A2      insufficient           e=   -   g=-0.191 abstain-correct
+E12-RM04  3518535  A3      insufficient           e=   -   g=-0.191 abstain-correct
+E12-RM04  3518535  replay  none                   e=-0.231 g=-0.191 abstain
+E12-RM04  3518535  always  recommend              e=   -   g=-0.191 recommend
+E12-RM04  3518535  cm      none                   e=-0.053 g=-0.191 abstain
+E12-RM12  3518535  full    insufficient           e=   -   g=-0.161 abstain-correct
+E12-RM12  3518535  A1      none                   e=   -   g=-0.161 abstain-correct
+E12-RM12  3518535  A2      insufficient           e=   -   g=-0.161 abstain-correct
+E12-RM12  3518535  A3      insufficient           e=   -   g=-0.161 abstain-correct
+E12-RM12  3518535  replay  none                   e=-0.252 g=-0.161 abstain
+E12-RM12  3518535  always  recommend              e=   -   g=-0.161 recommend
+E12-RM12  3518535  cm      none                   e=-0.067 g=-0.161 abstain
+
+truth: pays
+full    rec  2.0 tp  2.0 fp  0.0  precision 1.00 recall 0.17 fpr 0.00 abstention 0.90
+A1      rec  0.0 tp  0.0 fp  0.0  precision   -   recall 0.00 fpr 0.00 abstention 1.00
+A2      rec  4.0 tp  4.0 fp  0.0  precision 1.00 recall 0.33 fpr 0.00 abstention 0.67
+A3      rec  2.0 tp  2.0 fp  0.0  precision 1.00 recall 0.17 fpr 0.00 abstention 0.90
+replay  rec  6.0 tp  6.0 fp  0.0  precision 1.00 recall 0.50 fpr 0.00 abstention 0.80
+always  rec 30.0 tp 12.0 fp 18.0  precision 0.40 recall 1.00 fpr 1.00 abstention 0.00
+cm      rec 14.5 tp  9.5 fp  5.0  precision 0.66 recall 0.79 fpr 0.28 abstention 0.52
+replay on its covered case types: rec  6.0 tp  6.0 fp  0.0 of 12.0
+
+truth: pays_q
+full    rec  2.0 tp  2.0 fp  0.0  precision 1.00 recall 0.25 fpr 0.00 abstention 0.90
+A1      rec  0.0 tp  0.0 fp  0.0  precision   -   recall 0.00 fpr 0.00 abstention 1.00
+A2      rec  4.0 tp  2.0 fp  2.0  precision 0.50 recall 0.25 fpr 0.09 abstention 0.67
+A3      rec  2.0 tp  2.0 fp  0.0  precision 1.00 recall 0.25 fpr 0.00 abstention 0.90
+replay  rec  6.0 tp  6.0 fp  0.0  precision 1.00 recall 0.75 fpr 0.00 abstention 0.80
+always  rec 30.0 tp  8.0 fp 22.0  precision 0.27 recall 1.00 fpr 1.00 abstention 0.00
+cm      rec 14.5 tp  5.5 fp  9.0  precision 0.38 recall 0.69 fpr 0.41 abstention 0.52
+replay on its covered case types: rec  6.0 tp  6.0 fp  0.0 of 12.0
+
+expectations: {'rows': 60, 'as_expected': 60}
