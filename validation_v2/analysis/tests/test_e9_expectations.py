@@ -150,7 +150,7 @@ def test_every_row_of_a_rendered_table_has_as_many_columns_as_its_header():
 
 
 def test_the_numbers_the_readme_states_about_e9_are_the_committed_records():
-    readme = io.open(os.path.join(ROOT, "README.md"), encoding="utf-8").read()
+    readme = io.open(os.path.join(ROOT, "RECORDS.md"), encoding="utf-8").read()
     out, probes = load("E9_EXPECTATIONS.json"), load("E9_PROBES_POSTHOC.json")
     gdr = {w: [a["gdr"] for a in probes["allocations"] if a["world"] == w] for w in (12, 24)}
     stated = [
@@ -269,7 +269,7 @@ def test_the_second_reading_is_printed_for_every_range_with_a_verdict_for_each_c
 
 def test_the_readme_states_what_the_second_review_added_from_the_records():
     # the README is hard-wrapped: compare with its line breaks folded into spaces
-    readme = " ".join(io.open(os.path.join(ROOT, "README.md"), encoding="utf-8").read().split())
+    readme = " ".join(io.open(os.path.join(ROOT, "RECORDS.md"), encoding="utf-8").read().split())
     probes = load("E9_PROBES_POSTHOC.json")
     spread = load("E9_PASS_SPREAD_POSTHOC.json")["summary"]
     nodes = json.load(io.open(os.path.join(ROOT, "environment", "E9_NODE_FACTS.json"), encoding="utf-8"))
