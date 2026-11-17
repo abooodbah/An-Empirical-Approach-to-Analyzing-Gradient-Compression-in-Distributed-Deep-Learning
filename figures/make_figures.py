@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 """Build the four TPDS-paper figures from the July campaign data.
 
-Inputs: the aggregated figure CSVs of tacc_paper_workloads and the raw
-per-rank CSVs of the validated ndrhost 2x4 seeds (extracted under
-RAW_SEEDS). Outputs: vector PDFs under figures/ plus printed numbers used
-in the manuscript."""
+Inputs: the aggregated figure CSVs in processed/ and the raw per-rank
+CSVs of the validated ndrhost 2x4 seeds (extracted under RAW_SEEDS).
+Outputs: vector PDFs under figures/figures/ plus printed numbers used
+in the manuscript.
+
+Usage: TPDS_RAW_SEEDS=<folder> python figures/make_figures.py"""
 import csv
 import glob
 import os
@@ -17,12 +19,12 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DATA = r"C:\Users\Abdulfatah\Desktop\Personal\Research\ACM pivot V9\experiments\tacc_paper_workloads\figures\data"
-RAW_SEEDS = os.environ.get("TPDS_RAW_SEEDS") or (
-    "\\\\?\\" +
-    r"C:\Users\Abdulfatah\AppData\Local\Temp\claude"
-    r"\C--Users-Abdulfatah--codex-skills-multi-agent-coordinator-v2"
-    r"\f0e26e5f-5cb2-42e5-9585-2017e418bafa\scratchpad\tpds_raw")
+ROOT = os.path.dirname(HERE)
+# TPDS_FIG_DATA: folder of the aggregated CSVs (default: processed/).
+# TPDS_RAW_SEEDS: folder holding only the three extracted H100 seed archives
+# raw/july/h100-3328658, -3328659 and -3328660.tar.gz (default: work/july).
+DATA = os.environ.get("TPDS_FIG_DATA") or os.path.join(ROOT, "processed")
+RAW_SEEDS = os.environ.get("TPDS_RAW_SEEDS") or os.path.join(ROOT, "work", "july")
 if os.name == "nt" and not RAW_SEEDS.startswith("\\\\?\\"):
     RAW_SEEDS = "\\\\?\\" + os.path.abspath(RAW_SEEDS)
 FIG = os.path.join(HERE, "figures")

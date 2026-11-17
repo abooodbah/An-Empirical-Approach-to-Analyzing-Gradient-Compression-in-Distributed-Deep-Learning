@@ -1,18 +1,23 @@
 # -*- coding: utf-8 -*-
 """Compare identical wall-mode conditions between the J2 and J5 allocations
-(features.py keys collapse them, so re-read per run directory here)."""
+(features.py keys collapse them, so re-read per run directory here).
+
+Usage: python diagnostic/alloc_compare.py [<folder>]
+<folder> holds the extracted archives raw/round4/ls6-j1-pilot-3459209-and-j2-3459786.tgz
+and raw/round4/ls6-j5-3460182.tgz (default: $R4W, then work/r4w in the repository)."""
 import csv
 import glob
 import os
 import statistics as st
+import sys
 
-base = (r"C:\Users\Abdulfatah\AppData\Local\Temp\claude"
-        r"\C--Users-Abdulfatah--codex-skills-multi-agent-coordinator-v2"
-        r"\90dfc924-e7a7-4c99-bd46-b77f6884c30d\scratchpad\r4")
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+base = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("R4W", os.path.join(ROOT, "work", "r4w"))
 
 
 def op(p):
-    return "\\\\?\\" + os.path.abspath(p)
+    # long-path prefix, Windows only
+    return "\\\\?\\" + os.path.abspath(p) if os.name == "nt" else p
 
 
 def steps(job):
