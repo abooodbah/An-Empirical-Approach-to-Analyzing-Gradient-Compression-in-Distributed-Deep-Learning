@@ -106,4 +106,25 @@ echo "== tests of the retrospective modules"
 (cd diagnostic/v1_2 && REV4_MEM_ROOT="$PYW/mem" python -m pytest -q -p no:cacheprovider | tail -1)
 (cd validation_v2/analysis && REV4_JULY_ROOT="$PYW/july" python -m pytest tests/test_step_spread.py tests/test_intervals.py tests/test_traffic_models.py tests/test_e9_probes_posthoc.py tests/test_e9_pass_spread_posthoc.py tests/test_e9_expectations.py -q -p no:cacheprovider | tail -1)
 python -m pytest environment -q -p no:cacheprovider | tail -1
+
+# ---- Fourth set (E12): the frozen scorer on the three committed archives,
+# as section 9 of diagnostic/E12_PROTOCOL.md, both readings (about ten minutes).
+# The printed outputs carry Windows line endings, as E7_RESULT.txt does.
+echo "== fourth set (E12)"
+(cd raw/e12 && sha256sum -c --quiet ./*.sha256) && echo "archives match their sha256 files"
+sha256sum -c --quiet diagnostic/E12_FREEZE.sha256 && echo "E12_FREEZE.sha256 clean"
+mkdir -p "$W/e12"
+for a in raw/e12/*.tgz; do tar xzf "$a" -C "$W/e12"; done
+E12Q="$PYW/e12/e12-q-2n-3518376"; E12A="$PYW/e12/e12-e12a-2n-3518534"; E12B="$PYW/e12/e12-e12b-2n-3518535"
+for f in diagnostic/E12_RESULT.json diagnostic/E12_RESULT_described.json \
+         diagnostic/e12/E12_SCORE_frozen.txt diagnostic/e12/E12_SCORE_described.txt; do keep "$f"; done
+python diagnostic/e12/score_e12.py --qual "$E12Q" "$E12A" "$E12B" \
+  --json diagnostic/E12_RESULT.json > diagnostic/e12/E12_SCORE_frozen.txt
+python diagnostic/e12/score_e12.py --qual "$E12Q" "$E12A" "$E12B" --reading described \
+  --json diagnostic/E12_RESULT_described.json > diagnostic/e12/E12_SCORE_described.txt
+for f in diagnostic/E12_RESULT.json diagnostic/E12_RESULT_described.json \
+         diagnostic/e12/E12_SCORE_frozen.txt diagnostic/e12/E12_SCORE_described.txt; do same "$f"; done
+echo "== replay speedup figure (Fig. 6 data: the E8 and E12 results above)"
+python figures/make_fig_replay.py . "$PYW/fig" | head -2
+python -m pytest diagnostic/e12 -q -p no:cacheprovider | tail -1
 echo "ALL REGENERATED"

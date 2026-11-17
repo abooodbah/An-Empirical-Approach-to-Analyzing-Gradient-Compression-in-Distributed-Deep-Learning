@@ -1,15 +1,22 @@
+"""Peak device memory of the 1B conditions, from the rank-0 records.
+
+Usage: python diagnostic/peak_mem_1b.py [<folder>]
+<folder> holds the extracted archives raw/control/redctl-V-v3-3517750-51-52-53.tgz,
+raw/control/redctl-V-reruns-3517832-3517833.tgz and raw/control/redctl-V-r16b-3517873.tgz
+(default: $REV4_MEM_ROOT, then work/mem in the repository)."""
 import csv
 import glob
 import json
 import os
+import sys
 
-base = (r"C:\Users\Abdulfatah\AppData\Local\Temp\claude"
-        r"\C--Users-Abdulfatah--codex-skills-multi-agent-coordinator-v2"
-        r"\abb3b79e-3d8f-4d74-b7ee-4c31c833e0df\scratchpad\redctl_retrieved")
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+base = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("REV4_MEM_ROOT", os.path.join(ROOT, "work", "mem"))
 
 
 def op(p):
-    return "\\\\?\\" + p
+    # long-path prefix, Windows only
+    return "\\\\?\\" + os.path.abspath(p) if os.name == "nt" else p
 
 
 for pat, label in (("redctl-V-1n-3517751", "ws8"), ("redctl-V-2n-3517833", "ws16"),
